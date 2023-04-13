@@ -93,7 +93,7 @@ git clone https://github.com/pavlo-skobnikov/secrets.git ~/secrets
 
 # Link dotfiles
 echo "Linking .config folder from dotfiles..."
-ln -s ~/dotfiles/.config ~/.config
+ln -s ~/dotfiles ~/.config
 
 # Install Zap for Zsh and link .zshrc
 echo "Installing Zsh and linking .zshrc..."
