@@ -9,10 +9,238 @@ return {
   },
   {
     -- Useful paired mappings
-    'tpope/vim-unimpaired',
-    dependencies = {
-      'tpope/vim-repeat',
-    },
+    'Tummetott/unimpaired.nvim',
+    config = function()
+      require('unimpaired').setup {
+        default_keymaps = true,
+        keymaps = {
+          previous = {
+            mapping = '[a',
+            description = 'arglist - Jump to Prev',
+            dot_repeat = true,
+          },
+          next = {
+            mapping = ']a',
+            description = 'arglist - Jump to Next',
+            dot_repeat = true,
+          },
+          first = {
+            mapping = '[A',
+            description = 'arglist - Jump to First',
+            dot_repeat = false,
+          },
+          last = {
+            mapping = ']A',
+            description = 'arglist - Jump to Last',
+            dot_repeat = false,
+          },
+          bprevious = false,
+          bnext = false,
+          bfirst = false,
+          blast = false,
+          lprevious = {
+            mapping = '[l',
+            description = 'loclist - Jump to Prev',
+            dot_repeat = true,
+          },
+          lnext = {
+            mapping = ']l',
+            description = 'loclist - Jump to Next',
+            dot_repeat = true,
+          },
+          lfirst = {
+            mapping = '[L',
+            description = 'loclist - Jump to First',
+            dot_repeat = false,
+          },
+          llast = {
+            mapping = ']L',
+            description = 'loclist - Jump to Last',
+            dot_repeat = false,
+          },
+          lpfile = false,
+          lnfile = false,
+          cprevious = {
+            mapping = '[q',
+            description = 'qflist - Jump to Prev',
+            dot_repeat = true,
+          },
+          cnext = {
+            mapping = ']q',
+            description = 'qflist - Jump to Next',
+            dot_repeat = true,
+          },
+          cfirst = {
+            mapping = '[Q',
+            description = 'qflist - Jump to First',
+            dot_repeat = false,
+          },
+          clast = {
+            mapping = ']Q',
+            description = 'qflist - Jump to Last',
+            dot_repeat = false,
+          },
+          cpfile = false,
+          cnfile = false,
+          tprevious = {
+            mapping = '[t',
+            description = 'Jump to Prev Matching Tag',
+            dot_repeat = true,
+          },
+          tnext = {
+            mapping = ']t',
+            description = 'Jump to Next Matching Tag',
+            dot_repeat = true,
+          },
+          tfirst = {
+            mapping = '[T',
+            description = 'Jump to First Matching Tag',
+            dot_repeat = false,
+          },
+          tlast = {
+            mapping = ']T',
+            description = 'Jump to Last Matching Tag',
+            dot_repeat = false,
+          },
+          ptprevious = {
+            mapping = '[<C-t>',
+            description = ':tprevious in the Preview Window',
+            dot_repeat = true,
+          },
+          ptnext = {
+            mapping = ']<C-t>',
+            description = ':tnext in the Preview Window',
+            dot_repeat = true,
+          },
+          previous_file = false,
+          next_file = false,
+          blank_above = {
+            mapping = '[<Space>',
+            description = 'Add Blank Line(s) Above',
+            dot_repeat = true,
+          },
+          blank_below = {
+            mapping = ']<Space>',
+            description = 'Add Blank Line(s) Below',
+            dot_repeat = true,
+          },
+          exchange_above = {
+            mapping = '[e',
+            description = 'Exchange Line(s) with Above',
+            dot_repeat = true,
+          },
+          exchange_below = {
+            mapping = ']e',
+            description = 'Exchange Line(s) with Below',
+            dot_repeat = true,
+          },
+          exchange_section_above = {
+            mapping = '[e',
+            description = 'Move Section Up',
+            dot_repeat = true,
+          },
+          exchange_section_below = {
+            mapping = ']e',
+            description = 'Move Section Down',
+            dot_repeat = true,
+          },
+          enable_cursorline = false,
+          disable_cursorline = false,
+          toggle_cursorline = {
+            mapping = '<leader>TC',
+            description = 'Toggle cursorline',
+            dot_repeat = true,
+          },
+          enable_diff = false,
+          disable_diff = false,
+          toggle_diff = {
+            mapping = '<leader>TD',
+            description = 'Toggle diffthis',
+            dot_repeat = true,
+          },
+          enable_hlsearch = false,
+          disable_hlsearch = false,
+          toggle_hlsearch = {
+            mapping = '<leader>Th',
+            description = 'Toggle hlsearch',
+            dot_repeat = true,
+          },
+          enable_ignorecase = false,
+          disable_ignorecase = false,
+          toggle_ignorecase = {
+            mapping = '<leader>Ti',
+            description = 'Toggle ignorecase',
+            dot_repeat = true,
+          },
+          enable_list = false,
+          disable_list = false,
+          toggle_list = {
+            mapping = '<leader>Tl',
+            description = 'Toggle listchars',
+            dot_repeat = true,
+          },
+          enable_number = false,
+          disable_number = false,
+          toggle_number = {
+            mapping = '<leader>Tn',
+            description = 'Toggle Line Numbers',
+            dot_repeat = true,
+          },
+          enable_relativenumber = false,
+          disable_relativenumber = false,
+          toggle_relativenumber = {
+            mapping = '<leader>Tr',
+            description = 'Toggle Relative Numbers',
+            dot_repeat = true,
+          },
+          enable_spell = false,
+          disable_spell = false,
+          toggle_spell = {
+            mapping = '<leader>Ts',
+            description = 'Toggle Spell Check',
+            dot_repeat = true,
+          },
+          enable_background = false,
+          disable_background = false,
+          toggle_background = false,
+          enable_colorcolumn = false,
+          disable_colorcolumn = false,
+          toggle_colorcolumn = {
+            mapping = '<leader>TU',
+            description = 'Toggle colorcolumn',
+            dot_repeat = true,
+          },
+          enable_cursorcolumn = false,
+          disable_cursorcolumn = false,
+          toggle_cursorcolumn = {
+            mapping = '<leader>Tu',
+            description = 'Toggle cursorcolumn',
+            dot_repeat = true,
+          },
+          enable_virtualedit = false,
+          disable_virtualedit = false,
+          toggle_virtualedit = {
+            mapping = '<leader>Tv',
+            description = 'Toggle virtualedit',
+            dot_repeat = true,
+          },
+          enable_wrap = false,
+          disable_wrap = false,
+          toggle_wrap = {
+            mapping = '<leader>Tw',
+            description = 'Toggle Line Wrapping',
+            dot_repeat = true,
+          },
+          enable_cursorcross = false,
+          disable_cursorcross = false,
+          toggle_cursorcross = {
+            mapping = '<leader>Tx',
+            description = 'Toggle cursorcross',
+            dot_repeat = true,
+          },
+        },
+      }
+    end,
   },
   {
     -- Add color boxes on various color codes in code (hex, rgb, etc.)
@@ -47,20 +275,20 @@ return {
             lookahead = true,
             -- Capture groups defined in textobjects.scm are available for bindings
             keymaps = {
-              ['ad'] = { query = '@block.outer', desc = 'around block definition' },
-              ['ii'] = { query = '@call.inner', desc = 'inside invocation' },
-              ['aS'] = { query = '@call.outer', desc = 'around statement' },
-              ['iC'] = { query = '@class.inner', desc = 'inside class' },
-              ['aC'] = { query = '@class.outer', desc = 'around class' },
-              ['a/'] = { query = '@comment.outer', desc = 'around comment' },
-              ['ic'] = { query = '@conditional.inner', desc = 'inside conditional' },
-              ['ac'] = { query = '@conditional.outer', desc = 'around conditional' },
-              ['if'] = { query = '@function.inner', desc = 'inside function' },
-              ['af'] = { query = '@function.outer', desc = 'around function' },
-              ['il'] = { query = '@loop.inner', desc = 'inside loop' },
-              ['al'] = { query = '@loop.outer', desc = 'around loop' },
-              ['ia'] = { query = '@parameter.inner', desc = 'inside argument' },
-              ['aa'] = { query = '@parameter.outer', desc = 'around argument' },
+              ['ad'] = { query = '@block.outer', desc = 'Around Block Definition' },
+              ['ii'] = { query = '@call.inner', desc = 'Inside Invocation' },
+              ['aS'] = { query = '@call.outer', desc = 'Around Statement' },
+              ['iC'] = { query = '@class.inner', desc = 'Inside Class' },
+              ['aC'] = { query = '@class.outer', desc = 'Around Class' },
+              ['a/'] = { query = '@comment.outer', desc = 'Around Comment' },
+              ['ic'] = { query = '@conditional.inner', desc = 'Inside Conditional' },
+              ['ac'] = { query = '@conditional.outer', desc = 'Around Conditional' },
+              ['if'] = { query = '@function.inner', desc = 'Inside Function' },
+              ['af'] = { query = '@function.outer', desc = 'Around Function' },
+              ['il'] = { query = '@loop.inner', desc = 'Inside Loop' },
+              ['al'] = { query = '@loop.outer', desc = 'Around Loop' },
+              ['ia'] = { query = '@parameter.inner', desc = 'Inside Argument' },
+              ['aa'] = { query = '@parameter.outer', desc = 'Around Argument' },
             },
           },
           swap = {
@@ -80,24 +308,24 @@ return {
             -- Whether to set jumps in the jumplist
             set_jumps = true,
             goto_next_start = {
-              [']f'] = { query = '@function.outer', desc = 'Next function start' },
-              [']C'] = { query = '@class.outer', desc = 'Next class' },
-              [']c'] = { query = '@conditional.outer', desc = 'Next conditional' },
-              [']D'] = { query = '@block.outer', desc = 'Next block definition' },
-              [']i'] = { query = '@call.inner', desc = 'Next invocation' },
-              [']S'] = { query = '@call.outer', desc = 'Next statement' },
-              [']a'] = { query = '@parameter.inner', desc = 'Next argument' },
-              [']/'] = { query = '@comment.outer', desc = 'Next comment' },
+              [']f'] = { query = '@function.outer', desc = 'Next Function Start' },
+              [']C'] = { query = '@class.outer', desc = 'Next Class' },
+              [']c'] = { query = '@conditional.outer', desc = 'Next Conditional' },
+              [']D'] = { query = '@block.outer', desc = 'Next Block Definition' },
+              [']i'] = { query = '@call.inner', desc = 'Next Invocation' },
+              [']S'] = { query = '@call.outer', desc = 'Next Statement' },
+              [']a'] = { query = '@parameter.inner', desc = 'Next Argument' },
+              [']/'] = { query = '@comment.outer', desc = 'Next Comment' },
             },
             goto_previous_start = {
-              ['[f'] = { query = '@function.outer', desc = 'Previous function start' },
-              ['[C'] = { query = '@class.outer', desc = 'Previous class start' },
-              ['[c'] = { query = '@conditional.outer', desc = 'Previous conditional' },
-              ['[D'] = { query = '@block.outer', desc = 'Previous block definition' },
-              ['[i'] = { query = '@call.inner', desc = 'Previous invocation' },
-              ['[S'] = { query = '@call.outer', desc = 'Previous statement' },
-              ['[a'] = { query = '@parameter.inner', desc = 'Previous argument' },
-              ['[/'] = { query = '@comment.outer', desc = 'Next comment' },
+              ['[f'] = { query = '@function.outer', desc = 'Prev Function Start' },
+              ['[C'] = { query = '@class.outer', desc = 'Prev Class Start' },
+              ['[c'] = { query = '@conditional.outer', desc = 'Prev Conditional' },
+              ['[D'] = { query = '@block.outer', desc = 'Prev Block Definition' },
+              ['[i'] = { query = '@call.inner', desc = 'Prev Invocation' },
+              ['[S'] = { query = '@call.outer', desc = 'Prev Statement' },
+              ['[a'] = { query = '@parameter.inner', desc = 'Prev Argument' },
+              ['[/'] = { query = '@comment.outer', desc = 'Prev Comment' },
             },
           },
         },
@@ -126,7 +354,7 @@ return {
       configs.setup {
         rainbow = {
           enable = true,
-          extended_mode = true,  -- Also highlight non-bracket delimiters like html tags,
+          extended_mode = true, -- Also highlight non-bracket delimiters like html tags,
           -- boolean or table: lang -> boolean
           max_file_lines = 1000, -- Do not enable for files with more than 1000 lines, int
         },
@@ -187,7 +415,7 @@ return {
       vim.keymap.set({ 'n' }, '[h', ui.nav_prev, { silent = true, desc = 'Prev Harpoon Mark' })
 
       for i = 1, 9, 1 do
-        vim.keymap.set({ 'n' }, "<leader>/" .. i, function()
+        vim.keymap.set({ 'n' }, '<leader>/' .. i, function()
           term.gotoTerminal(i)
         end, { silent = true, desc = 'Go to Terminal ' .. i })
       end
@@ -209,7 +437,7 @@ return {
   {
     'mbbill/undotree',
     config = function()
-      vim.keymap.set('n', '<leader><F5>', vim.cmd.UndotreeToggle)
+      vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
     end,
-  }
+  },
 }
