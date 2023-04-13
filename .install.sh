@@ -38,8 +38,7 @@ brew install tree
 brew install rename
 brew install neofetch
 brew install mas
-brew install dooit
-brew install nnn
+brew install ranger
 
 brew install git
 brew install gh
@@ -62,7 +61,7 @@ brew install --cask sf-symbols
 brew install --cask font-hack-nerd-font
 
 brew install --cask libreoffice
-brew install --cask alacritty
+brew install --cask kitty
 
 brew install --cask zoom
 brew install --cask telegram
@@ -190,3 +189,10 @@ brew services start skhd
 brew services start fyabai
 brew services start sketchybar
 brew services start svim
+
+csrutil status
+echo "Do not forget to disable SIP and reconfigure keyboard -> $HOME/.config/keyboard..."
+
+echo "Add sudoer manually:\n '$(whoami) ALL = (root) NOPASSWD: sha256:$(shasum -a 256 $(which yabai) | awk "{print \$1;}") $(which yabai) --load-sa' to '/private/etc/sudoers.d/yabai'"
+
+echo "Installation complete!"
