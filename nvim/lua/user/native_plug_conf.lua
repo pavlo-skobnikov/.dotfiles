@@ -1,0 +1,2 @@
+-- TODO: remove native unused/redundant plugins like netrw, etc
+-- or better decide what to leave out from the custom plugins
