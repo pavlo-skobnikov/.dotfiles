@@ -1,5 +1,15 @@
 #!/bin/sh
 
+echo "This script will use git pull to clone some repositories."
+echo "So, you should have ssh configured in your GitHub account before running this script."
+
+read -p "Have you configured ssh? 'y' will continue the script" -n 1 -r
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+  exit
+fi
+echo
+
 # Install xCode cli tools
 echo "Installing commandline tools..."
 xcode-select --install
@@ -77,17 +87,27 @@ brew install --cask google-chrome
 echo "Installing npm packages..."
 npm install -g npm-groovy-lint
 
-# Configure git
-echo "Configuring git..."
-git config --global user.name "Pavlo Skobnikov"
-git config --global user.email "pavlo.skobnikov@gmail.com"
+# Configure git and clone some repositories
+echo "Configuring git default pull strategy and branch name..."
 git config --global pull.rebase true
 git config --global init.defaultBranch main
 
-# Fetch personal dotfiles
-echo "Fetching dotfiles and private exports..."
+echo "Are you Pavlo Skobnikov? If not, then press anything anything but 'y'!"
+
+read -p "Download secrets repository? 'y' will download secrets." -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  echo "Configuring git identifiers..."
+  git config --global user.name "Pavlo Skobnikov"
+  git config --global user.email "pavlo.skobnikov@gmail.com"
+
+  echo "Fetching secrets..."
+  git clone https://github.com/pavlo-skobnikov/secrets.git ~/secrets
+fi
+echo
+
+echo "Fetching dotfiles..."
 git clone https://github.com/pavlo-skobnikov/dotfiles.git ~/dotfiles
-git clone https://github.com/pavlo-skobnikov/secrets.git ~/secrets
 
 # Link dotfiles
 echo "Linking .config folder from dotfiles..."
