@@ -17,7 +17,6 @@ require("user.lazy_bootstrap")
 
 ----------------------------------------------[[  User Settings ]]
 
-require("user.native_plug_conf")
 require("user.autocmds")
 require("user.options")
 require("user.maps")
