@@ -16,7 +16,6 @@ return {
 
       -- Used only for setting groups
       which_key.register({
-        ['/'] = { name = 'terminal' },
         f = { name = 'find' },
         t = { name = 'toggle' },
         h = { name = 'hunks' },

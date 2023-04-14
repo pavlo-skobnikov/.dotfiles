@@ -63,6 +63,12 @@ return {
         ':NeoTreeReveal<CR>',
         { noremap = true, desc = 'Open Current File in Explorer' }
       )
+      vim.keymap.set(
+        'n',
+        '<leader>tt',
+        ':NeoTreeShowToggle<CR>',
+        { noremap = true, desc = 'Toggle File Explorer' }
+      )
 
       -- Enable NeoTree
       require('neo-tree').setup {
