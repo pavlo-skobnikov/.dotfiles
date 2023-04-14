@@ -10,16 +10,17 @@ return {
 
       local which_key = require 'which-key'
 
-      -- TODO: review and update after configs are updated
+      which_key.setup {
+        hidden = { "<leader>'" },
+      }
+
       -- Used only for setting groups
       which_key.register({
-        ['<space>'] = { name = 'easy-motion' },
-        ['\''] = { name = 'terminal' },
+        ['/'] = { name = 'terminal' },
         f = { name = 'find' },
         t = { name = 'toggle' },
         h = { name = 'hunks' },
         g = { name = 'git' },
-        -- p = { name = 'projects' },
         r = { name = 'replace' },
         w = { name = 'workspace' },
       }, { prefix = '<leader>' })

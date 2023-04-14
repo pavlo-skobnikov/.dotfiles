@@ -57,7 +57,7 @@ return {
             },
             { 'i', 'c' }
           ),
-          ['<M-y>'] = cmp.mapping(
+          ['<S-y>'] = cmp.mapping(
             cmp.mapping.confirm {
               behavior = cmp.ConfirmBehavior.Replace,
               select = true,
@@ -172,18 +172,12 @@ return {
     config = function()
       vim.cmd [[ let g:copilot_no_tab_map = v:true ]]
 
-      vim.keymap.set('i', '<A-y>', function()
+      vim.keymap.set('i', '<C-S-y>', function()
         ---@diagnostic disable-next-line: unused-local
         local suggestion = vim.fn['copilot#Accept'] ''
 
         local bar = vim.fn['copilot#TextQueuedForInsertion']()
         return vim.fn.split(bar, [[[ .]\zs]])[1]
-      end, { expr = true, remap = false })
-      vim.keymap.set('i', '<A-C-y>', function()
-        vim.fn.feedkeys(
-          vim.api.nvim_replace_termcodes(vim.fn['copilot#Accept'](), true, true, true),
-          ''
-        )
       end, { expr = true, remap = false })
 
       -- Bring up the suggestions panel

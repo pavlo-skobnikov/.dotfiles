@@ -7,7 +7,6 @@ return {
     'mfussenegger/nvim-jdtls',
     dependencies = {
       'nvim-telescope/telescope.nvim',
-      'SmiteshP/nvim-navic',
     },
   },
   { -- Easily manage external editor tooling such as LSP servers,
@@ -22,7 +21,6 @@ return {
     'neovim/nvim-lspconfig',
     dependencies = {
       'nvim-telescope/telescope.nvim',
-      'SmiteshP/nvim-navic',
     },
     config = function()
       require('mason').setup()
@@ -60,8 +58,6 @@ return {
         automatic_installation = false,
       }
 
-      local navic = require 'nvim-navic'
-
       local lsp_maps = require 'shared.lsp_maps'
 
       lsp_maps.on_startup()
@@ -70,10 +66,6 @@ return {
 
       local on_attach = function(client, bufnr)
         lsp_maps.on_attach(client, bufnr)
-
-        if client.server_capabilities.documentSymbolProvider then
-          navic.attach(client, bufnr)
-        end
       end
 
       lsp_config.dockerls.setup { on_attach = lsp_maps.on_attach }

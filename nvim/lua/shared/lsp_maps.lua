@@ -16,6 +16,7 @@ end
 
 -- Use an on_attach function to only map the following keys
 --  after the language server attaches to the current buffer
+---@diagnostic disable-next-line: unused-local
 function M.on_attach(client, bufnr)
   local map_w_buf_opts = utility_fns.create_mapping_fn_with_default_opts_and_desc {
     noremap = true,
@@ -37,19 +38,19 @@ function M.on_attach(client, bufnr)
 
   map_w_opts('n', 'gl', builtin.lsp_document_symbols, 'Go to Buffer Symbols')
 
-  map_w_opts('n', 'gI', builtin.lsp_incoming_calls, 'Go to Incoming Calls')
-  map_w_buf_opts('n', 'gi', builtin.lsp_implementations, 'Go to Implementation')
+  map_w_opts('n', 'gi', builtin.lsp_incoming_calls, 'Go to Incoming Calls')
+  map_w_buf_opts('n', 'gI', builtin.lsp_implementations, 'Go to Implementation')
 
   map_w_opts('n', 'go', builtin.lsp_outgoing_calls, 'Go to Outgoing Calls')
 
   map_w_buf_opts('n', 'gD', vim.lsp.buf.declaration, 'Go to Declaration')
   map_w_buf_opts('n', 'gd', builtin.lsp_definitions, 'Go to Definition')
 
-  map_w_buf_opts('n', 'gR', builtin.lsp_references, 'Go to References')
+  map_w_buf_opts('n', 'gr', builtin.lsp_references, 'Go to References')
 
   map_w_buf_opts('n', 'K', vim.lsp.buf.hover, 'Show Documentation')
 
-  map_w_buf_opts({ 'n', 'i' }, '<A-k>', vim.lsp.buf.signature_help, 'Signature Help')
+  map_w_buf_opts({ 'n', 'i' }, '<C-S-k>', vim.lsp.buf.signature_help, 'Signature Help')
 
   map_w_buf_opts('n', '<space>wa', vim.lsp.buf.add_workspace_folder, 'Add Folder to Workspace')
   map_w_buf_opts(
@@ -66,7 +67,7 @@ function M.on_attach(client, bufnr)
 
   map_w_buf_opts('n', '<space>n', function()
     -- Save buffer before renaming
-    vim.cmd('w')
+    vim.cmd 'w'
     vim.lsp.buf.rename()
   end, 'Rename')
   map_w_buf_opts('n', '<space>l', vim.lsp.buf.code_action, 'Show LSP Actions')

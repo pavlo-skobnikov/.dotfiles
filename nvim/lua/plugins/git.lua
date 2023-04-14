@@ -83,11 +83,11 @@ return {
           -- Toggles
           vim.keymap.set(
             'n',
-            '<leader>Tb',
+            '<leader>tb',
             gs.toggle_current_line_blame,
             { desc = 'Toggle Current Line Blame' }
           )
-          vim.keymap.set('n', '<leader>Td', gs.toggle_deleted, { desc = 'Toggle Deleted' })
+          vim.keymap.set('n', '<leader>td', gs.toggle_deleted, { desc = 'Toggle Deleted' })
 
           -- Text object
           vim.keymap.set({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')

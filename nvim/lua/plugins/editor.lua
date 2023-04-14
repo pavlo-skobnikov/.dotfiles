@@ -147,56 +147,56 @@ return {
           enable_cursorline = false,
           disable_cursorline = false,
           toggle_cursorline = {
-            mapping = '<leader>TC',
+            mapping = '<leader>tC',
             description = 'Toggle cursorline',
             dot_repeat = true,
           },
           enable_diff = false,
           disable_diff = false,
           toggle_diff = {
-            mapping = '<leader>TD',
+            mapping = '<leader>tD',
             description = 'Toggle diffthis',
             dot_repeat = true,
           },
           enable_hlsearch = false,
           disable_hlsearch = false,
           toggle_hlsearch = {
-            mapping = '<leader>Th',
+            mapping = '<leader>th',
             description = 'Toggle hlsearch',
             dot_repeat = true,
           },
           enable_ignorecase = false,
           disable_ignorecase = false,
           toggle_ignorecase = {
-            mapping = '<leader>Ti',
+            mapping = '<leader>ti',
             description = 'Toggle ignorecase',
             dot_repeat = true,
           },
           enable_list = false,
           disable_list = false,
           toggle_list = {
-            mapping = '<leader>Tl',
+            mapping = '<leader>tl',
             description = 'Toggle listchars',
             dot_repeat = true,
           },
           enable_number = false,
           disable_number = false,
           toggle_number = {
-            mapping = '<leader>Tn',
+            mapping = '<leader>tn',
             description = 'Toggle Line Numbers',
             dot_repeat = true,
           },
           enable_relativenumber = false,
           disable_relativenumber = false,
           toggle_relativenumber = {
-            mapping = '<leader>Tr',
+            mapping = '<leader>tr',
             description = 'Toggle Relative Numbers',
             dot_repeat = true,
           },
           enable_spell = false,
           disable_spell = false,
           toggle_spell = {
-            mapping = '<leader>Ts',
+            mapping = '<leader>ts',
             description = 'Toggle Spell Check',
             dot_repeat = true,
           },
@@ -206,35 +206,35 @@ return {
           enable_colorcolumn = false,
           disable_colorcolumn = false,
           toggle_colorcolumn = {
-            mapping = '<leader>TU',
+            mapping = '<leader>tU',
             description = 'Toggle colorcolumn',
             dot_repeat = true,
           },
           enable_cursorcolumn = false,
           disable_cursorcolumn = false,
           toggle_cursorcolumn = {
-            mapping = '<leader>Tu',
+            mapping = '<leader>tu',
             description = 'Toggle cursorcolumn',
             dot_repeat = true,
           },
           enable_virtualedit = false,
           disable_virtualedit = false,
           toggle_virtualedit = {
-            mapping = '<leader>Tv',
+            mapping = '<leader>tv',
             description = 'Toggle virtualedit',
             dot_repeat = true,
           },
           enable_wrap = false,
           disable_wrap = false,
           toggle_wrap = {
-            mapping = '<leader>Tw',
+            mapping = '<leader>tw',
             description = 'Toggle Line Wrapping',
             dot_repeat = true,
           },
           enable_cursorcross = false,
           disable_cursorcross = false,
           toggle_cursorcross = {
-            mapping = '<leader>Tx',
+            mapping = '<leader>tx',
             description = 'Toggle cursorcross',
             dot_repeat = true,
           },
@@ -248,7 +248,7 @@ return {
     config = function()
       require('colorizer').setup()
 
-      vim.keymap.set('n', '<leader>Tc', ':ColorizerToggle<CR>', { desc = 'Toggle Colorizer' })
+      vim.keymap.set('n', '<leader>tc', ':ColorizerToggle<CR>', { desc = 'Toggle Colorizer' })
     end,
   },
   {
@@ -406,16 +406,16 @@ return {
       )
 
       for i = 1, 9, 1 do
-        vim.keymap.set({ 'n' }, '<leader>m' .. i, function()
+        vim.keymap.set({ 'n' }, "g" .. i, function()
           ui.nav_file(i)
-        end, { silent = true, desc = 'Go to Buffer Mark ' .. i })
+        end, { silent = true, desc = 'Go to Harpoon Mark ' .. i })
       end
 
       vim.keymap.set({ 'n' }, ']h', ui.nav_next, { silent = true, desc = 'Next Harpoon Mark' })
       vim.keymap.set({ 'n' }, '[h', ui.nav_prev, { silent = true, desc = 'Prev Harpoon Mark' })
 
       for i = 1, 9, 1 do
-        vim.keymap.set({ 'n' }, '<leader>/' .. i, function()
+        vim.keymap.set({ 'n' }, '~' .. i, function()
           term.gotoTerminal(i)
         end, { silent = true, desc = 'Go to Terminal ' .. i })
       end
@@ -437,7 +437,12 @@ return {
   {
     'mbbill/undotree',
     config = function()
-      vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
+      vim.keymap.set(
+        'n',
+        '<leader>u',
+        vim.cmd.UndotreeToggle,
+        { silent = true, desc = 'Undo Tree' }
+      )
     end,
   },
 }
