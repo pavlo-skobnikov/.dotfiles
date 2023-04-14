@@ -44,9 +44,6 @@ brew install git
 brew install gh
 brew install glab
 
-brew install skhd
-brew install yabai
-brew install sketchybar
 brew install svim
 
 brew install neovim
@@ -56,6 +53,7 @@ brew install google-java-format
 
 ## Brew casks
 echo "Installing brew casks..."
+brew install --cask amethyst
 brew install --cask alfred
 brew install --cask sf-symbols
 brew install --cask font-hack-nerd-font
@@ -95,6 +93,8 @@ git clone https://github.com/pavlo-skobnikov/secrets.git ~/secrets
 echo "Linking .config folder from dotfiles..."
 ln -s ~/dotfiles ~/.config
 
+ln -s ~/dotfiles/amethyst/.amethyst.yml ~/.amethyst.yml
+
 # Install Zap for Zsh and link .zshrc
 echo "Installing Zsh and linking .zshrc..."
 zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh)
@@ -120,7 +120,7 @@ defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 defaults write NSGlobalDomain KeyRepeat -int 1
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-defaults write NSGlobalDomain _HIHideMenuBar -bool true
+defaults write NSGlobalDomain _HIHideMenuBar -bool false
 defaults write NSGlobalDomain AppleHighlightColor -string "0.65098 0.85490 0.58431"
 defaults write NSGlobalDomain AppleAccentColor -int 1
 defaults write com.apple.screencapture location -string "$HOME/Desktop"
@@ -185,14 +185,6 @@ ln -s ~/dotfiles/.ideavimrc ~/.ideavimrc
 
 # Start Services
 echo "Starting Services (grant permissions)..."
-brew services start skhd
-brew services start fyabai
-brew services start sketchybar
 brew services start svim
-
-csrutil status
-echo "Do not forget to disable SIP and reconfigure keyboard -> $HOME/.config/keyboard..."
-
-echo "Add sudoer manually:\n '$(whoami) ALL = (root) NOPASSWD: sha256:$(shasum -a 256 $(which yabai) | awk "{print \$1;}") $(which yabai) --load-sa' to '/private/etc/sudoers.d/yabai'"
 
 echo "Installation complete!"
