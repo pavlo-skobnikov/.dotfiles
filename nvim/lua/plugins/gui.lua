@@ -65,7 +65,7 @@ return {
       )
       vim.keymap.set(
         'n',
-        '<leader>tt',
+        '<leader>te',
         ':NeoTreeShowToggle<CR>',
         { noremap = true, desc = 'Toggle File Explorer' }
       )
