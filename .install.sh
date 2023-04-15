@@ -201,6 +201,8 @@ git clone https://github.com/dgileadi/vscode-java-decompiler ~/.local/source/jav
 
 # Configure IntelliJ
 echo "Linking IntelliJ .ideavimrc..."
+rm -f ~/.ideavimrc
+
 ln -s ~/dotfiles/.ideavimrc ~/.ideavimrc
 
 # Start Services
