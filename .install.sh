@@ -59,7 +59,6 @@ brew install svim
 brew install neovim
 
 brew install npm
-brew install google-java-format
 
 ## Brew casks
 echo "Installing brew casks..."

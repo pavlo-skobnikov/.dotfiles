@@ -1,16 +1,23 @@
 return {
-  'jose-elias-alvarez/null-ls.nvim',
-  dependencies = {
-    'nvim-lua/plenary.nvim',
-  },
-  config = function()
-    local null_ls = require 'null-ls'
+  -- For available formatter options see:
+  -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+  {
+    'jay-babu/mason-null-ls.nvim',
+    dependencies = {
+      'williamboman/mason.nvim',
+      'jose-elias-alvarez/null-ls.nvim',
+    },
+    config = function()
+      require('mason-null-ls').setup {
+        automatic_setup = true,
 
-    null_ls.setup {
-      sources = {
-        null_ls.builtins.formatting.stylua,
-        null_ls.builtins.formatting.google_java_format
-      },
-    }
-  end,
+        ensure_installed = {
+          'stylua',
+          'jq',
+          'google_java_format',
+          'prettier',
+        },
+      }
+    end,
+  },
 }
