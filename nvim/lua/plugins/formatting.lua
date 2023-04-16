@@ -2,20 +2,19 @@ return {
   -- For available formatter options see:
   -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
   {
-    'jay-babu/mason-null-ls.nvim',
+    'jose-elias-alvarez/null-ls.nvim',
     dependencies = {
       'williamboman/mason.nvim',
-      'jose-elias-alvarez/null-ls.nvim',
+      'nvim-lua/plenary.nvim',
     },
     config = function()
-      require('mason-null-ls').setup {
-        automatic_setup = true,
+      local null_ls = require 'null-ls'
 
-        ensure_installed = {
-          'stylua',
-          'jq',
-          'google_java_format',
-          'prettier',
+      null_ls.setup {
+        sources = {
+          null_ls.builtins.formatting.stylua,
+          null_ls.builtins.formatting.google_java_format,
+          null_ls.builtins.formatting.prettier,
         },
       }
     end,
