@@ -68,12 +68,15 @@ function M.on_attach(client, bufnr)
   map_w_buf_opts('n', '<space>n', function()
     -- Save buffer before renaming
     vim.cmd 'w'
+
     vim.lsp.buf.rename()
   end, 'Rename')
   map_w_buf_opts('n', '<space>l', vim.lsp.buf.code_action, 'Show LSP Actions')
 
   map_w_buf_opts({ 'n', 'v' }, '<space>=', function()
     vim.lsp.buf.format { async = true }
+
+    vim.cmd 'w'
   end, 'Format Buffer')
 end
 
