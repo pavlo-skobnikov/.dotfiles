@@ -3,7 +3,8 @@ return {
   { -- LSP extension for NeoVim-specific Lua development
     'folke/neodev.nvim',
   },
-  { -- Improvements for the Eclipse JDT Language Server
+  {
+    -- Improvements for the Eclipse JDT Language Server
     'mfussenegger/nvim-jdtls',
     dependencies = {
       'nvim-telescope/telescope.nvim',
@@ -17,7 +18,8 @@ return {
     -- -> making it easier to use both plugins together
     'williamboman/mason-lspconfig.nvim',
   },
-  { -- Native LSP configuration for NeoVim
+  {
+    -- Native LSP configuration for NeoVim
     'neovim/nvim-lspconfig',
     dependencies = {
       'nvim-telescope/telescope.nvim',
@@ -96,13 +98,25 @@ return {
       lsp_config.tsserver.setup { on_attach = lsp_maps.on_attach }
       lsp_config.quick_lint_js.setup { on_attach = lsp_maps.on_attach }
 
-      lsp_config.rust_analyzer.setup { on_attach = lsp_maps.on_attach }
+      lsp_config.rust_analyzer.setup {
+        on_attach = lsp_maps.on_attach,
+        filetypes = { 'rust', 'rs' },
+        root_dir = lsp_config.util.root_pattern('Cargo.toml', 'rust-project.json', '.git'),
+        settings = {
+          ['rust-analyzer'] = {
+            cargo = {
+              allFeatures = true,
+            },
+          },
+        },
+      }
     end,
   },
   { -- Debug Adapter Protocol client implementation
     'mfussenegger/nvim-dap',
   },
-  { -- A UI for nvim-dap
+  {
+    -- A UI for nvim-dap
     'rcarriga/nvim-dap-ui',
     dependencies = {
       'mfussenegger/nvim-dap',
