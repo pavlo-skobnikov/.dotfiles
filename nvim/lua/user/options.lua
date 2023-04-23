@@ -65,3 +65,17 @@ opt.iskeyword:append '-' -- Hyphenated words recognized by searches
 opt.formatoptions:remove { 'c', 'r', 'o' } -- Don't insert the current comment leader automatically
 -- for auto-wrapping comments using 'textwidth', hitting <Enter> in insert mode, or hitting
 -- 'o' or 'O' in normal mode.
+
+local global = vim.g
+
+local globals = {
+  -- netrw configuration
+  netrw_keepdir = 0, -- Keep the current directory and the browsing directory synced.
+  netrw_winsize = 30, -- Change the size of the Netrw window when it creates a split
+  netrw_banner = 0, -- Disable annoying banner
+  netrw_localcopydircmd = 'cp -r', -- Make copying directories recursive
+}
+
+for k, v in pairs(globals) do
+  global[k] = v
+end
