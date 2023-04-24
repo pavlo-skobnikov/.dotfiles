@@ -46,12 +46,41 @@ return {
       'nvim-tree/nvim-web-devicons',
     },
     config = function()
+      local actions = require 'telescope.actions'
+      require('telescope').setup {
+        extensions = {
+          file_browser = {
+            mappings = {
+              ['i'] = {
+                ['<Tab>'] = function(prompt_bufnr)
+                  actions.toggle_selection(prompt_bufnr)
+                  actions.move_selection_previous(prompt_bufnr)
+                end,
+                ['<S-Tab>'] = function(prompt_bufnr)
+                  actions.toggle_selection(prompt_bufnr)
+                  actions.move_selection_next(prompt_bufnr)
+                end,
+              },
+              ['n'] = {
+                ['<Tab>'] = function(prompt_bufnr)
+                  actions.toggle_selection(prompt_bufnr)
+                  actions.move_selection_previous(prompt_bufnr)
+                end,
+                ['<S-Tab>'] = function(prompt_bufnr)
+                  actions.toggle_selection(prompt_bufnr)
+                  actions.move_selection_next(prompt_bufnr)
+                end,
+              },
+            },
+          },
+        },
+      }
+
       vim.api.nvim_set_keymap('n', '<leader>e', ':Telescope file_browser<CR>', {
         noremap = true,
         desc = 'Open explorer',
       })
 
-      -- open file_browser with the path of the current buffer
       vim.api.nvim_set_keymap(
         'n',
         '<leader>E',
