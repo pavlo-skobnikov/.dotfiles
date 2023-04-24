@@ -49,8 +49,3 @@ for i = 1, 9 do
 
   map('n', left_hand_side, right_hand_side, options('Move to window ' .. i))
 end
-
--- netrw access
-map('n', '<leader>E', ':Lexplore %:p:h<CR>', options "netrw current file's dir")
-map('n', '<leader>e', ':Lexplore <CR>', options 'netrw cwd')
-map('n', 'gE', ':Rexplore <CR>', options 'Reopen netrw')
