@@ -7,6 +7,7 @@ return {
     config = function()
       require('catppuccin').setup {
         flavour = 'frappe', -- Options: latte, frappe, macchiato, mocha
+        -- flavour = 'latte', -- -> for working outside
       }
 
       vim.cmd [[ colorscheme catppuccin ]]
@@ -50,6 +51,7 @@ return {
       require('telescope').setup {
         extensions = {
           file_browser = {
+            initial_mode = 'normal',
             mappings = {
               ['i'] = {
                 ['<Tab>'] = function(prompt_bufnr)
