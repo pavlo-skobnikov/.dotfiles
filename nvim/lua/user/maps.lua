@@ -51,6 +51,6 @@ for i = 1, 9 do
 end
 
 -- netrw access
-map('n', '<leader>E', ':Lexplore %:p:h<CR>', options())
-map('n', '<leader>e', ':Lexplore <CR>', options())
-map('n', 'gT', ':Rexplore <CR>', options())
+map('n', '<leader>E', ':Lexplore %:p:h<CR>', options "netrw current file's dir")
+map('n', '<leader>e', ':Lexplore <CR>', options 'netrw cwd')
+map('n', 'gE', ':Rexplore <CR>', options 'Reopen netrw')
