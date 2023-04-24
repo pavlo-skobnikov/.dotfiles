@@ -74,6 +74,7 @@ local globals = {
   netrw_winsize = 30, -- Change the size of the Netrw window when it creates a split
   netrw_banner = 0, -- Disable annoying banner
   netrw_localcopydircmd = 'cp -r', -- Make copying directories recursive
+  netrw_liststyle = 3, -- Use a tree style directory listing
 }
 
 for k, v in pairs(globals) do

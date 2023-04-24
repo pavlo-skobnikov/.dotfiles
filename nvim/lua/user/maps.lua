@@ -53,3 +53,4 @@ end
 -- netrw access
 map('n', '<leader>E', ':Lexplore %:p:h<CR>', options())
 map('n', '<leader>e', ':Lexplore <CR>', options())
+map('n', 'gT', ':Rexplore <CR>', options())
