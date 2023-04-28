@@ -26,6 +26,7 @@ return {
     },
     config = function()
       require('mason').setup()
+      -- https://github.com/williamboman/mason-lspconfig.nvim#available-lsp-servers
       require('mason-lspconfig').setup {
         ensure_installed = {
           -- Dockerfile
