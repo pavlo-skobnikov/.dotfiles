@@ -90,6 +90,7 @@ npm install -g npm-groovy-lint
 echo "Configuring git default pull strategy and branch name..."
 git config --global pull.rebase true
 git config --global init.defaultBranch main
+git config --global push.autoSetupRemote true
 
 echo "Are you Pavlo Skobnikov? If not, then press anything anything but 'y'!"
 
