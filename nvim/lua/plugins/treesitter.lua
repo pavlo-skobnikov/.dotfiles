@@ -13,7 +13,6 @@ return {
           'c',
           'lua',
           'vim',
-          'help',
           -- Additional parsers
           'org',   -- for "nvim-orgmode/orgmode
           'query', -- for "nvim-treesitter/playground"
