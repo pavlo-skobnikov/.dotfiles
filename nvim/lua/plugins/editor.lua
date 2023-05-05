@@ -406,7 +406,7 @@ return {
       )
 
       for i = 1, 9, 1 do
-        vim.keymap.set({ 'n' }, "g" .. i, function()
+        vim.keymap.set({ 'n' }, 'g' .. i, function()
           ui.nav_file(i)
         end, { silent = true, desc = 'Go to Harpoon Mark ' .. i })
       end
@@ -432,6 +432,17 @@ return {
 
         term.sendCommand(terminal_id, command)
       end, { silent = true, desc = 'Send Shell Command to Given Terminal' })
+    end,
+  },
+  {
+    '/img-paste-devs/img-paste.vim',
+    config = function()
+      vim.cmd [[ let g:mdip_imgdir = 'images' ]]
+      vim.cmd [[ let g:mdip_imgname = 'image' ]]
+
+      vim.keymap.set({ 'n' }, '<leader>p', function()
+        vim.cmd [[ :call mdip#MarkdownClipboardImage() ]]
+      end, { silent = true, desc = 'Paste Image from Clipboard' })
     end,
   },
   {

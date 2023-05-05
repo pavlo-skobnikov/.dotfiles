@@ -39,6 +39,7 @@ brew install zsh
 brew install wget
 brew install coreutils
 brew install gnu-sed
+brew install xclip
 brew install ripgrep
 brew install fzf
 brew install jq
