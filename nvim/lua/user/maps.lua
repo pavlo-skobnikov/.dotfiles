@@ -49,3 +49,21 @@ for i = 1, 9 do
 
   map('n', left_hand_side, right_hand_side, options('Move to window ' .. i))
 end
+
+local function get_visual_selection()
+  -- Yank current visual selection into the 'v' register
+  --
+  -- NOTE: that this makes no effort to preserve this register
+  vim.cmd 'noau normal! "vy"'
+
+  return vim.fn.getreg 'v'
+end
+
+-- Open Chrome for selected link
+map('v', '<leader>o', function()
+  local selection = get_visual_selection()
+
+  local command = "!open '/Applications/Google Chrome.app' '" .. selection .. "'"
+
+  vim.cmd(command)
+end, options 'Open link in Chrome')
