@@ -40,59 +40,35 @@ return {
     end,
   },
   {
-    'nvim-telescope/telescope-file-browser.nvim',
+    'https://github.com/nvim-tree/nvim-tree.lua',
     dependencies = {
-      'nvim-telescope/telescope.nvim',
-      'nvim-lua/plenary.nvim',
       'nvim-tree/nvim-web-devicons',
     },
     config = function()
-      local actions = require 'telescope.actions'
-      require('telescope').setup {
-        extensions = {
-          file_browser = {
-            initial_mode = 'normal',
-            mappings = {
-              ['i'] = {
-                ['<Tab>'] = function(prompt_bufnr)
-                  actions.toggle_selection(prompt_bufnr)
-                  actions.move_selection_previous(prompt_bufnr)
-                end,
-                ['<S-Tab>'] = function(prompt_bufnr)
-                  actions.toggle_selection(prompt_bufnr)
-                  actions.move_selection_next(prompt_bufnr)
-                end,
-              },
-              ['n'] = {
-                ['<Tab>'] = function(prompt_bufnr)
-                  actions.toggle_selection(prompt_bufnr)
-                  actions.move_selection_previous(prompt_bufnr)
-                end,
-                ['<S-Tab>'] = function(prompt_bufnr)
-                  actions.toggle_selection(prompt_bufnr)
-                  actions.move_selection_next(prompt_bufnr)
-                end,
-              },
-            },
-          },
+      require('nvim-tree').setup {
+        sort_by = 'case_sensitive',
+        view = {
+          width = 30,
+        },
+        renderer = {
+          group_empty = true,
+        },
+        filters = {
+          dotfiles = true,
         },
       }
 
-      vim.api.nvim_set_keymap('n', '<leader>e', ':Telescope file_browser<CR>', {
+      vim.api.nvim_set_keymap('n', '<leader>e', ':NvimTreeFocus<CR>', {
         noremap = true,
+        silent = true,
         desc = 'Open explorer',
       })
 
-      vim.api.nvim_set_keymap(
-        'n',
-        '<leader>E',
-        ':Telescope file_browser path=%:p:h select_buffer=true<CR>',
-        {
-          noremap = true,
-          desc = 'Open explorer with current buffer path',
-        }
-      )
-      require('telescope').load_extension 'file_browser'
+      vim.api.nvim_set_keymap('n', '<leader>E', ':NvimTreeFindFile<CR>', {
+        noremap = true,
+        silent = true,
+        desc = 'Open explorer with current buffer path',
+      })
     end,
   },
   {

@@ -6,9 +6,10 @@ return {
     branch = '0.1.x',
     dependencies = {
       { 'nvim-lua/plenary.nvim' },
+      { 'nvim-tree/nvim-web-devicons' },
     },
     cmd = { 'Telescope', 'Tel' }, -- Lazy loads on these commands
-    keys = { '<leader>f' },       -- Lazy loads on this pattern
+    keys = { '<leader>f' }, -- Lazy loads on this pattern
     config = function()
       local telescope = require 'telescope'
       local actions = require 'telescope.actions'
@@ -94,9 +95,9 @@ return {
       -- Telescope main commands
       vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = 'Resume Previous Find' })
       vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find Files' })
-      vim.keymap.set('n', '<leader>f.',
-        function() builtin.find_files { find_command = { 'rg', '--files', '--hidden', '-g', '!.git' } } end,
-        { desc = 'Find Files' })
+      vim.keymap.set('n', '<leader>f.', function()
+        builtin.find_files { find_command = { 'rg', '--files', '--hidden', '-g', '!.git' } }
+      end, { desc = 'Find Files' })
       vim.keymap.set('n', '<leader>fF', builtin.oldfiles, { desc = 'Find Previously Open Files' })
       vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Find Text in Files' })
       vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find Recent Buffer' })
@@ -152,6 +153,13 @@ return {
       local telescope = require 'telescope'
 
       telescope.load_extension 'dap'
+    end,
+  },
+  {
+    'nvim-telescope/telescope-fzf-native.nvim',
+    build = 'make',
+    config = function()
+      require('telescope').load_extension 'fzf'
     end,
   },
 }
