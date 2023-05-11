@@ -36,20 +36,6 @@ autocmd({ 'BufWritePre' }, {
   desc = 'Remove trailing white spaces on saving',
 })
 
-autocmd({ 'BufLeave', 'FocusLost' }, {
-  group = augroup('SaveBufferAutomatically', { clear = true }),
-  pattern = { '*' },
-  callback = function()
-    if file_should_be_edited() then
-      -- `pcall` is used to prevent errors from stopping the execution of the rest of the commands
-      -- The calls may fail in some "special" buffers (like the one from `sindrets/diffview.nvim`)
-      pcall(remove_trailing_white_spaces)
-      pcall(save_buffer)
-    end
-  end,
-  desc = 'Remove trailing whitespaces and save buffer automatically on leaving it',
-})
-
 autocmd('FocusGained', {
   group = augroup('CheckFileForExternalChanges', { clear = true }),
   pattern = { '*' },
