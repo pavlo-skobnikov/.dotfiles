@@ -49,7 +49,6 @@ brew install tree
 brew install rename
 brew install neofetch
 brew install mas
-brew install ranger
 
 brew install git
 brew install gh
