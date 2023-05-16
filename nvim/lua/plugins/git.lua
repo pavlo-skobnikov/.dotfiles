@@ -5,7 +5,7 @@ return {
     config = function()
       vim.keymap.set('n', '<leader>gg', ':Git<CR>', { desc = 'Fugitive' })
 
-      vim.keymap.set('n', '<leader>go', ':Git checkout <SPACE>', { desc = 'Checkout' })
+      vim.keymap.set('n', '<leader>go', ':Git checkout<SPACE>', { desc = 'Checkout' })
       vim.keymap.set('n', '<leader>gf', ':Git fetch<SPACE>', { desc = 'Fetch' })
       vim.keymap.set('n', '<leader>gu', ':Git pull<SPACE>', { desc = 'Pull/Update' })
       vim.keymap.set('n', '<leader>gp', ':Git push<SPACE>', { desc = 'Push' })
