@@ -12,7 +12,6 @@ return {
     'Tummetott/unimpaired.nvim',
     config = function()
       require('unimpaired').setup {
-        default_keymaps = true,
         keymaps = {
           previous = {
             mapping = '[a',
@@ -135,12 +134,12 @@ return {
             dot_repeat = true,
           },
           exchange_section_above = {
-            mapping = '[e',
+            mapping = '[E',
             description = 'Move Section Up',
             dot_repeat = true,
           },
           exchange_section_below = {
-            mapping = ']e',
+            mapping = ']E',
             description = 'Move Section Down',
             dot_repeat = true,
           },
@@ -243,15 +242,6 @@ return {
     end,
   },
   {
-    -- Add color boxes on various color codes in code (hex, rgb, etc.)
-    'norcalli/nvim-colorizer.lua',
-    config = function()
-      require('colorizer').setup()
-
-      vim.keymap.set('n', '<leader>tc', ':ColorizerToggle<CR>', { desc = 'Toggle Colorizer' })
-    end,
-  },
-  {
     -- A powerful character autopair plugin
     'windwp/nvim-autopairs',
     config = true,
@@ -296,10 +286,10 @@ return {
             enable = true,
             -- Capture groups defined in textobjects.scm are available for bindings
             swap_next = {
-              [']s'] = { query = '@swappable', desc = 'Swap with Next' },
+              ['<leader>s'] = { query = '@swappable', desc = 'Swap with Next' },
             },
             swap_previous = {
-              ['[s'] = { query = '@swappable', desc = 'Swap with Prev' },
+              ['<leader>S'] = { query = '@swappable', desc = 'Swap with Prev' },
             },
           },
           move = {
@@ -345,45 +335,6 @@ return {
     end,
   },
   {
-    -- Colorize brackets according to their depth
-    'mrjones2014/nvim-ts-rainbow',
-    dependencies = 'nvim-treesitter/nvim-treesitter',
-    config = function()
-      local configs = require 'nvim-treesitter.configs'
-
-      configs.setup {
-        rainbow = {
-          enable = true,
-          extended_mode = true, -- Also highlight non-bracket delimiters like html tags,
-          -- boolean or table: lang -> boolean
-          max_file_lines = 1000, -- Do not enable for files with more than 1000 lines, int
-        },
-      }
-    end,
-  },
-  {
-    'nvim-pack/nvim-spectre',
-    config = function()
-      local spectre = require 'spectre'
-
-      vim.keymap.set({ 'n' }, '<leader>rp', function()
-        spectre.open()
-      end, { silent = true, desc = 'Search and Replace in Project' })
-      vim.keymap.set({ 'n' }, '<leader>rf', function()
-        spectre.open_file_search()
-      end, { silent = true, desc = 'Search and Replace in File' })
-
-      vim.keymap.set({ 'n' }, '<leader>rw', function()
-        spectre.open_visual { select_word = true }
-      end, { silent = true, desc = 'Search Word and Replace' })
-      vim.keymap.set({ 'v' }, '<leader>rs', function()
-        spectre.open_visual()
-      end, { silent = true, desc = 'Search Selection and Replace' })
-
-      require('spectre').setup()
-    end,
-  },
-  {
     'ThePrimeagen/harpoon',
     dependencies = {
       'nvim-lua/plenary.nvim',
@@ -419,19 +370,6 @@ return {
           term.gotoTerminal(i)
         end, { silent = true, desc = 'Go to Terminal ' .. i })
       end
-
-      vim.keymap.set(
-        { 'n' },
-        '<leader>c',
-        cmd_ui.toggle_quick_menu,
-        { silent = true, desc = 'View Commands Menu' }
-      )
-      vim.keymap.set({ 'n' }, '<leader>!', function()
-        local terminal_id = vim.fn.input 'Terminal ID > '
-        local command = vim.fn.input 'Shell Command > '
-
-        term.sendCommand(terminal_id, command)
-      end, { silent = true, desc = 'Send Shell Command to Given Terminal' })
     end,
   },
   {
