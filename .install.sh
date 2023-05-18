@@ -59,6 +59,7 @@ brew install svim
 brew install neovim
 
 brew install npm
+brew install go
 
 ## Brew casks
 echo "Installing brew casks..."
