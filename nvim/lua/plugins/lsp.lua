@@ -88,8 +88,8 @@ return {
       {
         -- Ensure Telescope is present
         -- Used to enhance LSP functionality
-        'nvim-telescope/telescope.nvim'
-      }
+        'nvim-telescope/telescope.nvim',
+      },
     },
     config = function()
       -- LSP CONFIGURATION
@@ -101,18 +101,18 @@ return {
 
       -- Add some additional language servers
       lsp.ensure_installed {
-        'jdtls', -- Java
-        'groovyls', -- Groovy
-        'gradle_ls', -- Gradle
-        'tsserver', -- JavaScript/TypeScript
+        'jdtls',         -- Java
+        'groovyls',      -- Groovy
+        'gradle_ls',     -- Gradle
+        'tsserver',      -- JavaScript/TypeScript
         'rust_analyzer', -- Rust
-        'lua_ls', -- Lua
-        'bashls', -- Bash
-        'marksman', -- Markdown
-        'dockerls', -- Dockerfile
-        'sqlls', -- SQL
-        'yamlls', -- YAML
-        'jsonls', -- JSON
+        'lua_ls',        -- Lua
+        'bashls',        -- Bash
+        'marksman',      -- Markdown
+        'dockerls',      -- Dockerfile
+        'sqlls',         -- SQL
+        'yamlls',        -- YAML
+        'jsonls',        -- JSON
       }
 
       -- JDTLS will be set up via the nvim-jdtls plugin
@@ -155,6 +155,12 @@ return {
         vim.keymap.set('i', '<C-S-k>', function()
           vim.lsp.buf.signature_help()
         end, create_opts 'Show Signature Help')
+
+        vim.keymap.set('n', '<leader>=', function()
+          vim.lsp.buf.format { async = true }
+
+          vim.cmd 'w'
+        end, create_opts 'Format Buffer')
 
         vim.keymap.set('n', '[d', function()
           vim.diagnostic.goto_next()
@@ -227,7 +233,7 @@ return {
       lsp.setup()
 
       -- COMPLETION CONFIGURATION
-      local cmp = require('cmp')
+      local cmp = require 'cmp'
       local luasnip = require 'luasnip'
       local lspkind = require 'lspkind'
 
@@ -235,8 +241,7 @@ return {
       -- detect the `luasnip` sources
       require('luasnip/loaders/from_vscode').lazy_load()
 
-
-      cmp.setup({
+      cmp.setup {
         -- Enable snippets
         snippet = {
           expand = function(args)
@@ -258,12 +263,12 @@ return {
         },
         -- Setting sources priority for appearing in completion prompts
         sources = {
-          {name = 'path'},
-          {name = 'nvim_lsp'},
-          {name = 'luasnip', keyword_length = 2},
-          {name = 'buffer', keyword_length = 4},
+          { name = 'path' },
+          { name = 'nvim_lsp' },
+          { name = 'luasnip', keyword_length = 2 },
+          { name = 'buffer',  keyword_length = 4 },
         },
-      })
+      }
     end,
   },
 }
