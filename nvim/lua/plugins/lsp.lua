@@ -33,6 +33,8 @@ return {
           'dockerls',
           -- Bash
           'bashls',
+          -- SQL
+          'sqls',
           -- Markdown
           'marksman',
           -- YAML

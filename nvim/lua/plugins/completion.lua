@@ -12,7 +12,6 @@ return {
       'saadparwaiz1/cmp_luasnip',
       'rafamadriz/friendly-snippets',
       'github/copilot.vim',
-      'nvim-orgmode/orgmode',
     },
     config = function()
       local cmp = require 'cmp'
