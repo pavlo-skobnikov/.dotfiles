@@ -171,7 +171,11 @@ rm -rf /tmp/SFMono_Nerd_Font/
 
 curl -L https://github.com/kvndrsslr/sketchybar-app-font/releases/download/v1.0.4/sketchybar-app-font.ttf -o $HOME/Library/Fonts/sketchybar-app-font.ttf
 
-# Configure Eclipse JDTLS for Java nvim development because it's a pain in the ass >:(
+# Create a directory for custom sources
+rm -rf ~/.local/source/
+mkdir -p ~/.local/source/
+
+# Install Java tools
 echo "Installing basic Java tools..."
 sdk install java
 sdk install gradle
@@ -180,25 +184,9 @@ sdk install maven
 # Install and build LSP extensions
 echo "Setting up and building JDTLS Extensions"
 
-# Remove target directory and recreate it (for script re-runs)
-# The JDTLS itself will be installed by the NeoVim LSP manager
-rm -rf ~/.local/source/java_lsp_extensions
-mkdir -p ~/.local/source/java_lsp_extensions
-
-# Java Debug
-echo "Building JDTLS debugging extension..."
-git clone https://github.com/microsoft/java-debug.git ~/.local/source/java_lsp_extensions/java-debug
-( cd ~/.local/source/java_lsp_extensions/java-debug ; ./mvnw clean install -DskipTests )
-
-# Java Testing
-echo "Building JDTLS test running extension..."
-git clone https://github.com/microsoft/vscode-java-test ~/.local/source/java_lsp_extensions/vscode-java-test
-( cd ~/.local/source/java_lsp_extensions/vscode-java-test ; npm install ; npm run build-plugin )
-
-# Java Decompiler
-echo "Building JDTLS decompiler extension..."
-git clone https://github.com/microsoft/vscode-java-test ~/.local/source/java_lsp_extensions/vscode-java-test
-git clone https://github.com/dgileadi/vscode-java-decompiler ~/.local/source/java_lsp_extensions/vscode-java-decompiler
+# Download Java Decompiler extension for JDTLS
+echo "Downloading JDTLS decompiler extension..."
+git clone https://github.com/dgileadi/vscode-java-decompiler ~/.local/source/vscode-java-decompiler
 
 # Configure IntelliJ
 echo "Linking IntelliJ .ideavimrc..."
