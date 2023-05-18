@@ -15,7 +15,7 @@ return {
       {
         -- Package manager for Neovim
         'williamboman/mason.nvim',
-        build = 'MasonUpdate',
+        build = ':MasonUpdate',
       },
       {
         -- Bridges mason.nvim with the lspconfig plugin
@@ -59,6 +59,32 @@ return {
           -- Bring up the suggestions panel
           vim.keymap.set('n', '<C-;>', ':Copilot panel<CR>', { noremap = true, silent = true })
         end,
+      },
+      -- Debug Adapter Protocol
+      {
+        -- DAP client
+        'mfussenegger/nvim-dap',
+        dependencies = {
+          {
+            -- UI for DAP
+            'rcarriga/nvim-dap-ui',
+          },
+        },
+        config = function()
+          require('dapui').setup()
+        end,
+      },
+      -- NVIM JDTLS
+      {
+        -- Significant improvements to the Eclipse JDTLS
+        'mfussenegger/nvim-jdtls',
+        build = {
+          -- Ensure custom source folder exists
+          'mkdir -p ~/.local/source/',
+          -- Clean and clone JDTLS debugger extension
+          'rm -rf ~/.local/source/vscode-java-decompiler',
+          'git clone https://github.com/dgileadi/vscode-java-decompiler ~/.local/source/vscode-java-decompiler',
+        },
       },
       -- AUTOCOMPLETION SOURCES
       {
