@@ -143,19 +143,6 @@ return {
     end,
   },
   {
-    -- UI picker extension for DAP
-    'nvim-telescope/telescope-dap.nvim',
-    dependencies = {
-      'nvim-telescope/telescope.nvim',
-      'mfussenegger/nvim-dap',
-    },
-    config = function()
-      local telescope = require 'telescope'
-
-      telescope.load_extension 'dap'
-    end,
-  },
-  {
     'nvim-telescope/telescope-fzf-native.nvim',
     build = 'make',
     config = function()
