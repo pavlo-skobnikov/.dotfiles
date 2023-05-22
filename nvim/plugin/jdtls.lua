@@ -60,7 +60,7 @@ local function get_jdtls_paths()
   -- Include java-debug-adapter bundle if present
   ---
   local java_debug_path =
-      require('mason-registry').get_package('java-debug-adapter'):get_install_path()
+    require('mason-registry').get_package('java-debug-adapter'):get_install_path()
 
   local java_debug_bundle = vim.split(
     vim.fn.glob(java_debug_path .. '/extension/server/com.microsoft.java.debug.plugin-*.jar'),
@@ -75,7 +75,7 @@ local function get_jdtls_paths()
   -- Include java-decompiler bundle if present
   ---
   local java_decompiler_jars =
-      vim.fn.glob(vim.fn.expand '$HOME' .. '/.local/source/vscode-java-decompiler/server/*.jar')
+    vim.fn.glob(vim.fn.expand '$HOME' .. '/.local/source/vscode-java-decompiler/server/*.jar')
 
   local java_decompiler_bundle = vim.fn.split(java_decompiler_jars, '\n')
 
@@ -121,6 +121,22 @@ local function enable_codelens(bufnr)
   })
 end
 
+local function attach_to_debug()
+  local dap = require 'dap'
+
+  dap.configurations.java = {
+    {
+      type = 'java',
+      request = 'attach',
+      name = 'Attach to the process',
+      hostName = 'localhost',
+      port = '5005',
+    },
+  }
+
+  dap.continue()
+end
+
 local function enable_debugger(bufnr)
   require('jdtls').setup_dap { hotcodereplace = 'auto' }
   require('jdtls.dap').setup_dap_main_class_configs()
@@ -131,16 +147,17 @@ local function enable_debugger(bufnr)
 
   vim.keymap.set(
     'n',
-    '<leader>df',
+    '<leader>dtc',
     "<cmd>lua require('jdtls').test_class()<cr>",
     create_opts 'Debug Test'
   )
   vim.keymap.set(
     'n',
-    '<leader>dn',
+    '<leader>dtn',
     "<cmd>lua require('jdtls').test_nearest_method()<cr>",
     create_opts 'Debug Nearest Test'
   )
+  vim.keymap.set('n', '<leader>dAj', attach_to_debug, create_opts 'Debug Last Test')
 end
 
 local function jdtls_on_attach(client, bufnr)

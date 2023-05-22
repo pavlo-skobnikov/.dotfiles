@@ -69,9 +69,125 @@ return {
             -- UI for DAP
             'rcarriga/nvim-dap-ui',
           },
+          {
+            -- Virtual Text for DAP
+            'theHamsta/nvim-dap-virtual-text',
+          },
+          {
+            -- UI picker extension for DAP
+            'nvim-telescope/telescope-dap.nvim',
+          },
+          {
+            -- Required for `telescope-dap.nvim`
+            'nvim-telescope/telescope.nvim',
+          },
         },
         config = function()
-          require('dapui').setup()
+          local dap = require 'dap'
+          local dapui = require 'dapui'
+          local dap_virtual_text = require 'nvim-dap-virtual-text'
+          local telescope = require 'telescope'
+
+          -- Redefine DAP signs
+          vim.fn.sign_define(
+            'DapBreakpoint',
+            { text = '🛑', texthl = '', linehl = '', numhl = '' }
+          )
+          vim.fn.sign_define(
+            'DapBreakpointCondition',
+            { text = '🟥', texthl = '', linehl = '', numhl = '' }
+          )
+          vim.fn.sign_define('DapLogPoint', { text = '📍', texthl = '', linehl = '', numhl = '' })
+          vim.fn.sign_define(
+            'DapStopped',
+            { text = '➡️', texthl = '', linehl = '', numhl = '' }
+          )
+          vim.fn.sign_define(
+            'DapBreakpointRejected',
+            { text = '❌', texthl = '', linehl = '', numhl = '' }
+          )
+
+          -- Mappings for DAP
+          -- dap-ui mappings
+          vim.keymap.set('n', '<leader>dd', function()
+            require('dapui').toggle()
+          end, { desc = 'Toggle DAP UI' })
+
+          -- nvim-dap mappings
+          vim.keymap.set('n', '<leader>dac', function()
+            require('dap').continue()
+          end, { desc = 'Continue' })
+          vim.keymap.set('n', '<leader>dan', function()
+            require('dap').step_over()
+          end, { desc = 'Step Over' })
+          vim.keymap.set('n', '<leader>dai', function()
+            require('dap').step_into()
+          end, { desc = 'Step Into' })
+          vim.keymap.set('n', '<leader>dao', function()
+            require('dap').step_out()
+          end, { desc = 'Step Out' })
+          vim.keymap.set('n', '<leader>dbt', function()
+            require('dap').toggle_breakpoint()
+          end, { desc = 'Toggle Breakpoint' })
+          vim.keymap.set('n', '<leader>dbc', function()
+            require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+          end, { desc = 'Set Conditional Breakpoint' })
+          vim.keymap.set('n', '<leader>dbl', function()
+            require('dap').set_breakpoint(nil, nil, vim.fn.input 'Log point message: ')
+          end, { desc = 'Set Log Point' })
+          vim.keymap.set('n', '<leader>dr', function()
+            require('dap').repl.open()
+          end, { desc = 'Open REPL' })
+          vim.keymap.set('n', '<leader>dR', function()
+            require('dap').run_last()
+          end, { desc = 'Run Last' })
+          vim.keymap.set({ 'n', 'v' }, '<leader>dh', function()
+            require('dap.ui.widgets').hover()
+          end, { desc = 'Hover' })
+          vim.keymap.set({ 'n', 'v' }, '<leader>dp', function()
+            require('dap.ui.widgets').preview()
+          end, { desc = 'Preview' })
+          vim.keymap.set('n', '<leader>dF', function()
+            local widgets = require 'dap.ui.widgets'
+            widgets.centered_float(widgets.frames)
+          end, { desc = 'Frames' })
+          vim.keymap.set('n', '<leader>ds', function()
+            local widgets = require 'dap.ui.widgets'
+            widgets.centered_float(widgets.scopes)
+          end, { desc = 'Scopes' })
+
+          -- telescope-dap mappings
+          vim.keymap.set('n', '<leader>dfc', function()
+            require('telescope').extensions.dap.commands {}
+          end, { desc = 'Find Commands' })
+          vim.keymap.set('n', '<leader>dfC', function()
+            require('telescope').extensions.dap.configurations {}
+          end, { desc = 'Find Configurations' })
+          vim.keymap.set('n', '<leader>dfb', function()
+            require('telescope').extensions.dap.list_breakpoints {}
+          end, { desc = 'Find Breakpoints' })
+          vim.keymap.set('n', '<leader>dfv', function()
+            require('telescope').extensions.dap.variables {}
+          end, { desc = 'Find Variables' })
+          vim.keymap.set('n', '<leader>dff', function()
+            require('telescope').extensions.dap.frames {}
+          end, { desc = 'Find Frames' })
+
+          -- Register DAP listeners for automatic opening/closing of DAP UI
+          dap.listeners.after.event_initialized['dapui_config'] = function()
+            dapui.open()
+          end
+          dap.listeners.before.event_terminated['dapui_config'] = function()
+            dapui.close()
+          end
+          dap.listeners.before.event_exited['dapui_config'] = function()
+            dapui.close()
+          end
+
+          -- Setup extension plugins for DAP
+          dapui.setup()
+          dap_virtual_text.setup()
+          telescope.load_extension 'dap'
         end,
       },
       -- NVIM JDTLS
@@ -110,6 +226,10 @@ return {
           },
         },
       },
+      {
+        -- DAP REPL completion
+        'rcarriga/cmp-dap',
+      },
       -- MISCELLANEOUS
       {
         -- Ensure Telescope is present
@@ -127,18 +247,18 @@ return {
 
       -- Add some additional language servers
       lsp.ensure_installed {
-        'jdtls',         -- Java
-        'groovyls',      -- Groovy
-        'gradle_ls',     -- Gradle
-        'tsserver',      -- JavaScript/TypeScript
+        'jdtls', -- Java
+        'groovyls', -- Groovy
+        'gradle_ls', -- Gradle
+        'tsserver', -- JavaScript/TypeScript
         'rust_analyzer', -- Rust
-        'lua_ls',        -- Lua
-        'bashls',        -- Bash
-        'marksman',      -- Markdown
-        'dockerls',      -- Dockerfile
-        'sqlls',         -- SQL
-        'yamlls',        -- YAML
-        'jsonls',        -- JSON
+        'lua_ls', -- Lua
+        'bashls', -- Bash
+        'marksman', -- Markdown
+        'dockerls', -- Dockerfile
+        'sqlls', -- SQL
+        'yamlls', -- YAML
+        'jsonls', -- JSON
       }
 
       -- JDTLS will be set up via the nvim-jdtls plugin
@@ -267,7 +387,18 @@ return {
       -- detect the `luasnip` sources
       require('luasnip/loaders/from_vscode').lazy_load()
 
+      cmp.setup.filetype({ 'dap-repl', 'dapui_watches', 'dapui_hover' }, {
+        sources = {
+          { name = 'dap' },
+        },
+      })
+
       cmp.setup {
+        -- For cmp-dap
+        enabled = function()
+          return vim.api.nvim_buf_get_option(0, 'buftype') ~= 'prompt'
+            or require('cmp_dap').is_dap_buffer()
+        end,
         -- Enable snippets
         snippet = {
           expand = function(args)
@@ -292,7 +423,7 @@ return {
           { name = 'path' },
           { name = 'nvim_lsp' },
           { name = 'luasnip', keyword_length = 2 },
-          { name = 'buffer',  keyword_length = 4 },
+          { name = 'buffer', keyword_length = 4 },
         },
       }
     end,
