@@ -273,6 +273,7 @@ return {
         'gradle_ls',              -- Gradle
         'tsserver',               -- JavaScript/TypeScript
         'rust_analyzer',          -- Rust
+        'pylsp',                  -- Python
         'lua_ls',                 -- Lua
         'bashls',                 -- Bash
         'marksman',               -- Markdown
