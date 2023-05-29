@@ -329,10 +329,10 @@ return {
           vim.cmd 'w'
         end, create_opts 'Format Buffer')
 
-        vim.keymap.set('n', '[d', function()
+        vim.keymap.set('n', ']d', function()
           vim.diagnostic.goto_next()
         end, create_opts 'Go to Next Diagnostic')
-        vim.keymap.set('n', ']d', function()
+        vim.keymap.set('n', '[d', function()
           vim.diagnostic.goto_prev()
         end, create_opts 'Go to Previous Diagnostic')
 
