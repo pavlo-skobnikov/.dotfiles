@@ -94,8 +94,7 @@ return {
 
       -- Telescope main commands
       vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = 'Resume Previous Find' })
-      vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find Files' })
-      vim.keymap.set('n', '<leader>f.', function()
+      vim.keymap.set('n', '<leader>ff', function()
         builtin.find_files { find_command = { 'rg', '--files', '--hidden', '-g', '!.git' } }
       end, { desc = 'Find Files' })
       vim.keymap.set('n', '<leader>fF', builtin.oldfiles, { desc = 'Find Previously Open Files' })
