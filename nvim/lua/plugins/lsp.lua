@@ -88,6 +88,26 @@ return {
           local dap_virtual_text = require 'nvim-dap-virtual-text'
           local telescope = require 'telescope'
 
+          -- Kotlin adapter and configuration
+          dap.adapters.kotlin = {
+            type = 'executable',
+            command = 'kotlin-debug-adapter',
+            args = { '--interpreter=vscode' },
+          }
+
+          dap.configurations.kotlin = {
+            {
+              type = 'kotlin',
+              name = 'launch - kotlin',
+              request = 'launch',
+              projectRoot = vim.fn.getcwd() .. '/app',
+              mainClass = function()
+                -- Insert path to main class > "myapp.sample.app.AppKt"
+                return vim.fn.input('Path to main class > ', '', 'file')
+              end,
+            },
+          }
+
           -- Redefine DAP signs
           vim.fn.sign_define(
             'DapBreakpoint',
@@ -247,18 +267,19 @@ return {
 
       -- Add some additional language servers
       lsp.ensure_installed {
-        'jdtls', -- Java
-        'groovyls', -- Groovy
-        'gradle_ls', -- Gradle
-        'tsserver', -- JavaScript/TypeScript
-        'rust_analyzer', -- Rust
-        'lua_ls', -- Lua
-        'bashls', -- Bash
-        'marksman', -- Markdown
-        'dockerls', -- Dockerfile
-        'sqlls', -- SQL
-        'yamlls', -- YAML
-        'jsonls', -- JSON
+        'jdtls',                  -- Java
+        'groovyls',               -- Groovy
+        'kotlin_language_server', -- Kotlin
+        'gradle_ls',              -- Gradle
+        'tsserver',               -- JavaScript/TypeScript
+        'rust_analyzer',          -- Rust
+        'lua_ls',                 -- Lua
+        'bashls',                 -- Bash
+        'marksman',               -- Markdown
+        'dockerls',               -- Dockerfile
+        'sqlls',                  -- SQL
+        'yamlls',                 -- YAML
+        'jsonls',                 -- JSON
       }
 
       -- JDTLS will be set up via the nvim-jdtls plugin
@@ -397,7 +418,7 @@ return {
         -- For cmp-dap
         enabled = function()
           return vim.api.nvim_buf_get_option(0, 'buftype') ~= 'prompt'
-            or require('cmp_dap').is_dap_buffer()
+              or require('cmp_dap').is_dap_buffer()
         end,
         -- Enable snippets
         snippet = {
@@ -423,7 +444,7 @@ return {
           { name = 'path' },
           { name = 'nvim_lsp' },
           { name = 'luasnip', keyword_length = 2 },
-          { name = 'buffer', keyword_length = 4 },
+          { name = 'buffer',  keyword_length = 4 },
         },
       }
     end,
