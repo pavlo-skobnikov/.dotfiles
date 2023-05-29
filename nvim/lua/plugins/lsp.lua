@@ -337,32 +337,32 @@ return {
         end, create_opts 'Go to Previous Diagnostic')
 
         vim.keymap.set('n', 'gd', function()
-          vim.lsp.buf.definition()
+          telescope_builtin.lsp_definitions()
         end, create_opts 'Go to Definition')
         vim.keymap.set('n', 'gD', function()
           vim.lsp.buf.declaration()
         end, create_opts 'Go to Declaration')
 
         vim.keymap.set('n', 'gO', function()
-          vim.lsp.buf.outgoing_calls()
+          telescope_builtin.lsp_outgoing_calls()
         end, create_opts 'Go to Outgoing Calls')
 
         vim.keymap.set('n', 'gi', function()
-          vim.lsp.buf.implementation()
+          telescope_builtin.lsp_implementations()
         end, create_opts 'Go to Implementation')
         vim.keymap.set('n', 'gI', function()
-          vim.lsp.buf.incoming_calls()
+          telescope_builtin.lsp_incoming_calls()
         end, create_opts 'Go to Incoming Calls')
 
         vim.keymap.set('n', 'gt', function()
-          vim.lsp.buf.type_definition()
+          telescope_builtin.lsp_type_definitions()
         end, create_opts 'Go to Type Definition')
 
         vim.keymap.set('n', 'gs', function()
-          vim.lsp.buf.document_symbol()
+          telescope_builtin.lsp_document_symbols()
         end, create_opts 'Search Document Symbols')
         vim.keymap.set('n', 'gS', function()
-          vim.lsp.buf.workspace_symbol()
+          telescope_builtin.lsp_workspace_symbols()
         end, create_opts 'Search Workspace Symbols')
 
         vim.keymap.set('n', 'gl', function()
@@ -377,7 +377,7 @@ return {
         end, create_opts 'Open Code Actions')
 
         vim.keymap.set('n', 'gr', function()
-          vim.lsp.buf.references()
+          telescope_builtin.lsp_references()
         end, create_opts 'Find References')
         vim.keymap.set('n', 'gR', function()
           vim.lsp.buf.rename()
