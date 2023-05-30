@@ -81,6 +81,10 @@ return {
             -- Required for `telescope-dap.nvim`
             'nvim-telescope/telescope.nvim',
           },
+          {
+            -- Debug Adapter for Python
+            'mfussenegger/nvim-dap-python',
+          },
         },
         config = function()
           local dap = require 'dap'
@@ -267,20 +271,20 @@ return {
 
       -- Add some additional language servers
       lsp.ensure_installed {
-        'jdtls',                  -- Java
-        'groovyls',               -- Groovy
+        'jdtls', -- Java
+        'groovyls', -- Groovy
         'kotlin_language_server', -- Kotlin
-        'gradle_ls',              -- Gradle
-        'tsserver',               -- JavaScript/TypeScript
-        'rust_analyzer',          -- Rust
-        'pylsp',                  -- Python
-        'lua_ls',                 -- Lua
-        'bashls',                 -- Bash
-        'marksman',               -- Markdown
-        'dockerls',               -- Dockerfile
-        'sqlls',                  -- SQL
-        'yamlls',                 -- YAML
-        'jsonls',                 -- JSON
+        'gradle_ls', -- Gradle
+        'tsserver', -- JavaScript/TypeScript
+        'rust_analyzer', -- Rust
+        'pylsp', -- Python
+        'lua_ls', -- Lua
+        'bashls', -- Bash
+        'marksman', -- Markdown
+        'dockerls', -- Dockerfile
+        'sqlls', -- SQL
+        'yamlls', -- YAML
+        'jsonls', -- JSON
       }
 
       -- JDTLS will be set up via the nvim-jdtls plugin
@@ -419,7 +423,7 @@ return {
         -- For cmp-dap
         enabled = function()
           return vim.api.nvim_buf_get_option(0, 'buftype') ~= 'prompt'
-              or require('cmp_dap').is_dap_buffer()
+            or require('cmp_dap').is_dap_buffer()
         end,
         -- Enable snippets
         snippet = {
@@ -445,7 +449,7 @@ return {
           { name = 'path' },
           { name = 'nvim_lsp' },
           { name = 'luasnip', keyword_length = 2 },
-          { name = 'buffer',  keyword_length = 4 },
+          { name = 'buffer', keyword_length = 4 },
         },
       }
     end,
