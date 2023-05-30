@@ -85,6 +85,10 @@ return {
             -- Debug Adapter for Python
             'mfussenegger/nvim-dap-python',
           },
+          {
+            -- Debug Adapter for Go
+            'leoluz/nvim-dap-go',
+          },
         },
         config = function()
           local dap = require 'dap'
@@ -217,7 +221,7 @@ return {
       -- NVIM JDTLS
       {
         -- Significant improvements to the Eclipse JDTLS
-        -- NB: Also includes a debug adapter!
+        -- -> Also includes a debug adapter
         'mfussenegger/nvim-jdtls',
         build = {
           -- Ensure custom source folder exists
@@ -280,6 +284,7 @@ return {
         'rust_analyzer', -- Rust
         'pylsp', -- Python
         'zls', -- Zig
+        'gopls', -- Go
         'lua_ls', -- Lua
         'bashls', -- Bash
         'marksman', -- Markdown
