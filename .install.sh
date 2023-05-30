@@ -49,6 +49,9 @@ brew install tree
 brew install rename
 brew install neofetch
 brew install mas
+brew install z3
+brew install llvm
+brew install cmake
 
 brew install git
 brew install gh
@@ -60,6 +63,7 @@ brew install neovim
 
 brew install npm
 brew install go
+brew install zig
 
 ## Brew casks
 echo "Installing brew casks..."

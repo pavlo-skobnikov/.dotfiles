@@ -278,6 +278,7 @@ return {
         'tsserver', -- JavaScript/TypeScript
         'rust_analyzer', -- Rust
         'pylsp', -- Python
+        'zls', -- Zig
         'lua_ls', -- Lua
         'bashls', -- Bash
         'marksman', -- Markdown

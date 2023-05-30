@@ -24,6 +24,7 @@ return {
           null_ls.builtins.formatting.jq,                 -- "json"
           null_ls.builtins.formatting.stylua,             -- "lua", "luau"
           null_ls.builtins.formatting.google_java_format, -- "java"
+          null_ls.builtins.formatting.zigfmt,             -- "zig"
           null_ls.builtins.formatting.black,              -- "python"
           null_ls.builtins.formatting.prettier,           -- "javascript", "javascriptreact",
           -- "typescript", "typescriptreact", "vue", "css", "scss", "less", "html", "json",
