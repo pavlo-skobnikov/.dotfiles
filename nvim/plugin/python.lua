@@ -15,7 +15,7 @@ local function set_dap_keymaps()
   vim.keymap.set('v', '<leader>dts', dap_python.debug_selection, { desc = 'Debug Selection' })
 end
 
-local function python_dap_setup()
+local function python_setup()
   setup_debugpy()
   set_dap_keymaps()
 end
@@ -23,6 +23,6 @@ end
 vim.api.nvim_create_autocmd('FileType', {
   group = python_cmds,
   pattern = { 'python' },
-  desc = 'Setup Python DAP',
-  callback = python_dap_setup,
+  desc = 'Setup Python',
+  callback = python_setup,
 })
