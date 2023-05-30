@@ -217,6 +217,7 @@ return {
       -- NVIM JDTLS
       {
         -- Significant improvements to the Eclipse JDTLS
+        -- NB: Also includes a debug adapter!
         'mfussenegger/nvim-jdtls',
         build = {
           -- Ensure custom source folder exists
