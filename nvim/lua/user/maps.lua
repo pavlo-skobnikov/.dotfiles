@@ -12,7 +12,7 @@ local map = vim.keymap.set
 --Remap space as leader key
 -- map("", "<Space>", "<Nop>", options())
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.maplocalleader = ';'
 
 -- Modes -> for reference
 --   normal_mode = "n",

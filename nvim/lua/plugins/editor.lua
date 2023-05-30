@@ -1,11 +1,17 @@
 -- Description: Plugins for blazingly fast code/text editing
 return {
   {
-    -- Cool surround actions for `cs`, `cS`, and `ds` mappings
-    'tpope/vim-surround',
+    -- Improved `vim-sexp` mappings
+    'tpope/vim-sexp-mappings-for-regular-people',
     dependencies = {
-      'tpope/vim-repeat',
+      'tpope/vim-surround', -- Cool surround actions for `cs`, `cS`, and `ds` mappings
+      'tpope/vim-repeat', -- Repeat plugin maps
+      'guns/vim-sexp', -- The Vim philosophy of precision editing for S-expressions
     },
+    config = function()
+      -- Extend `vim-sexp` to more filetypes
+      vim.g.sexp_filetypes = 'clojure,scheme,lisp,timl,fennel,janet'
+    end,
   },
   {
     -- Useful paired mappings

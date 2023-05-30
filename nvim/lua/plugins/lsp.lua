@@ -259,6 +259,10 @@ return {
         -- DAP REPL completion
         'rcarriga/cmp-dap',
       },
+      {
+        -- Conjure completion
+        'PaterJason/cmp-conjure',
+      },
       -- MISCELLANEOUS
       {
         -- Ensure Telescope is present
@@ -279,6 +283,7 @@ return {
         'jdtls', -- Java
         'groovyls', -- Groovy
         'kotlin_language_server', -- Kotlin
+        'clojure_lsp', -- Clojure
         'gradle_ls', -- Gradle
         'tsserver', -- JavaScript/TypeScript
         'rust_analyzer', -- Rust
@@ -286,6 +291,7 @@ return {
         'zls', -- Zig
         'gopls', -- Go
         'lua_ls', -- Lua
+        'fennel_language_server', -- Fennel
         'bashls', -- Bash
         'marksman', -- Markdown
         'dockerls', -- Dockerfile
@@ -455,6 +461,7 @@ return {
         sources = {
           { name = 'path' },
           { name = 'nvim_lsp' },
+          { name = 'conjure' },
           { name = 'luasnip', keyword_length = 2 },
           { name = 'buffer', keyword_length = 4 },
         },

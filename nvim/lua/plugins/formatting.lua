@@ -24,6 +24,7 @@ return {
           null_ls.builtins.formatting.jq, -- "json"
           null_ls.builtins.formatting.stylua, -- "lua", "luau"
           null_ls.builtins.formatting.google_java_format, -- "java"
+          null_ls.builtins.formatting.zprint, -- "clojure"
           null_ls.builtins.formatting.zigfmt, -- "zig"
           null_ls.builtins.formatting.gofmt, -- "go"
           null_ls.builtins.formatting.black, -- "python"
@@ -33,7 +34,7 @@ return {
 
           -- Diagnostic + Formatting
           null_ls.builtins.diagnostics.ktlint, -- "kotlin"
-          null_ls.builtins.formatting.ktlint, -- "kotlin"
+          null_ls.builtins.formatting.ktlint,
         },
       }
     end,
