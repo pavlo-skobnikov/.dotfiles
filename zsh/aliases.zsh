@@ -27,3 +27,5 @@ alias rm='rm -i'
 alias df='df -h'     # human-readable sizes
 alias free='free -m' # show sizes in MB
 
+# Chrome CLI Shortcut
+alias chrome="open -a 'Google Chrome'"
