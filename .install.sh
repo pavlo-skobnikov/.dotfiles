@@ -65,6 +65,8 @@ brew install npm
 brew install go
 brew install zig
 
+brew install markdownlint-cli
+
 brew install clojure
 brew install leiningen # Clojure build tool
 brew install --cask zprint # Clojure source code formatter
