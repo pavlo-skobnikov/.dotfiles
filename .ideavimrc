@@ -1,6 +1,13 @@
 " -> https://github.com/JetBrains/ideavim/wiki
 """"" OPTIONS
 
+" Use Vim as default handling for (almost) Vim shortcuts
+sethandler a:vim
+sethandler <C-y> a:ide
+
+" Use Intellij's line joining behaviour
+set ideajoin
+
 " <SPC> as the leader key
 let mapleader = " "
 
