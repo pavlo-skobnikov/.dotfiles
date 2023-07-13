@@ -1,6 +1,3 @@
--- Easier access vars
-local opt = vim.opt
-
 local options = {
   backup = false,            -- Creates a backup file
   clipboard = 'unnamedplus', -- Allows neovim to access the system clipboard
@@ -12,7 +9,7 @@ local options = {
     'noinsert',
   },                      -- A comma separated list of options for Insert mode completion
   conceallevel = 0,       -- So that `` is visible in markdown files
-  colorcolumn = '100',    -- Visual marker for column width
+  colorcolumn = '80',     -- Visual marker for column width
   fileencoding = 'utf-8', -- The encoding written to a file
   hlsearch = true,        -- Highlight all matches on previous search pattern
   ignorecase = true,      -- Ignore case in search patterns
@@ -32,8 +29,8 @@ local options = {
   writebackup = false,    -- If a file is being edited by another program (or was written to file
   --  while editing with another program), it is not allowed to be edited
   expandtab = true,       -- Convert tabs to spaces
-  shiftwidth = 2,         -- How much to (de-)indent when using `<` && `>` operators
-  tabstop = 2,            -- Insert 2 spaces for a tab
+  shiftwidth = 4,         -- How much to (de-)indent when using `<` && `>` operators
+  tabstop = 4,            -- Insert 2 spaces for a tab
   cursorline = true,      -- Highlight the current line
   number = true,          -- Set numbered lines
   relativenumber = true,  -- Set relative numbered lines
@@ -47,26 +44,19 @@ local options = {
     extends = '⟩',
     precedes = '⟨',
     trail = '·',
-  },                         -- Show hidden characters
-  scrolloff = 8,             -- Minimal number of screen lines to keep above and below the cursor
-  sidescrolloff = 8,         -- Minimal number of screen columns either side of cursor if wrap is `false`
-  guifont = 'monospace:h17', -- The font used in graphical neovim applications
-  whichwrap = 'bs<>[]hl',    -- Which "horizontal" keys are allowed to travel to prev/next line
-  wildignorecase = true,     -- When set case is ignored when completing file names and directories
-  wildmode = 'full',
+  },                              -- Show hidden characters
+  scrolloff = 8,                  -- Minimal number of screen lines to keep above and below the cursor
+  sidescrolloff = 8,              -- Minimal number of screen columns either side of cursor if wrap is `false`
+  guifont = 'monospace:h17',      -- The font used in graphical neovim applications
+  whichwrap = 'bs<>[]hl',         -- Which "horizontal" keys are allowed to travel to prev/next line
+  wildignorecase = true,          -- When set case is ignored when completing file names and directories
+  wildmode = 'list:longest,full', -- Bash-like completion in command line
+  shortmess = ''                  -- Don't abbreviate messages
 }
 
 for k, v in pairs(options) do
-  opt[k] = v
+  vim.opt[k] = v
 end
-
-opt.shortmess:append 'c'                   -- Don't give |ins-completion-menu| messages
-opt.iskeyword:append '-'                   -- Hyphenated words recognized by searches
-opt.formatoptions:remove { 'c', 'r', 'o' } -- Don't insert the current comment leader automatically
--- for auto-wrapping comments using 'textwidth', hitting <Enter> in insert mode, or hitting
--- 'o' or 'O' in normal mode.
-
-local global = vim.g
 
 local globals = {
   -- Disable netrw
@@ -75,5 +65,5 @@ local globals = {
 }
 
 for k, v in pairs(globals) do
-  global[k] = v
+  vim.g[k] = v
 end
