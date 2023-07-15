@@ -9,7 +9,7 @@ local options = {
         'noinsert',
     },                      -- A comma separated list of options for Insert mode completion
     conceallevel = 0,       -- So that `` is visible in markdown files
-    colorcolumn = '80',     -- Visual marker for column width
+    colorcolumn = '100',     -- Visual marker for column width
     fileencoding = 'utf-8', -- The encoding written to a file
     hlsearch = true,        -- Highlight all matches on previous search pattern
     ignorecase = true,      -- Ignore case in search patterns
