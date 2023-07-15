@@ -73,7 +73,6 @@ brew install --cask zprint # Clojure source code formatter
 
 ## Brew casks
 echo "Installing brew casks..."
-brew install --cask amethyst
 brew install --cask alfred
 brew install --cask sf-symbols
 brew install --cask font-hack-nerd-font
