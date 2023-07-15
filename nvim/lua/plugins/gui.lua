@@ -71,31 +71,4 @@ return {
       })
     end,
   },
-  {
-    -- Indentation guidelines
-    'lukas-reineke/indent-blankline.nvim',
-    dependencies = 'nvim-treesitter/nvim-treesitter',
-    config = function()
-      vim.opt.list = true
-
-      require('indent_blankline').setup {
-        show_end_of_line = true,
-      }
-
-      vim.g.filetype_exclude = {
-        'help',
-        'terminal',
-        'lazy',
-        'alpha',
-        'packer',
-        'lspinfo',
-        'TelescopePrompt',
-        'TelescopeResults',
-        'mason',
-        '',
-      }
-
-      vim.g.buftype_exclude = { 'terminal', 'nofile' }
-    end,
-  },
 }
