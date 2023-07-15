@@ -1,6 +1,6 @@
 -- Remap space as leader key
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ';'
+vim.g.maplocalleader = '\\'
 
 -- Modes -> for reference
 --   normal_mode = "n",
@@ -12,4 +12,3 @@ vim.g.maplocalleader = ';'
 
 -- Remove highlights on <ESC>
 vim.keymap.set('n', '<ESC>', ':noh<CR>', { silent = true, noremap = true })
-
