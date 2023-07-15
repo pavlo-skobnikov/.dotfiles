@@ -259,10 +259,6 @@ return {
         -- DAP REPL completion
         'rcarriga/cmp-dap',
       },
-      {
-        -- Conjure completion
-        'PaterJason/cmp-conjure',
-      },
       -- MISCELLANEOUS
       {
         -- Ensure Telescope is present
@@ -465,7 +461,6 @@ return {
         sources = {
           { name = 'path' },
           { name = 'nvim_lsp' },
-          { name = 'conjure' },
           { name = 'luasnip', keyword_length = 2 },
           { name = 'buffer',  keyword_length = 4 },
         },
