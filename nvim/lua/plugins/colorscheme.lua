@@ -1,4 +1,4 @@
--- Description: Configuration for the NeoVim editor GUI (if you can call it that)
+-- Colorscheme for a more civilized age
 return {
     {
         -- Colorscheme
