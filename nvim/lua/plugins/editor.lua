@@ -1,12 +1,12 @@
--- Description: Plugins for blazingly fast code/text editing
+-- Plugins for blazingly fast code/text editing
 return {
     {
         -- Improved `vim-sexp` mappings
         'tpope/vim-sexp-mappings-for-regular-people',
         dependencies = {
             'tpope/vim-surround', -- Cool surround actions for `cs`, `cS`, and `ds` mappings
-            'tpope/vim-repeat', -- Repeat plugin maps
-            'guns/vim-sexp', -- The Vim philosophy of precision editing for S-expressions
+            'tpope/vim-repeat',   -- Repeat plugin maps
+            'guns/vim-sexp',      -- The Vim philosophy of precision editing for S-expressions
         },
         config = function()
             -- Extend `vim-sexp` to more filetypes
@@ -333,7 +333,7 @@ return {
 
             vim.keymap.set(
                 { 'n' },
-                '<leader>h',
+                '<leader>a',
                 mark.add_file,
                 { silent = true, desc = 'Add to Harpoon Marks' }
             )
@@ -350,8 +350,18 @@ return {
                 end, { silent = true, desc = 'Go to Harpoon Mark ' .. i })
             end
 
-            vim.keymap.set({ 'n' }, ']h', ui.nav_next, { silent = true, desc = 'Next Harpoon Mark' })
-            vim.keymap.set({ 'n' }, '[h', ui.nav_prev, { silent = true, desc = 'Prev Harpoon Mark' })
+            vim.keymap.set(
+                { 'n' },
+                ']h',
+                ui.nav_next,
+                { silent = true, desc = 'Next Harpoon Mark' }
+            )
+            vim.keymap.set(
+                { 'n' },
+                '[h',
+                ui.nav_prev,
+                { silent = true, desc = 'Prev Harpoon Mark' }
+            )
         end,
     },
     {
