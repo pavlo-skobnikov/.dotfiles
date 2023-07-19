@@ -58,13 +58,3 @@ local options = {
 for k, v in pairs(options) do
     vim.opt[k] = v
 end
-
-local globals = {
-    -- Disable netrw
-    loaded_netrwPlugin = 1,
-    loaded_netrw = 1,
-}
-
-for k, v in pairs(globals) do
-    vim.g[k] = v
-end
