@@ -1,3 +1,4 @@
+-- git-related plugins
 return {
     {
         -- Powerful Git wrapper for many-many simple and coml

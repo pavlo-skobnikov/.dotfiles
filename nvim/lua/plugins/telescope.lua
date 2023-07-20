@@ -1,4 +1,4 @@
--- Description: Telescope configuration
+-- Telescope configuration
 return {
     {
         -- An incredibly extendable fuzzy finder over lists

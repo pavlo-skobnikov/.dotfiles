@@ -1,3 +1,4 @@
+-- Everything related to source file formatting
 return {
     -- For available formatter options see:
     -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md

@@ -1,4 +1,4 @@
--- Description: Treesitter (parsing code as ASTs) configuration
+-- Treesitter (parsing code as ASTs) configuration
 return {
     {
         -- Treesitter plugin itself
