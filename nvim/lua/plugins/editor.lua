@@ -270,7 +270,7 @@ return {
                         -- Automatically jump forward to textobj, similar to targets.vim
                         lookahead = true,
                         -- Capture groups defined in textobjects.scm are available for bindings
-                        keymaps = { -- TODO: Refer to plugin documentation if all is correct
+                        keymaps = {
                             ['if'] = { query = '@function.inner', desc = 'Inside Function' },
                             ['af'] = { query = '@function.outer', desc = 'Around Function' },
                             ['ia'] = { query = '@parameter.inner', desc = 'Inside Argument' },
