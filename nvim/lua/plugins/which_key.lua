@@ -22,6 +22,7 @@ return {
                     b = { name = 'breakpoints' },
                     f = { name = 'find' },
                     s = { name = 'step' },
+                    t = { name = 'test' },
                     w = { name = 'widget' },
                 },
                 f = { name = 'find' },
