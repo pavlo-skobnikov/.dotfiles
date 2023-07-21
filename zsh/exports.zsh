@@ -5,6 +5,7 @@ export PATH="$HOME/.local/bin":$PATH
 export MANPAGER='nvim +Man!'
 export MANWIDTH=999
 export EDITOR='nvim'
+export PAGER='less'
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export JAVA_HOME=$HOME/.sdkman/candidates/java/current
 export M2_HOME=$HOME/.sdkman/candidates/maven/current
