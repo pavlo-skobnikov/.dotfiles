@@ -59,6 +59,7 @@ return {
             }
 
             mason_lspconfig.setup_handlers {
+                -- Default setup for non-specified language servers
                 function(server_name)
                     if table.contains(servers_to_not_auto_setup, server_name) then
                         return
@@ -80,12 +81,6 @@ return {
                                 },
                             },
                         },
-                    }
-                end,
-                ['jsonls'] = function()
-                    lspconfig.jsonls.setup {
-                        on_attach = on_attach,
-                        capabilities = capabilities,
                     }
                 end,
             }
