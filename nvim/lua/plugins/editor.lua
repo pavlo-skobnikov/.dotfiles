@@ -319,7 +319,7 @@ return {
         end,
     },
     {
-        -- Easy buffer management
+        -- Easy buffer and terminal management
         'ThePrimeagen/harpoon',
         dependencies = {
             'nvim-lua/plenary.nvim',
@@ -330,6 +330,7 @@ return {
 
             local mark = require 'harpoon.mark'
             local ui = require 'harpoon.ui'
+            local term = require 'harpoon.term'
 
             vim.keymap.set(
                 { 'n' },
@@ -349,6 +350,13 @@ return {
                     ui.nav_file(i)
                 end, { silent = true, desc = 'Go to Harpoon Mark ' .. i })
             end
+
+            for i = 1, 9, 1 do
+                vim.keymap.set({ 'n' }, '<Localleader>' .. i, function()
+                    term.gotoTerminal(i)
+                end, { silent = true, desc = 'Go to Terminal ' .. i })
+            end
+
 
             vim.keymap.set(
                 { 'n' },
