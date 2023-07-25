@@ -36,10 +36,12 @@ return {
 
             mason_lspconfig.setup {
                 ensure_installed = {
+                    'clangd', -- C
                     'lua_ls', -- Lua
-                    'jdtls', -- Java
-                    'gopls', -- Go
                     'pylsp', -- Python
+                    'gopls', -- Go
+                    'jdtls', -- Java
+                    'tsserver', -- TypeScript
                     'bashls', -- Bash
                     'marksman', -- Markdown
                     'dockerls', -- Dockerfile
