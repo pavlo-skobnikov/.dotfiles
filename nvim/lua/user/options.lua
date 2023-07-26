@@ -9,7 +9,7 @@ local options = {
         'noinsert',
     },                      -- A comma separated list of options for Insert mode completion
     conceallevel = 0,       -- So that `` is visible in markdown files
-    colorcolumn = '100',     -- Visual marker for column width
+    colorcolumn = '100',    -- Visual marker for column width
     fileencoding = 'utf-8', -- The encoding written to a file
     hlsearch = true,        -- Highlight all matches on previous search pattern
     ignorecase = true,      -- Ignore case in search patterns
@@ -45,14 +45,15 @@ local options = {
         extends = '▸',
         precedes = '◂',
         trail = '·',
-    },                              -- Show hidden characters
-    scrolloff = 8,                  -- Minimal number of screen lines to keep above and below the cursor
-    sidescrolloff = 8,              -- Minimal number of screen columns either side of cursor if wrap is `false`
-    guifont = 'monospace:h17',      -- The font used in graphical neovim applications
-    whichwrap = 'bs<>[]hl',         -- Which "horizontal" keys are allowed to travel to prev/next line
-    wildignorecase = true,          -- When set case is ignored when completing file names and directories
-    wildmode = 'list:longest,full', -- Bash-like completion in command line
-    shortmess = ''                  -- Don't abbreviate messages
+    },                                                             -- Show hidden characters
+    scrolloff = 8,                                                 -- Minimal number of screen lines to keep above and below the cursor
+    sidescrolloff = 8,                                             -- Minimal number of screen columns either side of cursor if wrap is `false`
+    guifont = 'monospace:h17',                                     -- The font used in graphical neovim applications
+    whichwrap = 'bs<>[]hl',                                        -- Which "horizontal" keys are allowed to travel to prev/next line
+    wildignorecase = true,                                         -- When set case is ignored when completing file names and directories
+    wildmode = 'list:longest,full',                                -- Bash-like completion in command line
+    shortmess = '',                                                -- Don't abbreviate messages
+    statusline = '%f  %r%m%=%y  (%{b:git_branch})    %l,%c    %P', -- Custom status line
 }
 
 for k, v in pairs(options) do
