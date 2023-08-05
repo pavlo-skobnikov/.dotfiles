@@ -1,33 +1,23 @@
--- Language Server Protocol Setup for NeoVim
 return {
     {
-        -- Bridges mason.nvim with the lspconfig plugin
-        'williamboman/mason-lspconfig.nvim',
+        'williamboman/mason-lspconfig.nvim', -- Bridges mason.nvim with the lspconfig plugin
         dependencies = {
             {
                 -- Package manager for Neovim
                 'williamboman/mason.nvim',
                 build = ':MasonUpdate',
             },
+            'neovim/nvim-lspconfig', -- Configs for the Nvim LSP client (:help lsp)
+            'mfussenegger/nvim-jdtls', -- Significant improvements to the Eclipse JDTLS
             {
-                -- Configs for the Nvim LSP client (:help lsp)
-                'neovim/nvim-lspconfig',
+                -- Scala MetaLS
+                'scalameta/nvim-metals',
+                dependencies = {
+                    'nvim-lua/plenary.nvim',
+                },
             },
-            {
-                -- Significant improvements to the Eclipse JDTLS
-                -- -> Also includes a debug adapter
-                'mfussenegger/nvim-jdtls',
-            },
-            {
-                -- Ensure Telescope is present
-                -- Used to enhance LSP functionality
-                'nvim-telescope/telescope.nvim',
-            },
-            {
-                -- Ensure nvim-cmp is present
-                -- Used to extend capabilities
-                'hrsh7th/cmp-nvim-lsp',
-            },
+            'nvim-telescope/telescope.nvim', -- Used to enhance LSP functionality
+            'hrsh7th/cmp-nvim-lsp', -- Used to extend capabilities
         },
         config = function()
             require('mason').setup()
@@ -41,6 +31,7 @@ return {
                     'pylsp', -- Python
                     'gopls', -- Go
                     'jdtls', -- Java
+                    'clojure_lsp', -- Clojure
                     'tsserver', -- TypeScript
                     'bashls', -- Bash
                     'marksman', -- Markdown
@@ -89,8 +80,7 @@ return {
         end,
     },
     {
-        -- AI-powered code completion
-        'github/copilot.vim',
+        'github/copilot.vim', -- AI-powered code completion
         cmd = 'Copilot',
         event = 'InsertEnter',
         config = function()

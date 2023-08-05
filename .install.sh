@@ -89,11 +89,23 @@ echo "Installing Clang tools..."
 brew install cmake # Cross-platform make
 brew install cmake-docs # Documentation for CMake
 
-# Install Java tools
-echo "Installing basic Java tools via SDKMan..."
+# Install Java & tools
+echo "Installing Java & tools..."
 sdk install java
 sdk install gradle # Build automation system
 sdk install maven # Build automation system
+
+# Install Clojure & tools
+echo "Installing Clojure & tools..."
+brew install clojure
+sdk install leiningen # Build automation system
+
+# Install Scala & tools
+echo "Installing Scala & tools..."
+sdk install scala
+sdk install scalaclie # REPL for Scala
+sdk install sbt # Build automation system
+sdk install coursier # Build automation system
 
 # Python
 echo "Installing Python 3..."
@@ -117,6 +129,10 @@ brew install --cask kitty
 echo "Installing code editors..."
 brew install neovim
 brew install --cask intellij-idea
+
+echo "Installing OS interaction utilities..."
+brew install --cask karabiner-elements
+brew install --cask hammerspoon
 
 echo "Installing other developer tools..."
 brew install --cask docker
@@ -202,10 +218,6 @@ mv /tmp/SFMono_Nerd_Font/* $HOME/Library/Fonts
 rm -rf /tmp/SFMono_Nerd_Font/
 
 curl -L https://github.com/kvndrsslr/sketchybar-app-font/releases/download/v1.0.4/sketchybar-app-font.ttf -o $HOME/Library/Fonts/sketchybar-app-font.ttf
-
-# Create a directory for custom sources
-rm -rf ~/.local/source/
-mkdir -p ~/.local/source/
 
 # Configure IntelliJ
 echo "Linking IntelliJ .ideavimrc..."

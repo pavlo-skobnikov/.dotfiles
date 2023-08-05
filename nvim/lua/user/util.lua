@@ -27,70 +27,82 @@ function M.on_attach(client, bufnr)
     end
 
     -- LSP Mappings try to mostly be tied to `g` as the leader keybinding
-    vim.keymap.set({ 'n', 'v' }, 'K', function()
-        vim.lsp.buf.hover()
-    end, create_opts 'Show Hover Info')
-    vim.keymap.set({ 'n', 'i' }, '<C-S-k>', function()
-        vim.lsp.buf.signature_help()
-    end, create_opts 'Show Signature Help')
+    if client.server_capabilities.hoverProvider then
+        vim.keymap.set({ 'n', 'v' }, 'K', vim.lsp.buf.hover, create_opts 'Show Hover Info')
+    end
+    if client.server_capabilities.signatureHelpProvider then
+        vim.keymap.set(
+            { 'n', 'i' },
+            '<C-S-k>',
+            vim.lsp.buf.signature_help,
+            create_opts 'Show Signature Help'
+        )
+    end
 
     vim.keymap.set('n', '<leader>=', function()
         vim.lsp.buf.format { async = true }
     end, create_opts 'Format Buffer')
 
-    vim.keymap.set('n', ']d', function()
-        vim.diagnostic.goto_next()
-    end, create_opts 'Go to Next Diagnostic')
-    vim.keymap.set('n', '[d', function()
-        vim.diagnostic.goto_prev()
-    end, create_opts 'Go to Previous Diagnostic')
+    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, create_opts 'Go to Next Diagnostic')
+    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, create_opts 'Go to Prev Diagnostic')
 
-    vim.keymap.set('n', 'gd', function()
-        telescope_builtin.lsp_definitions()
-    end, create_opts 'Go to Definition')
-    vim.keymap.set('n', 'gD', function()
-        vim.lsp.buf.declaration()
-    end, create_opts 'Go to Declaration')
+    if client.server_capabilities.definitionProvider then
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, create_opts 'Go to Definition')
+    end
+    if client.server_capabilities.declarationProvider then
+        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, create_opts 'Go to Declaration')
+    end
 
-    vim.keymap.set('n', 'gO', function()
-        telescope_builtin.lsp_outgoing_calls()
-    end, create_opts 'Go to Outgoing Calls')
+    if client.server_capabilities.callHierarchyProvider then
+        vim.keymap.set('n', 'go', vim.lsp.buf.outgoing_calls, create_opts 'Go to Outgoing Calls')
+    end
 
-    vim.keymap.set('n', 'gi', function()
-        telescope_builtin.lsp_implementations()
-    end, create_opts 'Go to Implementation')
-    vim.keymap.set('n', 'gI', function()
-        telescope_builtin.lsp_incoming_calls()
-    end, create_opts 'Go to Incoming Calls')
+    if client.server_capabilities.implementationProvider then
+        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, create_opts 'Go to Implementation')
+    end
+    if client.server_capabilities.callHierarchyProvider then
+        vim.keymap.set('n', 'gI', vim.lsp.buf.incoming_calls, create_opts 'Go to Incoming Calls')
+    end
 
-    vim.keymap.set('n', 'gt', function()
-        telescope_builtin.lsp_type_definitions()
-    end, create_opts 'Go to Type Definition')
+    if client.server_capabilities.typeDefinitionProvider then
+        vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, create_opts 'Go to Type Definition')
+    end
 
-    vim.keymap.set('n', '<leader>csd', function()
-        telescope_builtin.lsp_document_symbols()
-    end, create_opts 'Search Document Symbols')
-    vim.keymap.set('n', '<leader>csw', function()
-        telescope_builtin.lsp_workspace_symbols()
-    end, create_opts 'Search Workspace Symbols')
+    if client.server_capabilities.documentSymbolProvider then
+        vim.keymap.set(
+            'n',
+            '<leader>csd',
+            vim.lsp.buf.document_symbol,
+            create_opts 'Search Document Symbols'
+        )
+    end
+    if client.server_capabilities.workspaceSymbolProvider then
+        vim.keymap.set(
+            'n',
+            '<leader>csw',
+            vim.lsp.buf.workspace_symbol,
+            create_opts 'Search Workspace Symbols'
+        )
+    end
 
-    vim.keymap.set('n', '<leader>cd', function()
-        vim.diagnostic.open_float()
-    end, create_opts 'Open Diagnostics Float')
-    vim.keymap.set('n', '<leader>cl', function()
-        vim.lsp.codelens.run()
-    end, create_opts 'Run Code Lens')
+    vim.keymap.set(
+        'n',
+        '<leader>cf',
+        vim.diagnostic.open_float,
+        create_opts 'Open Diagnostics Float'
+    )
+    vim.keymap.set('n', '<leader>cl', vim.lsp.codelens.run, create_opts 'Run Code Lens')
 
-    vim.keymap.set('n', '<leader>ca', function()
-        vim.lsp.buf.code_action()
-    end, create_opts 'Open Code Actions')
+    if client.server_capabilities.codeActionProvider then
+        vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, create_opts 'Open Code Actions')
+    end
 
-    vim.keymap.set('n', '<leader>cr', function()
-        telescope_builtin.lsp_references()
-    end, create_opts 'Find References')
-    vim.keymap.set('n', '<leader>cn', function()
-        vim.lsp.buf.rename()
-    end, create_opts 'Rename Symbol')
+    if client.server_capabilities.referencesProvider then
+        vim.keymap.set('n', '<leader>cr', vim.lsp.buf.references, create_opts 'Find References')
+    end
+    if client.server_capabilities.renameProvider then
+        vim.keymap.set('n', '<leader>cn', vim.lsp.buf.rename, create_opts 'Rename Symbol')
+    end
 
     vim.keymap.set('n', '<leader>cdd', function()
         telescope_builtin.diagnostics { bufnr = 0 }

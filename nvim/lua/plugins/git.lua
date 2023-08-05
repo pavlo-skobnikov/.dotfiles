@@ -1,8 +1,9 @@
--- git-related plugins
 return {
     {
-        -- Powerful Git wrapper for many-many simple and coml
-        'tpope/vim-fugitive',
+        'tpope/vim-fugitive', -- Powerful Git wrapper for many-many simple and coml
+        dependencies = 'nvim-telescope/telescope.nvim',
+        cmd = 'Git',
+        keys = '<leader>g',
         config = function()
             vim.keymap.set('n', '<leader>gg', ':Git<CR>', { desc = 'Fugitive' })
 
@@ -19,11 +20,25 @@ return {
             vim.keymap.set('n', '<leader>gd', ':Gvdiff<CR>', { desc = 'Open Diff' })
 
             vim.keymap.set('n', '<leader>g?', ':Git help<CR>', { desc = 'Fugitive Help' })
+
+            local builtin = require 'telescope.builtin'
+
+            vim.keymap.set('n', '<leader>gs', builtin.git_status, { desc = 'Git Status' })
+            vim.keymap.set('n', '<leader>gS', builtin.git_stash, { desc = 'Git Stash' })
+            vim.keymap.set('n', '<leader>gc', builtin.git_commits, { desc = ' Git Commits' })
+            vim.keymap.set(
+                'n',
+                '<leader>gC',
+                builtin.git_bcommits,
+                { desc = 'Current File Commits' }
+            )
+
+            vim.keymap.set('n', '<leader>gb', builtin.git_branches, { desc = 'Switch Branch' })
         end,
     },
     {
-        -- Git gutters and hunk navigation
-        'lewis6991/gitsigns.nvim',
+        'lewis6991/gitsigns.nvim', -- Git gutters and hunk navigation
+        event = 'BufEnter',
         config = function()
             require('gitsigns').setup {
                 on_attach = function()
@@ -59,7 +74,12 @@ return {
                     )
                     vim.keymap.set('n', '<leader>hS', gs.stage_buffer, { desc = 'Stage Buffer' })
 
-                    vim.keymap.set('n', '<leader>hu', gs.undo_stage_hunk, { desc = 'Undo Stage Buffer' })
+                    vim.keymap.set(
+                        'n',
+                        '<leader>hu',
+                        gs.undo_stage_hunk,
+                        { desc = 'Undo Stage Buffer' }
+                    )
 
                     vim.keymap.set(
                         { 'n', 'v' },
@@ -88,7 +108,12 @@ return {
                         gs.toggle_current_line_blame,
                         { desc = 'Toggle Current Line Blame' }
                     )
-                    vim.keymap.set('n', '<leader>td', gs.toggle_deleted, { desc = 'Toggle Deleted' })
+                    vim.keymap.set(
+                        'n',
+                        '<leader>td',
+                        gs.toggle_deleted,
+                        { desc = 'Toggle Deleted' }
+                    )
 
                     -- Text object
                     vim.keymap.set({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')

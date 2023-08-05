@@ -1,9 +1,8 @@
--- Treesitter (parsing code as ASTs) configuration
 return {
     {
-        -- Treesitter plugin itself
-        'nvim-treesitter/nvim-treesitter',
+        'nvim-treesitter/nvim-treesitter', -- Treesitter plugin itself
         build = ':TSUpdate',
+        event = 'BufEnter',
         config = function()
             local configs = require 'nvim-treesitter.configs'
 
@@ -14,7 +13,7 @@ return {
                     'lua',
                     'vim',
                     -- Additional parsers
-                    'org',   -- for "nvim-orgmode/orgmode
+                    'org', -- for "nvim-orgmode/orgmode
                     'query', -- for "nvim-treesitter/playground"
                     'http',
                     'comment',
@@ -53,39 +52,21 @@ return {
                 },
 
                 indent = {
+                    enable = false,
+                },
+
+                incremental_selection = {
                     enable = true,
                 },
             }
         end,
     },
     {
-        -- Treesitter playground -> awesome for debugging queries
-        'nvim-treesitter/playground',
+        'nvim-treesitter/playground', -- Treesitter playground -> awesome for debugging queries
         dependencies = 'nvim-treesitter/nvim-treesitter',
         cmd = 'TSPlaygroundToggle',
         config = function()
-            local configs = require 'nvim-treesitter.configs'
-
-            configs.setup {
-                playground = {
-                    enable = true,
-                    disable = {},
-                    updatetime = 25,         -- Debounced time for highlighting nodes in the playground from source code
-                    persist_queries = false, -- Whether the query persists across vim sessions
-                    keybindings = {
-                        toggle_query_editor = 'o',
-                        toggle_hl_groups = 'i',
-                        toggle_injected_languages = 't',
-                        toggle_anonymous_nodes = 'a',
-                        toggle_language_display = 'I',
-                        focus_language = 'f',
-                        unfocus_language = 'F',
-                        update = 'R',
-                        goto_node = '<cr>',
-                        show_help = '?',
-                    },
-                },
-            }
+            require('nvim-treesitter.configs').setup()
         end,
     },
 }

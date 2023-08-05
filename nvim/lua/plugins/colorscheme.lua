@@ -1,15 +1,9 @@
--- Colorscheme for a more civilized age
 return {
-    {
-        -- Colorscheme
-        'catppuccin/nvim',
-        name = 'catppuccin',
-        config = function()
-            require('catppuccin').setup {
-                flavour = 'frappe', -- Options: latte, frappe, macchiato, mocha
-            }
+    'catppuccin/nvim',
+    config = function()
+        -- Options: latte, frappe, macchiato, mocha
+        require('catppuccin').setup { flavour = 'frappe' }
 
-            vim.cmd [[ colorscheme catppuccin ]]
-        end,
-    },
+        vim.cmd [[ colorscheme catppuccin ]]
+    end,
 }

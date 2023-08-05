@@ -1,15 +1,23 @@
--- Telescope configuration
+local telescope_lazy_cmds = {
+    'Telescope',
+    'Tel',
+}
+
+local telescope_lazy_keys = {
+    '<leader>f',
+    '<leader>df',
+}
+
 return {
     {
-        -- An incredibly extendable fuzzy finder over lists
-        'nvim-telescope/telescope.nvim',
+        'nvim-telescope/telescope.nvim', -- An incredibly extendable fuzzy finder over lists
         branch = '0.1.x',
         dependencies = {
-            { 'nvim-lua/plenary.nvim' },
-            { 'nvim-tree/nvim-web-devicons' },
+            'nvim-lua/plenary.nvim',
+            'nvim-tree/nvim-web-devicons',
         },
-        cmd = { 'Telescope', 'Tel' }, -- Lazy loads on these commands
-        keys = { '<leader>f' },       -- Lazy loads on this pattern
+        cmd = telescope_lazy_cmds,
+        keys = telescope_lazy_keys,
         config = function()
             local telescope = require 'telescope'
 
@@ -84,27 +92,13 @@ return {
             )
             vim.keymap.set('n', '<leader>fl', builtin.loclist, { desc = 'Find in Local List' })
             vim.keymap.set('n', '<leader>f"', builtin.registers, { desc = 'Find in Registers' })
-
-            -- Git-related Telescope commands
-            vim.keymap.set('n', '<leader>gs', builtin.git_status, { desc = 'Git Status' })
-            vim.keymap.set('n', '<leader>gS', builtin.git_stash, { desc = 'Git Stash' })
-            vim.keymap.set('n', '<leader>gc', builtin.git_commits, { desc = ' Git Commits' })
-            vim.keymap.set(
-                'n',
-                '<leader>gC',
-                builtin.git_bcommits,
-                { desc = 'Current File Commits' }
-            )
-
-            vim.keymap.set('n', '<leader>gb', builtin.git_branches, { desc = 'Switch Branch' })
         end,
     },
     {
-        -- UI picker extension for Telescope
-        'nvim-telescope/telescope-ui-select.nvim',
-        dependencies = {
-            'nvim-telescope/telescope.nvim',
-        },
+        'nvim-telescope/telescope-ui-select.nvim', -- UI picker extension for Telescope
+        dependencies = 'nvim-telescope/telescope.nvim',
+        cmd = telescope_lazy_cmds,
+        keys = telescope_lazy_keys,
         config = function()
             local telescope = require 'telescope'
 
@@ -112,9 +106,10 @@ return {
         end,
     },
     {
-        -- Blazingly-fast C port of FZF for Telescope
-        'nvim-telescope/telescope-fzf-native.nvim',
+        'nvim-telescope/telescope-fzf-native.nvim', -- Blazingly-fast C port of FZF for Telescope
         build = 'make',
+        cmd = telescope_lazy_cmds,
+        keys = telescope_lazy_keys,
         config = function()
             require('telescope').load_extension 'fzf'
         end,
