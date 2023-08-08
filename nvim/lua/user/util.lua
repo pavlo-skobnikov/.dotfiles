@@ -39,10 +39,6 @@ function M.on_attach(client, bufnr)
         )
     end
 
-    vim.keymap.set('n', '<leader>=', function()
-        vim.lsp.buf.format { async = true }
-    end, create_opts 'Format Buffer')
-
     vim.keymap.set('n', ']d', vim.diagnostic.goto_next, create_opts 'Go to Next Diagnostic')
     vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, create_opts 'Go to Prev Diagnostic')
 
@@ -72,7 +68,7 @@ function M.on_attach(client, bufnr)
         vim.keymap.set(
             'n',
             '<leader>csd',
-            vim.lsp.buf.document_symbol,
+            telescope_builtin.lsp_document_symbols,
             create_opts 'Search Document Symbols'
         )
     end
@@ -80,7 +76,7 @@ function M.on_attach(client, bufnr)
         vim.keymap.set(
             'n',
             '<leader>csw',
-            vim.lsp.buf.workspace_symbol,
+            telescope_builtin.lsp_workspace_symbols,
             create_opts 'Search Workspace Symbols'
         )
     end

@@ -1,24 +1,32 @@
--- Everything related to source file formatting
 return {
-    -- For available formatter options see:
-    -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
-    -- TODO: Change to formatting.nvim
-    'jose-elias-alvarez/null-ls.nvim',
+    'mhartington/formatter.nvim',
     dependencies = {
         'williamboman/mason.nvim',
         'nvim-lua/plenary.nvim',
     },
     config = function()
-        local null_ls = require 'null-ls'
+        -- Utilities for creating configurations
+        local util = require 'formatter.util'
 
-        null_ls.setup {
-            sources = {
-                -- Formatting
-                null_ls.builtins.formatting.sql_formatter, -- "sql"
-                null_ls.builtins.formatting.jq, -- "json"
-                null_ls.builtins.formatting.stylua, -- "lua", "luau"
-                null_ls.builtins.formatting.google_java_format, -- "java"
+        -- Provides the Format, FormatWrite, FormatLock, and FormatWriteLock commands
+        require('formatter').setup {
+            logging = true,
+            log_level = vim.log.levels.WARN,
+
+            filetype = {
+                lua = { require('formatter.filetypes.lua').stylua },
+                ['*'] = {
+                    require('formatter.filetypes.any').remove_trailing_whitespace,
+                },
             },
         }
+
+        vim.keymap.set('n', '<leader>=', ':Format<CR>', { silent = true, desc = 'Format' })
+        vim.keymap.set(
+            'n',
+            '<leader>+',
+            ':FormatWrite<CR>',
+            { silent = true, desc = 'Format & Write' }
+        )
     end,
 }

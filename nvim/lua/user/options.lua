@@ -54,7 +54,6 @@ local options = {
     wildignorecase = true, -- When set case is ignored when completing file names and directories
     wildmode = 'list:longest,full', -- Bash-like completion in command line
     shortmess = 'filnxtToOFc', -- Flags for short messages
-    statusline = '%f  %r%m%=%y  (%{b:git_branch})    %l,%c    %P', -- Custom status line
 }
 
 for k, v in pairs(options) do
