@@ -11,7 +11,6 @@ export JAVA_HOME=$HOME/.sdkman/candidates/java/current
 export M2_HOME=$HOME/.sdkman/candidates/maven/current
 export PATH=$HOME/.cargo/bin:$PATH
 export PATH="$HOME/.local/share/neovim/bin":$PATH
-export PATH="$HOME/.local/share/nvim/mason/bin":$PATH # Mason's path for installing LSPs
+export PATH="$HOME/.local/share/nvim/mason/bin":$PATH               # Mason's path for installing LSPs
 export PATH="/Applications/IntelliJ IDEA.app/Contents/MacOS/":$PATH # IntelliJ IDEA
-export PATH="$HOME/go/bin":$PATH # Go-installed binaries
-
+export PATH="$HOME/go/bin":$PATH                                    # Go-installed binaries

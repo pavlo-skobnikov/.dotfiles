@@ -1,13 +1,3 @@
-local telescope_lazy_cmds = {
-    'Telescope',
-    'Tel',
-}
-
-local telescope_lazy_keys = {
-    '<leader>f',
-    '<leader>df',
-}
-
 return {
     {
         'nvim-telescope/telescope.nvim', -- An incredibly extendable fuzzy finder over lists
@@ -16,8 +6,6 @@ return {
             'nvim-lua/plenary.nvim',
             'nvim-tree/nvim-web-devicons',
         },
-        cmd = telescope_lazy_cmds,
-        keys = telescope_lazy_keys,
         config = function()
             local telescope = require 'telescope'
 
@@ -97,8 +85,6 @@ return {
     {
         'nvim-telescope/telescope-ui-select.nvim', -- UI picker extension for Telescope
         dependencies = 'nvim-telescope/telescope.nvim',
-        cmd = telescope_lazy_cmds,
-        keys = telescope_lazy_keys,
         config = function()
             local telescope = require 'telescope'
 
@@ -108,8 +94,6 @@ return {
     {
         'nvim-telescope/telescope-fzf-native.nvim', -- Blazingly-fast C port of FZF for Telescope
         build = 'make',
-        cmd = telescope_lazy_cmds,
-        keys = telescope_lazy_keys,
         config = function()
             require('telescope').load_extension 'fzf'
         end,

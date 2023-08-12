@@ -162,14 +162,16 @@ git clone https://github.com/pavlo-skobnikov/dotfiles.git ~/dotfiles
 echo "Linking .config folder from dotfiles..."
 ln -s ~/dotfiles ~/.config
 
-ln -s ~/dotfiles/amethyst/.amethyst.yml ~/.amethyst.yml
+# Link hammerspoon config
+rm -rf ~/.hammerspoon  
+ln -s ~/dotfiles/hammerspoon ~/.hammerspoon
 
 # Install Zap for Zsh and link .zshrc
 echo "Installing Zsh and linking .zshrc..."
 zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh)
 
 rm -f ~/.zshrc
-ln -s ~/dotfiles/.zshrc ~/.zshrc
+ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
 
 # Set Zsh as the main system shell
 echo "Setting Zsh as the main system shell..."
@@ -223,6 +225,6 @@ curl -L https://github.com/kvndrsslr/sketchybar-app-font/releases/download/v1.0.
 echo "Linking IntelliJ .ideavimrc..."
 rm -f ~/.ideavimrc
 
-ln -s ~/dotfiles/.ideavimrc ~/.ideavimrc
+ln -s ~/dotfiles/idea/.ideavimrc ~/.ideavimrc
 
 echo "Installation complete!"

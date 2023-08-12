@@ -109,6 +109,15 @@ function M.on_attach(client, bufnr)
     vim.keymap.set('n', '<leader>cde', function()
         telescope_builtin.diagnostics { severity = vim.diagnostic.severity.ERROR }
     end, create_opts 'Show Workspace Errors')
+
+    if client.server_capabilities.documentHighlightProvider then
+        vim.keymap.set(
+            'n',
+            '<leader>cH',
+            vim.lsp.buf.document_highlight,
+            create_opts 'Highlight Symbol'
+        )
+    end
 end
 
 return M

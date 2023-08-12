@@ -2,8 +2,6 @@ return {
     {
         'tpope/vim-fugitive', -- Powerful Git wrapper for many-many simple and coml
         dependencies = 'nvim-telescope/telescope.nvim',
-        cmd = 'Git',
-        keys = '<leader>g',
         config = function()
             vim.keymap.set('n', '<leader>gg', ':Git<CR>', { desc = 'Fugitive' })
 
@@ -38,7 +36,6 @@ return {
     },
     {
         'lewis6991/gitsigns.nvim', -- Git gutters and hunk navigation
-        event = 'BufEnter',
         config = function()
             require('gitsigns').setup {
                 on_attach = function()

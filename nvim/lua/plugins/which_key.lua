@@ -1,17 +1,5 @@
 return {
     'folke/which-key.nvim', -- The popup menu plugin
-    keys = {
-        '<leader>',
-        '<localleader>',
-        '`',
-        "'",
-        '"',
-        'g',
-        'g',
-        'g',
-        '<c-r>',
-        'z',
-    },
     config = function()
         local which_key = require 'which-key'
 

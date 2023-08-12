@@ -9,6 +9,7 @@ return {
         },
         keys = {
             '<leader>a',
+            '<localleader>',
             '<C-h>',
             'g',
         },

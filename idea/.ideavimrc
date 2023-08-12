@@ -58,40 +58,46 @@ let g:WhichKeyDesc_SurroundChange = "cs +change-surround"
 let g:WhichKeyDesc_SurroundDelete = "ds +delete-surround"
 
 "" PLUGIN
-" Add text object for entire buffer: ae (around buffer), ie (inside buffer)
-set textobj-entire
 
 " Add text object for arguments: aA (around arguments), iA (inside arguments)
 set argtextobj
 
 """"" MAPPINGS
 """ FIRST-LEVEL MAPPINGS
-""" NORMAL
 
 " Remove Highlights on <ESC>
 nnoremap <ESC> :noh<CR>
 
-" Easier Window Navigation
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
-" x and X Copy Into Throwaway Register `_`
-nnoremap x \"_x
-nnoremap X \"_X
-
 " Get Minimal Parameter Info
 nnoremap <C-S-k> :action ParameterInfo<CR>
-
-""" VISUAL
-
-""" INSERT
-
-" Get Minimal Parameter Info
 inoremap <C-S-k> :action ParameterInfo<CR>
 
+" Show Bookmarks
+nnoremap <C-h> :action ShowHarpoon<CR>
+
+" Get Minimal Parameter Info
+
 """ g MAPPINGS
+
+let g:WhichKeyDesc_GoTo_GotoHarpoon1 = "g1 Go to Harpoon Mark 1"
+nnoremap g1 :action GotoHarpoon1<CR>
+vnoremap g1 :action GotoHarpoon1<CR>
+
+let g:WhichKeyDesc_GoTo_GotoHarpoon2 = "g2 Go to Harpoon Mark 2"
+nnoremap g2 :action GotoHarpoon2<CR>
+vnoremap g2 :action GotoHarpoon2<CR>
+
+let g:WhichKeyDesc_GoTo_GotoHarpoon3 = "g3 Go to Harpoon Mark 3"
+nnoremap g3 :action GotoHarpoon3<CR>
+vnoremap g3 :action GotoHarpoon3<CR>
+
+let g:WhichKeyDesc_GoTo_GotoHarpoon4 = "g4 Go to Harpoon Mark 4"
+nnoremap g4 :action GotoHarpoon4<CR>
+vnoremap g4 :action GotoHarpoon4<CR>
+
+let g:WhichKeyDesc_GoTo_GotoHarpoon5 = "g5 Go to Harpoon Mark 5"
+nnoremap g5 :action GotoHarpoon5<CR>
+vnoremap g5 :action GotoHarpoon5<CR>
 
 let g:WhichKeyDesc_GoTo_ShowIntentionActions = "ga Open Code Actions"
 nnoremap ga :action ShowIntentionActions<CR>
@@ -109,13 +115,17 @@ let g:WhichKeyDesc_GoTo_JumpToClass = "gC Go to Class"
 nnoremap gC :action GotoClass<CR>
 vnoremap gC :action GotoClass<CR>
 
-let g:WhichKeyDesc_GoTo_QuickImplementations = "gi Go to Implementation"
-nnoremap gi :action QuickImplementations<CR>
-vnoremap gi <Esc>:action QuickImplementations<CR>
+let g:WhichKeyDesc_GoTo_GotoImplementation = "gi Go to Implementation"
+nnoremap gi :action GotoImplementation<CR>
+vnoremap gi <Esc>:action GotoImplementation<CR>
 
 let g:WhichKeyDesc_GoTo_CallHierarchy = "gI Go to Incoming Calls"
 nnoremap gI :action CallHierarchy<CR>
 vnoremap gI <Esc>:action CallHierarchy<CR>
+
+let g:WhichKeyDesc_GoTo_GotoSuperMethod = "go Go to Super"
+nnoremap go :action GotoSuperMethod<CR>
+vnoremap go <Esc>:action GotoSuperMethod<CR>
 
 let g:WhichKeyDesc_GoTo_GotoTypeDeclaration = "gt Go to Type Declaration for Symbol"
 nnoremap gt :action GotoTypeDeclaration<CR>
@@ -145,10 +155,6 @@ let g:WhichKeyDesc_GoTo_ShowErrorDescription = "gl Open Diagnostics Float"
 nnoremap gl :action ShowErrorDescription<CR>
 vnoremap gl :action ShowErrorDescription<CR>
 
-let g:WhichKeyDesc_GoTo_Bookmarks = "gm Go to Mnemonic Bookmark"
-nnoremap gm :action Bookmarks.Goto<CR>
-vnoremap gm :action Bookmarks.Goto<CR>
-
 let g:WhichKeyDesc_GoTo_ActivateProblemsViewToolWindow = "gQ Show Diagnostics Tool Window"
 nnoremap gQ :action ActivateProblemsViewToolWindow<CR>
 vnoremap gQ :action ActivateProblemsViewToolWindow<CR>
@@ -168,13 +174,13 @@ let g:WhichKeyDesc_RightSquareBracket_GotoPreviousError = "]d Next Diagnostic"
 nnoremap ]d :action GotoNextError<CR>
 vnoremap ]d :action <ESC>GotoNextError<CR>
 
-let g:WhichKeyDesc_LeftSquareBracket_VcsShowPrevChangeMarker = "[g Prev Hunk/Change"
-nnoremap [g :action VcsShowPrevChangeMarker<CR>
-vnoremap [g :action <ESC>VcsShowPrevChangeMarker<CR>
+let g:WhichKeyDesc_LeftSquareBracket_VcsShowPrevChangeMarker = "[c Prev Hunk"
+nnoremap [c :action VcsShowPrevChangeMarker<CR>
+vnoremap [c :action <ESC>VcsShowPrevChangeMarker<CR>
 
-let g:WhichKeyDesc_RightSquareBracket_VcsShowNextChangeMarker = "]g Next Hunk/Change"
-nnoremap ]g :action VcsShowNextChangeMarker<CR>
-vnoremap ]g :action <ESC>VcsShowNextChangeMarker<CR>
+let g:WhichKeyDesc_RightSquareBracket_VcsShowNextChangeMarker = "]c Next Hunk"
+nnoremap ]c :action VcsShowNextChangeMarker<CR>
+vnoremap ]c :action <ESC>VcsShowNextChangeMarker<CR>
 
 let g:WhichKeyDesc_LeftSquareBracket_GotoPreviousBookmark = "[h Prev Bookmark"
 nnoremap [h :action GotoPreviousBookmark<CR>
@@ -199,17 +205,9 @@ let g:WhichKeyDesc_Leader_ReformatCode = "<leader>= Reformat Code"
 nnoremap <leader>= :action ReformatCode<CR>
 vnoremap <leader>= :action ReformatCode<CR>
 
-let g:WhichKeyDesc_Leader_ToggleBookmark = "<leader>a Add to Marks"
-nnoremap <leader>a :action ToggleBookmark<CR>
-vnoremap <leader>a :action ToggleBookmark<CR>
-
-let g:WhichKeyDesc_Leader_ToggleBookmarkWithMnemonic = "<leader>A Add to Mnemonic Marks"
-nnoremap <leader>A :action ToggleBookmarkWithMnemonic<CR>
-vnoremap <leader>A :action ToggleBookmarkWithMnemonic<CR>
-
-let g:WhichKeyDesc_Leader_ShowBookmarks = "<leader>b Show Marks"
-nnoremap <leader>b :action ShowBookmarks<CR>
-vnoremap <leader>b :action ShowBookmarks<CR>
+let g:WhichKeyDesc_Leader_AddToHarpoon = "<leader>a Add to Harpoon Marks"
+nnoremap <leader>a :action AddToHarpoon<CR>
+vnoremap <leader>a :action AddToHarpoon<CR>
 
 let g:WhichKeyDesc_Leader_ActivateProjectToolWindow = "<leader>e Open Explorer"
 nnoremap <leader>e :action ActivateProjectToolWindow<CR>
@@ -466,6 +464,10 @@ let g:WhichKeyDesc_Git_Vcs_Pull = "<leader>gu Pull/Update"
 nnoremap <leader>gu    :action Vcs.UpdateProject<CR>
 vnoremap <leader>gu    :action Vcs.UpdateProject<CR>
 
+let g:WhichKeyDesc_Toggles_Vcs_Annotate = "<leader>gB Toggle Blame"
+nnoremap <leader>gB    :action Annotate<CR>
+vnoremap <leader>gB    :action Annotate<CR>
+
 
 """ <leader>h MAPPINGS -> Hunks
 let g:WhichKeyDesc_Hunks = "<leader>h +hunks"
@@ -488,17 +490,9 @@ let g:WhichKeyDesc_Help_PluginDevelopment = "<leader>Hp JetBrains Plugins Reposi
 nnoremap <leader>Hp    :action WelcomeScreen.DevelopPlugins<CR>
 vnoremap <leader>Hp    :action WelcomeScreen.DevelopPlugins<CR>
 
-let g:WhichKeyDesc_Help_ContextualHelpAlt = "<leader>H<Space> Visit Intellij Documentation Website"
-nnoremap <leader>H<Space>    :action ContextHelp<CR>
-vnoremap <leader>H<Space>    :action ContextHelp<CR>
-
-let g:WhichKeyDesc_Help_Settings = "<leader>Hs Show Settings"
-nnoremap <leader>Hs    :action ShowSettings<CR>
-vnoremap <leader>Hs    <Esc>:action ShowSettings<CR>
-
-let g:WhichKeyDesc_Help_ReloadIdeaVimRc = "<leader>HR Reload .ideavimrc"
-nnoremap <leader>HR    :source ~/.ideavimrc<CR>
-vnoremap <leader>HR    <Esc>:source ~/.ideavimrc<CR>
+let g:WhichKeyDesc_Help_ReloadIdeaVimRc = "<leader>Hr Reload .ideavimrc"
+nnoremap <leader>Hr    :source ~/.ideavimrc<CR>
+vnoremap <leader>Hr    <Esc>:source ~/.ideavimrc<CR>
 
 
 """ <leader>w MAPPINGS -> Workspaces
@@ -557,11 +551,6 @@ vnoremap <leader>wR <Esc>:action RestartIde<CR>
 """ <leader>t MAPPINGS -> Toggle
 let g:WhichKeyDesc_Toggles = "<leader>t +toggle"
 
-
-let g:WhichKeyDesc_Toggles_Vcs_Annotate = "<leader>tb Toggle Blame"
-nnoremap <leader>tb    :action Annotate<CR>
-vnoremap <leader>tb    :action Annotate<CR>
-
 let g:WhichKeyDesc_Toggles_IndentLines = "<leader>ti Toggle Show Indent Guide"
 nnoremap <leader>ti :action EditorToggleShowIndentLines<CR>
 vnoremap <leader>ti <Esc>:action EditorToggleShowIndentLines<CR>
@@ -597,21 +586,4 @@ vnoremap <leader>tc :action copilot.enableCopilot<CR>
 let g:WhichKeyDesc_Toggles_DisableCopilot = "<leader>tC Disable Copilot"
 nnoremap <leader>tC :action copilot.disableCopilot<CR>
 vnoremap <leader>tC :action copilot.disableCopilot<CR>
-
-
-""" <leader>z MAPPINGS -> Zoom
-let g:WhichKeyDesc_Zoom = "<leader>z +zoom"
-
-
-let g:WhichKeyDesc_Zoom_IncreaseAlt = "<leader>z= Increase Font Size"
-nnoremap <leader>z= :action EditorIncreaseFontSize<CR>
-vnoremap <leader>z= :action EditorIncreaseFontSize<CR>
-
-let g:WhichKeyDesc_Zoom_Decrease = "<leader>z- Decrease Font Size"
-nnoremap <leader>z- :action EditorDecreaseFontSize<CR>
-vnoremap <leader>z- :action EditorDecreaseFontSize<CR>
-
-let g:WhichKeyDesc_Zoom_Reset = "<leader>z0 Reset Font Size"
-nnoremap <leader>z0 :action EditorResetFontSize<CR>
-vnoremap <leader>z0 :action EditorResetFontSize<CR>
 

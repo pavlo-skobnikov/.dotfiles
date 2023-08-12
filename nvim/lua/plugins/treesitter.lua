@@ -1,8 +1,7 @@
 return {
     {
-        'nvim-treesitter/nvim-treesitter', -- Treesitter plugin itself
+        'nvim-treesitter/nvim-treesitter', -- AST-based highlighting, indentation, and more
         build = ':TSUpdate',
-        event = 'BufEnter',
         config = function()
             local configs = require 'nvim-treesitter.configs'
 
@@ -59,14 +58,52 @@ return {
                     enable = true,
                 },
             }
+
+            -- Hide all semantic highlights provided via LSP -> let Treesitter handle it
+            for _, group in ipairs(vim.fn.getcompletion('@lsp', 'highlight')) do
+                vim.api.nvim_set_hl(0, group, {})
+            end
+
+            -- Some custom color highlights for Java
+            vim.api.nvim_set_hl(0, '@type.qualifier.java', { link = 'Statement' })
+            vim.api.nvim_set_hl(0, '@variable.builtin.java', { link = 'Statement' })
+            vim.api.nvim_set_hl(0, '@constant.java', { link = 'Character' })
+            vim.api.nvim_set_hl(0, '@attribute.java', { link = 'Character' })
+            vim.api.nvim_set_hl(0, '@type.java', { link = 'Type' })
+            vim.api.nvim_set_hl(0, '@field.java', { link = 'Identifier' })
         end,
     },
     {
         'nvim-treesitter/playground', -- Treesitter playground -> awesome for debugging queries
         dependencies = 'nvim-treesitter/nvim-treesitter',
-        cmd = 'TSPlaygroundToggle',
+        cmd = {
+            'TSPlaygroundToggle',
+            'TSHighlightCapturesUnderCursor',
+            'TSNodeUnderCursor',
+        },
         config = function()
-            require('nvim-treesitter.configs').setup()
+            require('nvim-treesitter.configs').setup {}
+
+            vim.keymap.set(
+                'n',
+                '<leader>pp',
+                ':TSPlaygroundToggle<CR>',
+                { silent = true, desc = 'Toggle Treesitter playground' }
+            )
+
+            vim.keymap.set(
+                'n',
+                '<leader>ph',
+                ':TSHighlightCapturesUnderCursor<CR>',
+                { silent = true, desc = 'Highlight captures under cursor' }
+            )
+
+            vim.keymap.set(
+                'n',
+                '<leader>pn',
+                ':TSNodeUnderCursor<CR>',
+                { silent = true, desc = 'Highlight node under cursor' }
+            )
         end,
     },
 }

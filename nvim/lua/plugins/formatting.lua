@@ -5,16 +5,27 @@ return {
         'nvim-lua/plenary.nvim',
     },
     config = function()
-        -- Utilities for creating configurations
-        local util = require 'formatter.util'
-
-        -- Provides the Format, FormatWrite, FormatLock, and FormatWriteLock commands
         require('formatter').setup {
             logging = true,
             log_level = vim.log.levels.WARN,
 
             filetype = {
                 lua = { require('formatter.filetypes.lua').stylua },
+                sh = { require('formatter.filetypes.sh').shfmt },
+                zsh = { require('formatter.filetypes.sh').shfmt },
+                java = {
+                    function()
+                        return {
+                            exe = 'google-java-format',
+                            args = {
+                                '-a',
+                                vim.api.nvim_buf_get_name(0),
+                            },
+                            stdin = true,
+                        }
+                    end,
+                },
+                kotlin = { require('formatter.filetypes.kotlin').ktlint },
                 ['*'] = {
                     require('formatter.filetypes.any').remove_trailing_whitespace,
                 },

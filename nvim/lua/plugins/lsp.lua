@@ -3,15 +3,13 @@ return {
         'williamboman/mason-lspconfig.nvim', -- Bridges mason.nvim with the lspconfig plugin
         dependencies = {
             {
-                -- Package manager for Neovim
-                'williamboman/mason.nvim',
+                'williamboman/mason.nvim', -- Package manager for Neovim
                 build = ':MasonUpdate',
             },
             'neovim/nvim-lspconfig', -- Configs for the Nvim LSP client (:help lsp)
             'mfussenegger/nvim-jdtls', -- Significant improvements to the Eclipse JDTLS
             {
-                -- Scala MetaLS
-                'scalameta/nvim-metals',
+                'scalameta/nvim-metals', -- Scala MetaLS
                 dependencies = {
                     'nvim-lua/plenary.nvim',
                 },
@@ -81,8 +79,6 @@ return {
     },
     {
         'github/copilot.vim', -- AI-powered code completion
-        cmd = 'Copilot',
-        event = 'InsertEnter',
         config = function()
             vim.cmd [[
             imap <silent><script><expr> <C-S-y> copilot#Accept("\<CR>")
