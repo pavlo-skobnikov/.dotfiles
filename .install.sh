@@ -33,69 +33,30 @@ brew tap homebrew/cask-fonts
 brew tap FelixKratz/formulae
 brew tap koekeishiya/formulae
 
-## Brew formulae
-echo "Installing brew formulae..."
-brew install zsh
-brew install wget
-brew install coreutils
-brew install gnu-sed
-brew install xclip
-brew install ripgrep
-brew install fzf
-brew install jq
-brew install fd
-brew install exa
-brew install tree
-brew install rename
-brew install neofetch
-brew install mas
-brew install z3
-brew install llvm
-brew install cmake
+## Brew formulae and casks
+echo "Installing brew formulae and casks..."
 
+echo "Installing general-purpose CLI tools..."
+brew install zsh # UNIX shell (command interpreter)
+brew install wget # Internet file retriever
+brew install coreutils # GNU File, Shell, and Text utilities
+brew install gnu-sed # GNU implementation of the famous stream editor
+brew install ripgrep # Search tool like grep and The Silver Searcher
+brew install fzf # Command-line fuzzy finder written in Go
+brew install jq # Lightweight and flexible command-line JSON processor
+brew install miller # Like sed, awk, cut, join & sort for name-indexed data such as CSV
+brew install fd # Simple, fast and user-friendly alternative to find
+brew install exa # Modern replacement for 'ls'
+brew install tree # Display directories as trees (with optional color/HTML output)
+brew install rename # Perl-powered file rename script with many helpful built-ins
+brew install mas # Mac App Store command-line interface
+brew install llvm # Next-gen compiler infrastructure
+
+# Git and CLI tools for remote repositories
+echo "Installing git and CLI tools for remote repositories..."
 brew install git
 brew install gh
 brew install glab
-
-brew install svim
-
-brew install neovim
-
-brew install npm
-brew install go
-brew install zig
-
-brew install markdownlint-cli
-
-brew install clojure
-brew install leiningen # Clojure build tool
-brew install --cask zprint # Clojure source code formatter
-
-## Brew casks
-echo "Installing brew casks..."
-brew install --cask amethyst
-brew install --cask alfred
-brew install --cask sf-symbols
-brew install --cask font-hack-nerd-font
-
-brew install --cask libreoffice
-brew install --cask kitty
-
-brew install --cask zoom
-brew install --cask telegram
-brew install --cask slack
-
-brew install --cask docker
-brew install --cask intellij-idea
-brew install --cask postman
-
-brew install --cask notion
-brew install --cask nordpass
-brew install --cask google-chrome
-
-# Install npm packages
-echo "Installing npm packages..."
-npm install -g npm-groovy-lint
 
 # Configure git and clone some repositories
 echo "Configuring git default pull strategy and branch name..."
@@ -103,9 +64,7 @@ git config --global pull.rebase true
 git config --global init.defaultBranch main
 git config --global push.autoSetupRemote true
 
-echo "Are you Pavlo Skobnikov? If not, then press anything anything but 'y'!"
-
-read -p "Download secrets repository? 'y' will download secrets." -n 1 -r
+read -p "Download secrets repository? 'y' will download secrets. NOTE: ssh should be already set up!" -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
   echo "Configuring git identifiers..."
@@ -117,6 +76,85 @@ then
 fi
 echo
 
+# Install programming languages and related tools
+echo "Installing languages and related tools..."
+
+# Lua
+brew install lua
+brew install luajit
+brew install luarocks # Package manager for Lua
+
+# Clang
+echo "Installing Clang tools..."
+brew install cmake # Cross-platform make
+brew install cmake-docs # Documentation for CMake
+
+# Install Java & tools
+echo "Installing Java & tools..."
+sdk install java
+sdk install gradle # Build automation system
+sdk install maven # Build automation system
+
+# Install Clojure & tools
+echo "Installing Clojure & tools..."
+brew install clojure
+sdk install leiningen # Build automation system
+
+# Install Scala & tools
+echo "Installing Scala & tools..."
+sdk install scala
+sdk install scalaclie # REPL for Scala
+sdk install sbt # Build automation system
+sdk install coursier # Build automation system
+
+# Python
+echo "Installing Python 3..."
+brew install python3
+
+# Golang
+echo "Installing Golang..."
+brew install go
+
+# Javascript
+echo "Installing Javascript..."
+brew install node
+brew install typescript
+
+# Install other tools
+echo "Installing other tools..."
+
+echo "Installing the terminal emulator..."
+brew install --cask kitty
+
+echo "Installing code editors..."
+brew install neovim
+brew install --cask intellij-idea
+
+echo "Installing OS interaction utilities..."
+brew install --cask karabiner-elements
+brew install --cask hammerspoon
+
+echo "Installing other developer tools..."
+brew install --cask docker
+brew install --cask postman
+
+echo "Installing messaging and communication tools..."
+brew install --cask telegram
+brew install --cask slack
+
+echo "Installing the browser..."
+brew install --cask google-chrome
+
+echo "Installing the password manager..."
+brew install --cask nordpass
+
+echo "Installing miscelaneous casks..."
+brew install --cask sf-symbols
+brew install --cask font-hack-nerd-font
+
+# Configure the environment
+echo "Configuring the environment..."
+
 echo "Fetching dotfiles..."
 git clone https://github.com/pavlo-skobnikov/dotfiles.git ~/dotfiles
 
@@ -124,14 +162,16 @@ git clone https://github.com/pavlo-skobnikov/dotfiles.git ~/dotfiles
 echo "Linking .config folder from dotfiles..."
 ln -s ~/dotfiles ~/.config
 
-ln -s ~/dotfiles/amethyst/.amethyst.yml ~/.amethyst.yml
+# Link hammerspoon config
+rm -rf ~/.hammerspoon  
+ln -s ~/dotfiles/hammerspoon ~/.hammerspoon
 
 # Install Zap for Zsh and link .zshrc
 echo "Installing Zsh and linking .zshrc..."
 zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh)
 
 rm -f ~/.zshrc
-ln -s ~/dotfiles/.zshrc ~/.zshrc
+ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
 
 # Set Zsh as the main system shell
 echo "Setting Zsh as the main system shell..."
@@ -181,31 +221,10 @@ rm -rf /tmp/SFMono_Nerd_Font/
 
 curl -L https://github.com/kvndrsslr/sketchybar-app-font/releases/download/v1.0.4/sketchybar-app-font.ttf -o $HOME/Library/Fonts/sketchybar-app-font.ttf
 
-# Create a directory for custom sources
-rm -rf ~/.local/source/
-mkdir -p ~/.local/source/
-
-# Install Java tools
-echo "Installing basic Java tools..."
-sdk install java
-sdk install gradle
-sdk install maven
-
-# Install and build LSP extensions
-echo "Setting up and building JDTLS Extensions"
-
-# Download Java Decompiler extension for JDTLS
-echo "Downloading JDTLS decompiler extension..."
-git clone https://github.com/dgileadi/vscode-java-decompiler ~/.local/source/vscode-java-decompiler
-
 # Configure IntelliJ
 echo "Linking IntelliJ .ideavimrc..."
 rm -f ~/.ideavimrc
 
-ln -s ~/dotfiles/.ideavimrc ~/.ideavimrc
-
-# Start Services
-echo "Starting Services (grant permissions)..."
-brew services start svim
+ln -s ~/dotfiles/idea/.ideavimrc ~/.ideavimrc
 
 echo "Installation complete!"

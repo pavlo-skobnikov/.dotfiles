@@ -1,42 +1,43 @@
 return {
-  -- For available formatter options see:
-  -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
-  {
-    'jose-elias-alvarez/null-ls.nvim',
+    'mhartington/formatter.nvim',
     dependencies = {
-      'williamboman/mason.nvim',
-      'nvim-lua/plenary.nvim',
+        'williamboman/mason.nvim',
+        'nvim-lua/plenary.nvim',
     },
     config = function()
-      local null_ls = require 'null-ls'
+        require('formatter').setup {
+            logging = true,
+            log_level = vim.log.levels.WARN,
 
-      null_ls.setup {
-        sources = {
-          -- Diagnostic
-          null_ls.builtins.diagnostics.pylint.with {
-            -- Disable displaying diagnostics visually
-            diagnostic_config = { underline = false, virtual_text = false, signs = false },
-            method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
-          }, -- "python"
-          null_ls.builtins.diagnostics.markdownlint, -- "markdown"
-          -- Formatting
-          null_ls.builtins.formatting.sql_formatter, -- "sql"
-          null_ls.builtins.formatting.jq, -- "json"
-          null_ls.builtins.formatting.stylua, -- "lua", "luau"
-          null_ls.builtins.formatting.google_java_format, -- "java"
-          null_ls.builtins.formatting.zprint, -- "clojure"
-          null_ls.builtins.formatting.zigfmt, -- "zig"
-          null_ls.builtins.formatting.gofmt, -- "go"
-          null_ls.builtins.formatting.black, -- "python"
-          null_ls.builtins.formatting.prettier, -- "javascript", "javascriptreact",
-          -- "typescript", "typescriptreact", "vue", "css", "scss", "less", "html", "json",
-          -- "jsonc", "yaml", "markdown", "markdown.mdx", "graphql", "handlebars"
+            filetype = {
+                lua = { require('formatter.filetypes.lua').stylua },
+                sh = { require('formatter.filetypes.sh').shfmt },
+                zsh = { require('formatter.filetypes.sh').shfmt },
+                java = {
+                    function()
+                        return {
+                            exe = 'google-java-format',
+                            args = {
+                                '-a',
+                                vim.api.nvim_buf_get_name(0),
+                            },
+                            stdin = true,
+                        }
+                    end,
+                },
+                kotlin = { require('formatter.filetypes.kotlin').ktlint },
+                ['*'] = {
+                    require('formatter.filetypes.any').remove_trailing_whitespace,
+                },
+            },
+        }
 
-          -- Diagnostic + Formatting
-          null_ls.builtins.diagnostics.ktlint, -- "kotlin"
-          null_ls.builtins.formatting.ktlint,
-        },
-      }
+        vim.keymap.set('n', '<leader>=', ':Format<CR>', { silent = true, desc = 'Format' })
+        vim.keymap.set(
+            'n',
+            '<leader>+',
+            ':FormatWrite<CR>',
+            { silent = true, desc = 'Format & Write' }
+        )
     end,
-  },
 }

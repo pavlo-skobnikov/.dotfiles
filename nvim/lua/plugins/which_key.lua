@@ -1,28 +1,37 @@
--- Description: Plugin for dynamically showing key mappings
 return {
-  {
-    -- The popup menu plugin
-    'folke/which-key.nvim',
+    'folke/which-key.nvim', -- The popup menu plugin
     config = function()
-      -- Set a delay for the popup to...well...pop up
-      vim.o.timeout = true
-      vim.o.timeoutlen = 200
+        local which_key = require 'which-key'
 
-      local which_key = require 'which-key'
+        -- Used only for setting groups
+        which_key.register({
+            c = {
+                name = 'code',
+                s = 'search',
+                d = 'diagnostics',
+            },
+            d = {
+                name = 'dap',
+                b = 'breakpoints',
+                f = 'find',
+                s = 'step',
+                t = 'test',
+                w = 'widget',
+            },
+            f = 'find',
+            g = 'git',
+            h = 'hunks',
+            t = 'toggle',
+        }, { prefix = '<leader>' })
 
-      which_key.setup {
-        hidden = { "<leader>'" },
-      }
-
-      -- Used only for setting groups
-      which_key.register({
-        f = { name = 'find' },
-        t = { name = 'toggle' },
-        h = { name = 'hunks' },
-        g = { name = 'git' },
-        r = { name = 'replace' },
-        w = { name = 'workspace' },
-      }, { prefix = '<leader>' })
+        which_key.register({
+            e = {
+                name = 'evaluate',
+                c = 'comment',
+            },
+            g = 'get',
+            l = 'log',
+            r = 'run',
+        }, { prefix = '<localleader>' })
     end,
-  },
 }

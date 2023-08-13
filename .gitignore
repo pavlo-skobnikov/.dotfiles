@@ -1,8 +1,7 @@
 .DS_Store
 .idea
 github-copilot
-glab-cli
-karabiner
-jgit
-neofetch
-
+karabiner/automatic_backups/*
+karabiner/assets/*
+configstore/*
+stripe/*

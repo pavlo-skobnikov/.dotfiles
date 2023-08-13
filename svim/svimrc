@@ -1,3 +1,0 @@
-nmap <C-k> <Esc>:m .+1<CR>
-nmap <C-l> <Esc>:m .-2<CR>
-
