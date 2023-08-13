@@ -1,4 +1,3 @@
-require 'hs.application'
 local hyper = { 'cmd', 'ctrl', 'alt', 'shift' }
 
 -- Reload the configuration
@@ -19,10 +18,10 @@ end
 
 local launchOrFocusToBindMap = {
     a = 'Activity Monitor',
-    b = 'System Preferences',
+    b = '',
     c = 'Calendar',
     d = 'Docker Desktop',
-    e = '',
+    e = 'System Preferences', -- `e` for `environment`
     f = 'Finder',
     g = 'Google Chrome',
     h = 'Hammerspoon',
@@ -39,8 +38,8 @@ local launchOrFocusToBindMap = {
     s = 'Slack',
     t = 'Telegram',
     u = '',
-    v = '',
-    w = 'Microsoft Teams',
+    -- v = '', -> Reserved for showing the shortcut reminder
+    w = 'Microsoft Teams', -- `w` for `work`
     x = '',
     y = 'Youtube Music',
     z = 'zoom.us',
