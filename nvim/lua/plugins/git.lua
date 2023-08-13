@@ -50,7 +50,7 @@ return {
                             gs.next_hunk()
                         end)
                         return '<Ignore>'
-                    end, { expr = true, desc = 'Next Hunk' })
+                    end, { expr = true, desc = 'Next Change' })
 
                     vim.keymap.set('n', '[c', function()
                         if vim.wo.diff then
@@ -60,7 +60,7 @@ return {
                             gs.prev_hunk()
                         end)
                         return '<Ignore>'
-                    end, { expr = true, desc = 'Previous Hunk' })
+                    end, { expr = true, desc = 'Previous Change' })
 
                     -- Actions
                     vim.keymap.set(
