@@ -7,12 +7,6 @@ return {
             'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope.nvim',
         },
-        keys = {
-            '<leader>a',
-            '<localleader>',
-            '<C-h>',
-            'g',
-        },
         config = function()
             require('telescope').load_extension 'harpoon'
 

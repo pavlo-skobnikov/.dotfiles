@@ -29,6 +29,7 @@ return {
                     'pylsp', -- Python
                     'gopls', -- Go
                     'jdtls', -- Java
+                    'kotlin_language_server', -- Kotlin
                     'clojure_lsp', -- Clojure
                     'tsserver', -- TypeScript
                     'bashls', -- Bash

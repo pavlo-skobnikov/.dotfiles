@@ -7,11 +7,10 @@ alias zsh-update-plugins="find "$ZDOTDIR/plugins" -type d -exec test -e '{}/.git
 alias config='cd ~/.config/ && nvim ~/.config/'
 
 # Fuzzy Searching
-alias cda='cd $(find ~/ -type d -print | fzf)'                                                            # Search all directories for user
-alias cdh='cd $(find . -type d -print | fzf)'                                                             # Search all directories from terminal's position
-alias work='cd $(find ~/code/work -type d -path "*/.git" -print -prune | sed "s/\.git$//" | fzf)'         # Search work projects
-alias personal='cd $(find ~/code/personal -type d -path "*/.git" -print -prune | sed "s/\.git$//" | fzf)' # Search personal projects
-alias learn='cd $(find ~/code/learn -type d -path "*/.git" -print -prune | sed "s/\.git$//" | fzf)'       # Search personal projects
+alias cda='cd $(find ~/ -type d -print | fzf)'                                                      # Search all directories for user
+alias cdh='cd $(find . -type d -print | fzf)'                                                       # Search all directories from terminal's position
+alias work='cd $(find ~/code/work -maxdepth 1 -type d | fzf)'                                       # Search work projects
+alias personal='cd $(find ~/code/personal -maxdepth 1 -type d | fzf)'                               # Search personal projects
 
 # Colorize GREP Output (Good For Log Files)
 alias grep='grep --color=auto'
