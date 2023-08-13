@@ -7,10 +7,10 @@ alias zsh-update-plugins="find "$ZDOTDIR/plugins" -type d -exec test -e '{}/.git
 alias config='cd ~/.config/ && nvim ~/.config/'
 
 # Fuzzy Searching
-alias cda='cd $(find ~/ -type d -print | fzf)'                                                      # Search all directories for user
-alias cdh='cd $(find . -type d -print | fzf)'                                                       # Search all directories from terminal's position
-alias work='cd $(find ~/code/work -maxdepth 1 -type d | fzf)'                                       # Search work projects
-alias personal='cd $(find ~/code/personal -maxdepth 1 -type d | fzf)'                               # Search personal projects
+alias cda='cd $(find ~/ -type d -print | fzf)'                        # Search all directories for user
+alias cdh='cd $(find . -type d -print | fzf)'                         # Search all directories from terminal's position
+alias work='cd $(find ~/code/work -maxdepth 1 -type d | fzf)'         # Search work projects
+alias personal='cd $(find ~/code/personal -maxdepth 1 -type d | fzf)' # Search personal projects
 
 # Colorize GREP Output (Good For Log Files)
 alias grep='grep --color=auto'
@@ -30,5 +30,5 @@ alias free='free -m' # show sizes in MB
 alias chrome="open -a 'Google Chrome'"
 
 # NeoVim
-alias vim='nvim'                           # Use NeoVim as default editor
-alias tvim="nvim '+lua vim.cmd(\"term\")'" # Open NeoVim's terminal in current directory
+alias vim='nvim'                                                   # Use NeoVim as default editor
+alias tvim="nvim '+lua require(\"harpoon.term\").gotoTerminal(1)'" # Open NeoVim's terminal in current directory
