@@ -164,6 +164,10 @@ let g:WhichKeyDesc_Leader_ReformatCode = "<leader>= Reformat Code"
 nnoremap <leader>= :action ReformatCode<CR>
 vnoremap <leader>= :action ReformatCode<CR>
 
+let g:WhichKeyDesc_Leader_HideAllWindows - "<leader>- Hide All Tool Windows"
+nnoremap <leader>- :action HideAllWindows<CR>
+vnoremap <leader>- :action HideAllWindows<CR>
+
 let g:WhichKeyDesc_Leader_AddToHarpoon = "<leader>a Add to Harpoon Marks"
 nnoremap <leader>a :action AddToHarpoon<CR>
 vnoremap <leader>a :action AddToHarpoon<CR>
