@@ -40,7 +40,7 @@ local launchOrFocusToBindMap = {
     u = '',
     -- v = '', -> Reserved for showing the shortcut reminder
     w = 'Microsoft Teams', -- `w` for `work`
-    x = '',
+    -- x = '', -> Reserved for relaunching Amethyst
     y = 'Youtube Music',
     z = 'zoom.us',
 }

@@ -133,6 +133,7 @@ brew install --cask intellij-idea
 echo "Installing OS interaction utilities..."
 brew install --cask karabiner-elements
 brew install --cask hammerspoon
+brew install --cask amethyst
 
 echo "Installing other developer tools..."
 brew install --cask docker
@@ -165,6 +166,10 @@ ln -s ~/dotfiles ~/.config
 # Link hammerspoon config
 rm -rf ~/.hammerspoon  
 ln -s ~/dotfiles/hammerspoon ~/.hammerspoon
+
+# Link hammerspoon config
+rm ~/.amethyst.yml
+ln -s ~/dotfiles/amethyst/amethyst.yml ~/.amethyst.yml
 
 # Install Zap for Zsh and link .zshrc
 echo "Installing Zsh and linking .zshrc..."
