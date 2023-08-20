@@ -1,7 +1,7 @@
 local hyper = { 'cmd', 'ctrl', 'alt', 'shift' }
 
 -- Reload the configuration
-hs.hotkey.bind(hyper, 'r', function()
+hs.hotkey.bind(hyper, 'l', function()
     hs.reload()
 end)
 
@@ -28,13 +28,13 @@ local launchOrFocusToBindMap = {
     i = 'IntelliJ IDEA',
     j = '',
     k = 'Kitty',
-    l = 'Reminders', -- `l` for `TODO list`
+    -- l = '', -> Reserved for reloading Hammerspoon's configuration
     m = 'Mail',
     n = 'NordPass',
     o = 'Obsidian',
     p = 'Postman',
     -- q = '', -> Reserved for closing applications
-    -- r = '', -> Reserved for reloading Hammerspoon's configuration
+    r = 'Reminders',
     s = 'Slack',
     t = 'Telegram',
     u = '',
