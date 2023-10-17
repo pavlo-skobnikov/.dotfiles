@@ -1,10 +1,10 @@
 return {
     'folke/which-key.nvim', -- The popup menu plugin
     config = function()
-        local which_key = require 'which-key'
+        local wk = require 'which-key'
 
         -- Used only for setting groups
-        which_key.register({
+        wk.register({
             c = {
                 name = 'code',
                 s = 'search',
@@ -18,13 +18,19 @@ return {
                 t = 'test',
                 w = 'widget',
             },
-            f = 'find',
-            g = 'git',
-            h = 'hunks',
-            t = 'toggle',
+            f = { name = 'find' },
+            g = { name = 'git' },
+            h = { name = 'hunks' },
+            t = { name = 'toggle' },
+            p = { name = 'ts-playground' },
+            s = {
+                name = 'swap',
+                n = 'next',
+                p = 'previous',
+            }
         }, { prefix = '<leader>' })
 
-        which_key.register({
+        wk.register({
             e = {
                 name = 'evaluate',
                 c = 'comment',

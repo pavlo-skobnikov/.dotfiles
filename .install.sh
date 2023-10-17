@@ -79,46 +79,39 @@ echo
 # Install programming languages and related tools
 echo "Installing languages and related tools..."
 
-# Lua
+brew install cmake # Cross-platform make
+brew install cmake-docs # Documentation for CMake
+brew install clang-format
+
+brew install zig
+
+brew install rust
+
 brew install lua
 brew install luajit
 brew install luarocks # Package manager for Lua
 
-# Clang
-echo "Installing Clang tools..."
-brew install cmake # Cross-platform make
-brew install cmake-docs # Documentation for CMake
 
-# Install Java & tools
-echo "Installing Java & tools..."
 sdk install java
 sdk install gradle # Build automation system
 sdk install maven # Build automation system
 
-# Install Clojure & tools
-echo "Installing Clojure & tools..."
 brew install clojure
 sdk install leiningen # Build automation system
 
-# Install Scala & tools
-echo "Installing Scala & tools..."
-sdk install scala
-sdk install scalaclie # REPL for Scala
-sdk install sbt # Build automation system
-sdk install coursier # Build automation system
+brew install coursier/formulas/coursier 
+cs setup
 
-# Python
-echo "Installing Python 3..."
 brew install python3
+brew install black
 
-# Golang
-echo "Installing Golang..."
 brew install go
+go install golang.org/x/tools/cmd/goimports@latest
 
-# Javascript
-echo "Installing Javascript..."
 brew install node
 brew install typescript
+
+brew install prettier
 
 # Install other tools
 echo "Installing other tools..."
@@ -167,7 +160,7 @@ ln -s ~/dotfiles ~/.config
 rm -rf ~/.hammerspoon  
 ln -s ~/dotfiles/hammerspoon ~/.hammerspoon
 
-# Link hammerspoon config
+# Link amethyst config
 rm ~/.amethyst.yml
 ln -s ~/dotfiles/amethyst/amethyst.yml ~/.amethyst.yml
 

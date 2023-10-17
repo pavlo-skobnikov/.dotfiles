@@ -1,3 +1,11 @@
+local function shfmt()
+    return require('formatter.filetypes.sh').shfmt
+end
+
+local function prettier()
+    require 'formatter.defaults.prettier'
+end
+
 return {
     'mhartington/formatter.nvim',
     dependencies = {
@@ -10,9 +18,12 @@ return {
             log_level = vim.log.levels.WARN,
 
             filetype = {
+                c = { require('formatter.filetypes.c').clangformat },
+                zig = { require('formatter.filetypes.zig').zigfmt },
+                rust = { require('formatter.filetypes.rust').rustfmt },
                 lua = { require('formatter.filetypes.lua').stylua },
-                sh = { require('formatter.filetypes.sh').shfmt },
-                zsh = { require('formatter.filetypes.sh').shfmt },
+                python = { require('formatter.filetypes.python').black },
+                go = { require('formatter.filetypes.go').goimports },
                 java = {
                     function()
                         return {
@@ -26,18 +37,26 @@ return {
                     end,
                 },
                 kotlin = { require('formatter.filetypes.kotlin').ktlint },
+                javascript = { prettier() },
+                typescript = { prettier() },
+                sh = { shfmt() },
+                bash = { shfmt() },
+                zsh = { shfmt() },
+                markdown = { prettier() },
+                sql = { prettier() },
+                yaml = { prettier() },
+                json = { prettier() },
                 ['*'] = {
                     require('formatter.filetypes.any').remove_trailing_whitespace,
                 },
             },
         }
 
-        vim.keymap.set('n', '<leader>=', ':Format<CR>', { silent = true, desc = 'Format' })
-        vim.keymap.set(
-            'n',
-            '<leader>+',
-            ':FormatWrite<CR>',
-            { silent = true, desc = 'Format & Write' }
-        )
+        local function map(key, cmd, desc)
+            vim.keymap.set('n', '<LEADER>' .. key, cmd, { desc = desc })
+        end
+
+        map('=', ':Format<CR>', 'Format')
+        map('+', ':FormatWrite<CR>', 'Format && Write')
     end,
 }

@@ -9,8 +9,8 @@ end
 local function set_dap_keymaps()
     local dap_go = require 'dap-go'
 
-    vim.keymap.set('n', '<leader>dtn', dap_go.debug_test, { desc = 'Debug Nearest Test' })
-    vim.keymap.set('n', '<leader>dtl', dap_go.debug_last_test, { desc = 'Debug Last Test' })
+    vim.keymap.set('n', '<leader>dtn', dap_go.debug_test, { desc = '[n]earest' })
+    vim.keymap.set('n', '<leader>dtl', dap_go.debug_last_test, { desc = '[l]ast' })
 end
 
 local function go_setup()

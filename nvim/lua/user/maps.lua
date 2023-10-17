@@ -14,7 +14,7 @@ vim.keymap.set('n', '<leader>H', function()
     local word = vim.fn.expand '<cword>'
 
     vim.fn.matchadd('Search', word)
-end, { desc = 'Highlight Word', silent = true, noremap = true })
+end, { desc = '[h]ighlight word', silent = true, noremap = true })
 
 -- Remove all highlights on <ESC>
 vim.keymap.set('n', '<ESC>', function()

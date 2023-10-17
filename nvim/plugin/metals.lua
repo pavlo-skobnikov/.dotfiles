@@ -1,5 +1,11 @@
 local function get_metals_main_cfg()
-    local metals_config = require('metals').bare_config()
+    local metals = require 'metals'
+
+    vim.keymap.set('n', '<leader>ws', function()
+        metals.hover_worksheet()
+    end, { desc = '[w]orksheet' })
+
+    local metals_config = metals.bare_config()
 
     -- Example of settings
     metals_config.settings = {

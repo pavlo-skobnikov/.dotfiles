@@ -3,35 +3,25 @@ return {
         'tpope/vim-fugitive', -- Powerful Git wrapper for many-many simple and coml
         dependencies = 'nvim-telescope/telescope.nvim',
         config = function()
-            vim.keymap.set('n', '<leader>gg', ':Git<CR>', { desc = 'Fugitive' })
+            local tb = require 'telescope.builtin'
 
-            vim.keymap.set('n', '<leader>go', ':Git checkout<SPACE>', { desc = 'Checkout' })
-            vim.keymap.set('n', '<leader>gf', ':Git fetch<SPACE>', { desc = 'Fetch' })
-            vim.keymap.set('n', '<leader>gu', ':Git pull<SPACE>', { desc = 'Pull/Update' })
-            vim.keymap.set('n', '<leader>gp', ':Git push<SPACE>', { desc = 'Push' })
+            vim.keymap.set('n', '<leader>gb', tb.git_branches, { desc = '[b]ranches' })
+            vim.keymap.set('n', '<leader>gB', ':Git blame<CR>', { desc = '[b]lame' })
+            vim.keymap.set('n', '<leader>gc', tb.git_commits, { desc = '[c]ommits' })
+            vim.keymap.set('n', '<leader>gC', tb.git_bcommits, { desc = '[c]urrent' })
+            vim.keymap.set('n', '<leader>gd', ':Gvdiff<CR>', { desc = '[d]iff' })
+            vim.keymap.set('n', '<leader>gf', ':Git fetch<SPACE>', { desc = '[f]etch' })
+            vim.keymap.set('n', '<leader>gg', ':Git<CR>', { desc = 'fu[g]itive' })
+            vim.keymap.set('n', '<leader>gh', ':0Gclog<CR>', { desc = 'file [h]istory' })
+            vim.keymap.set('n', '<leader>gl', ':Git log<CR>', { desc = '[l]og' })
+            vim.keymap.set('n', '<leader>go', ':Git checkout<SPACE>', { desc = '[c]heckout' })
+            vim.keymap.set('n', '<leader>gp', ':Git push<SPACE>', { desc = '[p]ush' })
+            vim.keymap.set('n', '<leader>gu', ':Git pull<SPACE>', { desc = 'p[u]ll' })
+            vim.keymap.set('n', '<leader>gs', tb.git_status, { desc = '[s]tatus' })
+            vim.keymap.set('n', '<leader>gS', tb.git_stash, { desc = '[s]tash' })
+            vim.keymap.set('n', '<leader>g?', ':Git help<CR>', { desc = 'help ([?])' })
 
-            vim.keymap.set('n', '<leader>gB', ':Git blame<CR>', { desc = 'Blame' })
-
-            vim.keymap.set('n', '<leader>gl', ':Git log<CR>', { desc = 'Log' })
-            vim.keymap.set('n', '<leader>gh', ':0Gclog<CR>', { desc = 'File History' })
-
-            vim.keymap.set('n', '<leader>gd', ':Gvdiff<CR>', { desc = 'Open Diff' })
-
-            vim.keymap.set('n', '<leader>g?', ':Git help<CR>', { desc = 'Fugitive Help' })
-
-            local builtin = require 'telescope.builtin'
-
-            vim.keymap.set('n', '<leader>gs', builtin.git_status, { desc = 'Git Status' })
-            vim.keymap.set('n', '<leader>gS', builtin.git_stash, { desc = 'Git Stash' })
-            vim.keymap.set('n', '<leader>gc', builtin.git_commits, { desc = ' Git Commits' })
-            vim.keymap.set(
-                'n',
-                '<leader>gC',
-                builtin.git_bcommits,
-                { desc = 'Current File Commits' }
-            )
-
-            vim.keymap.set('n', '<leader>gb', builtin.git_branches, { desc = 'Switch Branch' })
+            vim.keymap.set('n', '<leader>tb', ':Git blame<CR>', { desc = 'git [b]lame' })
         end,
     },
     {
@@ -42,75 +32,63 @@ return {
                     local gs = package.loaded.gitsigns
 
                     -- Navigation between changes
-                    vim.keymap.set('n', ']c', function()
+                    vim.keymap.set('n', ']h', function()
                         if vim.wo.diff then
-                            return ']c'
+                            return ']h'
                         end
                         vim.schedule(function()
                             gs.next_hunk()
                         end)
                         return '<Ignore>'
-                    end, { expr = true, desc = 'Next Change' })
-
-                    vim.keymap.set('n', '[c', function()
+                    end, { expr = true, desc = 'Next [h]unk' })
+                    vim.keymap.set('n', '[h', function()
                         if vim.wo.diff then
-                            return '[c'
+                            return '[h'
                         end
                         vim.schedule(function()
                             gs.prev_hunk()
                         end)
                         return '<Ignore>'
-                    end, { expr = true, desc = 'Previous Change' })
+                    end, { expr = true, desc = 'Previous [h]unk' })
 
                     -- Actions
                     vim.keymap.set(
                         { 'n', 'v' },
                         '<leader>hs',
-                        ':Gitsigns stage_hunk<CR>',
-                        { desc = 'Stage Hunk' }
+                        gs.stage_hunk,
+                        { desc = '[S]tage hunk' }
                     )
-                    vim.keymap.set('n', '<leader>hS', gs.stage_buffer, { desc = 'Stage Buffer' })
-
+                    vim.keymap.set('n', '<leader>hS', gs.stage_buffer, { desc = '[S]tage buffer' })
                     vim.keymap.set(
                         'n',
                         '<leader>hu',
                         gs.undo_stage_hunk,
-                        { desc = 'Undo Stage Buffer' }
+                        { desc = '[U]ndo stage Hunk' }
                     )
-
                     vim.keymap.set(
                         { 'n', 'v' },
                         '<leader>hr',
-                        ':Gitsigns reset_hunk<CR>',
-                        { desc = 'Reset Hunk' }
+                        gs.reset_hunk,
+                        { desc = '[R]eset hunk' }
                     )
-                    vim.keymap.set('n', '<leader>hR', gs.reset_buffer, { desc = 'Reset Buffer' })
-
-                    vim.keymap.set('n', '<leader>hp', gs.preview_hunk, { desc = 'Preview Hunk' })
+                    vim.keymap.set('n', '<leader>hR', gs.reset_buffer, { desc = '[R]eset buffer' })
+                    vim.keymap.set('n', '<leader>hp', gs.preview_hunk, { desc = '[P]review hunk' })
                     vim.keymap.set('n', '<leader>hb', function()
                         gs.blame_line { full = true }
-                    end, { desc = 'Blame Line' })
-
-                    vim.keymap.set('n', '<leader>hd', gs.diffthis, { desc = 'Diff This' })
+                    end, { desc = '[B]lame line' })
+                    vim.keymap.set('n', '<leader>hd', gs.diffthis, { desc = '[D]iff' })
                     vim.keymap.set('n', '<leader>hD', function()
-                        local ref = vim.fn.input 'Ref > '
-
-                        gs.diffthis(ref)
-                    end, { desc = 'Diff This against Ref' })
+                        gs.diffthis(vim.fn.input 'Ref > ')
+                    end, { desc = '[D]iff against ref' })
 
                     -- Toggles
                     vim.keymap.set(
                         'n',
-                        '<leader>tb',
+                        '<leader>tL',
                         gs.toggle_current_line_blame,
-                        { desc = 'Toggle Current Line Blame' }
+                        { desc = 'current [l]ine blame' }
                     )
-                    vim.keymap.set(
-                        'n',
-                        '<leader>td',
-                        gs.toggle_deleted,
-                        { desc = 'Toggle Deleted' }
-                    )
+                    vim.keymap.set('n', '<leader>td', gs.toggle_deleted, { desc = '[d]eleted' })
 
                     -- Text object
                     vim.keymap.set({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')

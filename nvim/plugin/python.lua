@@ -12,9 +12,9 @@ end
 local function set_dap_keymaps()
     local dap_python = require 'dap-python'
 
-    vim.keymap.set('n', '<leader>dtc', dap_python.test_class, { desc = 'Debug Test Class' })
-    vim.keymap.set('n', '<leader>dtn', dap_python.test_method, { desc = 'Debug Nearest Test' })
-    vim.keymap.set('v', '<leader>dts', dap_python.debug_selection, { desc = 'Debug Selection' })
+    vim.keymap.set('n', '<leader>dtc', dap_python.test_class, { desc = '[c]lass' })
+    vim.keymap.set('n', '<leader>dtn', dap_python.test_method, { desc = '[n]earest' })
+    vim.keymap.set('v', '<leader>dts', dap_python.debug_selection, { desc = '[s]election' })
 end
 
 local function python_setup()

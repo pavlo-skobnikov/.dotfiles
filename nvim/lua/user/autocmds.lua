@@ -11,7 +11,13 @@ vim.api.nvim_create_autocmd('FocusGained', {
 })
 
 local function get_git_branch()
-    return vim.fn.trim(vim.fn.system 'git branch --show-current')
+    local result = vim.fn.system 'git branch --show-current'
+
+    if string.match(result, 'fatal') then
+        return 'no git'
+    end
+
+    return vim.fn.trim(result)
 end
 
 local function set_statusline()
