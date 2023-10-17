@@ -1,10 +1,6 @@
 local function get_metals_main_cfg()
     local metals = require 'metals'
 
-    vim.keymap.set('n', '<leader>ws', function()
-        metals.hover_worksheet()
-    end, { desc = '[w]orksheet' })
-
     local metals_config = metals.bare_config()
 
     -- Example of settings
@@ -52,8 +48,15 @@ end
 
 local function compose_metals_cfg()
     local metals_config = get_metals_main_cfg()
+    local metals = require 'metals'
 
-    metals_config.on_attach = function()
+    metals_config.on_attach = function(client, bufnr)
+        vim.keymap.set('n', '<leader>ws', function()
+            metals.hover_worksheet()
+        end, { desc = '[w]orksheet' })
+
+        require('user.util').on_attach(client, bufnr)
+
         setup_dap_cfg()
         require('metals').setup_dap()
     end
