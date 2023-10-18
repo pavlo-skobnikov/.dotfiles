@@ -35,3 +35,5 @@ fi
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
+# FZF Completions
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

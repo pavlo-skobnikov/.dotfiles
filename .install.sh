@@ -43,6 +43,7 @@ brew install coreutils # GNU File, Shell, and Text utilities
 brew install gnu-sed # GNU implementation of the famous stream editor
 brew install ripgrep # Search tool like grep and The Silver Searcher
 brew install fzf # Command-line fuzzy finder written in Go
+/opt/homebrew/opt/fzf/install # Install completion and key bindings for fzf
 brew install jq # Lightweight and flexible command-line JSON processor
 brew install miller # Like sed, awk, cut, join & sort for name-indexed data such as CSV
 brew install fd # Simple, fast and user-friendly alternative to find
@@ -109,6 +110,7 @@ brew install go
 go install golang.org/x/tools/cmd/goimports@latest
 
 brew install node
+npm completion
 brew install typescript
 
 brew install prettier
@@ -216,8 +218,6 @@ defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
 git clone git@github.com:shaunsingh/SFMono-Nerd-Font-Ligaturized.git /tmp/SFMono_Nerd_Font
 mv /tmp/SFMono_Nerd_Font/* $HOME/Library/Fonts
 rm -rf /tmp/SFMono_Nerd_Font/
-
-curl -L https://github.com/kvndrsslr/sketchybar-app-font/releases/download/v1.0.4/sketchybar-app-font.ttf -o $HOME/Library/Fonts/sketchybar-app-font.ttf
 
 # Configure IntelliJ
 echo "Linking IntelliJ .ideavimrc..."

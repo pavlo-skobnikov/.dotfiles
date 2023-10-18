@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# Zsh-specific
-alias zsh-update-plugins="find "$ZDOTDIR/plugins" -type d -exec test -e '{}/.git' ';' -print0 | xargs -I {} -0 git -C {} pull -q"
-
 # Configurations
 alias config='cd ~/.config/ && nvim ~/.config/'
 
@@ -29,4 +26,11 @@ alias free='free -m' # show sizes in MB
 alias chrome="open -a 'Google Chrome'"
 
 # NeoVim
-alias vim='nvim'                                                   # Use NeoVim as default editor
+alias vim='nvim' # Use NeoVim as default editor
+
+# Updates
+alias zsh-update-plugins="find "$ZDOTDIR/plugins" -type d -exec test -e '{}/.git' ';' -print0 | xargs -I {} -0 git -C {} pull -q"
+alias brew-update="brew update && brew upgrade && brew cleanup"
+alias sdk-update="sdk update && sdk upgrade"
+
+alias update-all='zsh-update-plugins && brew-update && sdk-update && rustup update && npm update'
