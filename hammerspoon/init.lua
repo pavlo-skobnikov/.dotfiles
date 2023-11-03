@@ -1,13 +1,13 @@
 local hyper = { 'cmd', 'ctrl', 'alt', 'shift' }
 
--- Reload the configuration
-hs.hotkey.bind(hyper, 'l', function()
-    hs.reload()
-end)
-
 -- Close the currently focused application
 hs.hotkey.bind(hyper, 'q', function()
     hs.application.frontmostApplication():kill()
+end)
+
+-- Reload the configuration
+hs.hotkey.bind(hyper, 'a', function()
+    hs.reload()
 end)
 
 local function bindLaunchOrFocusAppToHyperAndKey(appName, key)
@@ -17,20 +17,23 @@ local function bindLaunchOrFocusAppToHyperAndKey(appName, key)
 end
 
 local launchOrFocusToBindMap = {
-    a = 'Activity Monitor', -- [a]ctivity
-    c = 'Calendar', -- [c]alendar
-    d = 'Docker Desktop', -- [d]ocker
-    g = 'Google Chrome', -- [g]oogle
-    i = 'IntelliJ IDEA', -- [i]ntellij
-    k = 'Kitty', -- [k]itty
-    m = 'Mail', -- [m]ail
-    n = 'NordPass', -- [n]ordpass
-    o = 'Obsidian', -- [o]bsidian
-    r = 'Reminders', -- [r]eminders
-    s = 'Slack', -- [s]lack
-    t = 'Telegram', -- [t]elegram
-    y = 'Youtube Music', -- [y]outube
-    z = 'zoom.us', -- [z]oom
+    e = 'Google Chrome',
+    r = 'Youtube Music',
+    t = 'Telegram',
+
+    s = 'Calendar',
+    d = 'Mail',
+    f = 'Reminders',
+    g = 'Slack',
+
+    c = 'Activity Monitor',
+    v = 'Docker Desktop',
+    b = 'zoom.us',
+
+    u = 'Kitty',
+    i = 'IntelliJ IDEA',
+    o = 'Obsidian',
+    p = 'NordPass',
 }
 
 for key, appName in pairs(launchOrFocusToBindMap) do
