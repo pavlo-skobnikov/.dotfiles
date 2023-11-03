@@ -22,3 +22,7 @@ vim.keymap.set('n', '<ESC>', function()
     vim.cmd ':call clearmatches()'
     vim.lsp.buf.clear_references()
 end, { silent = true, noremap = true })
+
+-- Always center the screen when jumping up/down
+vim.keymap.set('n', '<C-d>', '<C-d>zz')
+vim.keymap.set('n', '<C-u>', '<C-u>zz')
