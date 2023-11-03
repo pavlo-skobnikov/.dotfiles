@@ -50,13 +50,15 @@ local function get_jdtls_paths()
     ---
     -- Include java-test bundle if present
     ---
-    local java_test_path = mason_registry.get_package('java-test'):get_install_path()
+    if features.debugger then
+        local java_test_path = mason_registry.get_package('java-test'):get_install_path()
 
-    local java_test_bundle =
+        local java_test_bundle =
         vim.split(vim.fn.glob(java_test_path .. '/extension/server/*.jar'), '\n')
 
-    if java_test_bundle[1] ~= '' then
-        vim.list_extend(path.bundles, java_test_bundle)
+        if java_test_bundle[1] ~= '' then
+            vim.list_extend(path.bundles, java_test_bundle)
+        end
     end
 
     ---
@@ -65,8 +67,8 @@ local function get_jdtls_paths()
     local java_debug_path = mason_registry.get_package('java-debug-adapter'):get_install_path()
 
     local java_debug_bundle = vim.split(
-        vim.fn.glob(java_debug_path .. '/extension/server/com.microsoft.java.debug.plugin-*.jar'),
-        '\n'
+    vim.fn.glob(java_debug_path .. '/extension/server/com.microsoft.java.debug.plugin-*.jar'),
+    '\n'
     )
 
     if java_debug_bundle[1] ~= '' then
@@ -77,7 +79,7 @@ local function get_jdtls_paths()
     -- Include java-decompiler bundle if present
     ---
     local java_decompiler_path =
-        mason_registry.get_package('vscode-java-decompiler'):get_install_path()
+    mason_registry.get_package('vscode-java-decompiler'):get_install_path()
     local java_decompiler_jars = vim.fn.glob(java_decompiler_path .. '/server/*.jar')
 
     local java_decompiler_bundle = vim.fn.split(java_decompiler_jars, '\n')
@@ -97,18 +99,18 @@ local function get_jdtls_paths()
         --
         -- This example assume you are using sdkman: https://sdkman.io
         -- {
-        --   name = 'JavaSE-17',
-        --   path = vim.fn.expand('~/.sdkman/candidates/java/17.0.6-tem'),
-        -- },
-        -- {
-        --   name = 'JavaSE-18',
-        --   path = vim.fn.expand('~/.sdkman/candidates/java/18.0.2-amzn'),
-        -- },
-    }
+            --   name = 'JavaSE-17',
+            --   path = vim.fn.expand('~/.sdkman/candidates/java/17.0.6-tem'),
+            -- },
+            -- {
+                --   name = 'JavaSE-18',
+                --   path = vim.fn.expand('~/.sdkman/candidates/java/18.0.2-amzn'),
+                -- },
+            }
 
-    cache_vars.paths = path
+            cache_vars.paths = path
 
-    return path
+            return path
 end
 
 local function enable_codelens(bufnr)
