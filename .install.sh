@@ -155,7 +155,11 @@ brew install --cask sf-symbols
 brew install --cask font-hack-nerd-font
 
 echo "Configuring the environment..."
-echo "Configuring the environment..."
+
+echo "Making scrips executable..."
+chmod -R +x ~/.config/scripts
+
+echo "Linking some config files..."
 
 # Link tmux config and install TPM
 rm -rf ~/.tmux.conf
