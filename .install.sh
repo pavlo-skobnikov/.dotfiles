@@ -52,6 +52,9 @@ brew install tree # Display directories as trees (with optional color/HTML outpu
 brew install rename # Perl-powered file rename script with many helpful built-ins
 brew install mas # Mac App Store command-line interface
 brew install llvm # Next-gen compiler infrastructure
+curl -s https://cht.sh/:cht.sh \
+    | sudo tee /usr/local/bin/cht.sh \
+    && sudo chmod +x /usr/local/bin/cht.sh # Command-line client for cheat.sh
 
 # Git and CLI tools for remote repositories
 echo "Installing git and CLI tools for remote repositories..."
@@ -65,6 +68,9 @@ git config --global pull.rebase true
 git config --global init.defaultBranch main
 git config --global push.autoSetupRemote true
 
+echo "Fetching dotfiles..."
+git clone https://github.com/pavlo-skobnikov/.dotfiles.git ~/.config/
+
 read -p "Download secrets repository? 'y' will download secrets. NOTE: ssh should be already set up!" -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
@@ -73,15 +79,15 @@ then
   git config --global user.email "pavlo.skobnikov@gmail.com"
 
   echo "Fetching secrets..."
-  git clone https://github.com/pavlo-skobnikov/secrets.git ~/secrets
+  git clone git@github.com:pavlo-skobnikov/.secrets.git ~/.secrets
 fi
 echo
 
 # Install programming languages and related tools
 echo "Installing languages and related tools..."
 
-brew install cmake # Cross-platform make
-brew install cmake-docs # Documentation for CMake
+brew install cmake
+brew install cmake-docs
 brew install clang-format
 
 brew install zig
@@ -90,12 +96,11 @@ brew install rust
 
 brew install lua
 brew install luajit
-brew install luarocks # Package manager for Lua
-
+brew install luarocks
 
 sdk install java
-sdk install gradle # Build automation system
-sdk install maven # Build automation system
+sdk install gradle
+sdk install maven
 
 brew install clojure
 sdk install leiningen # Build automation system
@@ -118,7 +123,8 @@ brew install prettier
 # Install other tools
 echo "Installing other tools..."
 
-echo "Installing the terminal emulator..."
+echo "Installing tmux and kitty..."
+brew install tmux
 brew install --cask kitty
 
 echo "Installing code editors..."
@@ -148,33 +154,29 @@ echo "Installing miscelaneous casks..."
 brew install --cask sf-symbols
 brew install --cask font-hack-nerd-font
 
-# Configure the environment
+echo "Configuring the environment..."
 echo "Configuring the environment..."
 
-echo "Fetching dotfiles..."
-git clone https://github.com/pavlo-skobnikov/dotfiles.git ~/dotfiles
-
-# Link dotfiles
-echo "Linking .config folder from dotfiles..."
-ln -s ~/dotfiles ~/.config
+# Link tmux config and install TPM
+rm -rf ~/.tmux.conf
+ln -s ~/.config/tmux/.tmux.conf ~/.tmux.conf
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # Link hammerspoon config
 rm -rf ~/.hammerspoon  
-ln -s ~/dotfiles/hammerspoon ~/.hammerspoon
+ln -s ~/.config/hammerspoon ~/.hammerspoon
 
 # Link amethyst config
 rm ~/.amethyst.yml
-ln -s ~/dotfiles/amethyst/amethyst.yml ~/.amethyst.yml
+ln -s ~/.config/amethyst/amethyst.yml ~/.amethyst.yml
 
 # Install Zap for Zsh and link .zshrc
-echo "Installing Zsh and linking .zshrc..."
 zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh)
 
 rm -f ~/.zshrc
-ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
+ln -s ~/.config/zsh/.zshrc ~/.zshrc
 
 # Set Zsh as the main system shell
-echo "Setting Zsh as the main system shell..."
 chsh -s $(which zsh)
 
 # macOS Settings
@@ -219,10 +221,8 @@ git clone git@github.com:shaunsingh/SFMono-Nerd-Font-Ligaturized.git /tmp/SFMono
 mv /tmp/SFMono_Nerd_Font/* $HOME/Library/Fonts
 rm -rf /tmp/SFMono_Nerd_Font/
 
-# Configure IntelliJ
-echo "Linking IntelliJ .ideavimrc..."
+# Link IDEAVim config
 rm -f ~/.ideavimrc
-
-ln -s ~/dotfiles/idea/.ideavimrc ~/.ideavimrc
+ln -s ~/.config/idea/.ideavimrc ~/.ideavimrc
 
 echo "Installation complete!"

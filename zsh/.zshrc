@@ -7,7 +7,7 @@ HISTFILE=~/.zsh_history
 # Source
 plug "$HOME/.config/zsh/aliases.zsh"
 plug "$HOME/.config/zsh/exports.zsh"
-plug "$HOME/secrets/secret_exports.zsh"
+plug "$HOME/.secrets/secret_exports.zsh"
 
 # Plugins
 plug "esc/conda-zsh-completion"
@@ -34,6 +34,3 @@ fi
 # Enable SDKMAN!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-
-# FZF Completions
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
