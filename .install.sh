@@ -47,7 +47,7 @@ brew install fzf # Command-line fuzzy finder written in Go
 brew install jq # Lightweight and flexible command-line JSON processor
 brew install miller # Like sed, awk, cut, join & sort for name-indexed data such as CSV
 brew install fd # Simple, fast and user-friendly alternative to find
-brew install exa # Modern replacement for 'ls'
+brew install eza # Modern replacement for `ls`
 brew install tree # Display directories as trees (with optional color/HTML output)
 brew install rename # Perl-powered file rename script with many helpful built-ins
 brew install mas # Mac App Store command-line interface
