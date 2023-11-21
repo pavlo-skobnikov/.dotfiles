@@ -1,13 +1,17 @@
-local function shfmt()
-    return require('formatter.filetypes.sh').shfmt
+local function getFtFmt(filetype, formatter)
+    return require('formatter.filetypes.' .. filetype)[formatter]
 end
 
-local function prettier()
-    require 'formatter.defaults.prettier'
+local function getShFmt()
+    return getFtFmt('sh', 'shfmt')
+end
+
+local function getPrettier()
+    return require 'formatter.defaults.prettier'
 end
 
 return {
-    'mhartington/formatter.nvim',
+    'mhartington/formatter.nvim', -- Easy formatter setup goodness
     dependencies = {
         'williamboman/mason.nvim',
         'nvim-lua/plenary.nvim',
@@ -18,12 +22,12 @@ return {
             log_level = vim.log.levels.WARN,
 
             filetype = {
-                c = { require('formatter.filetypes.c').clangformat },
-                zig = { require('formatter.filetypes.zig').zigfmt },
-                rust = { require('formatter.filetypes.rust').rustfmt },
-                lua = { require('formatter.filetypes.lua').stylua },
-                python = { require('formatter.filetypes.python').black },
-                go = { require('formatter.filetypes.go').goimports },
+                c = { getFtFmt('c', 'clangformat') },
+                zig = { getFtFmt('zig', 'zigfmt') },
+                rust = { getFtFmt('rust', 'rustfmt') },
+                lua = { getFtFmt('lua', 'stylua') },
+                python = { getFtFmt('python', 'black') },
+                go = { getFtFmt('go', 'goimports') },
                 java = {
                     function()
                         return {
@@ -36,27 +40,22 @@ return {
                         }
                     end,
                 },
-                kotlin = { require('formatter.filetypes.kotlin').ktlint },
-                javascript = { prettier() },
-                typescript = { prettier() },
-                sh = { shfmt() },
-                bash = { shfmt() },
-                zsh = { shfmt() },
-                markdown = { prettier() },
-                sql = { prettier() },
-                yaml = { prettier() },
-                json = { prettier() },
-                ['*'] = {
-                    require('formatter.filetypes.any').remove_trailing_whitespace,
-                },
+                kotlin = { getFtFmt('kotlin', 'ktlint') },
+                javascript = { getPrettier() },
+                typescript = { getPrettier() },
+                sh = { getShFmt() },
+                bash = { getShFmt() },
+                zsh = { getShFmt() },
+                markdown = { getPrettier() },
+                sql = { getPrettier() },
+                yaml = { getPrettier() },
+                json = { getPrettier() },
+                ['*'] = { getFtFmt('any', 'remove_trailing_whitespace') },
             },
         }
 
-        local function map(key, cmd, desc)
-            vim.keymap.set('n', '<LEADER>' .. key, cmd, { desc = desc })
-        end
-
-        map('=', ':Format<CR>', 'Format')
-        map('+', ':FormatWrite<CR>', 'Format && Write')
+        RegisterWK({
+            ['='] = { ':Format<CR>', 'Format' },
+        }, { prefix = '<LEADER>' })
     end,
 }

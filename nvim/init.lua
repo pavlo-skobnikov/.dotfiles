@@ -1,30 +1,43 @@
--- .
--- ├── init.lua
--- ├── ...
--- └── lua
---     ├── plugins
---     │   ├── PLUGIN_MODULE_1.lua
---     │   ├── PLUGIN_MODULE_2.lua
---     │   ├── PLUGIN_MODULE_3.lua
---     │   └── PLUGIN_MODULE_N.lua
---     └── user
---         ├── autocmds.lua
---         ├── lazy_bootstrap.lua
---         ├── maps.lua
---         ├── options.lua
---         └── util.lua
+-- Register a keymap with the which-key plugin
+---@param mapTable table The table names, mappings, and descriptions
+---@param optsTable table | nil The options for the which-key plugin
+function RegisterWK(mapTable, optsTable)
+    local wk = require 'which-key'
 
-----------------------------------------------[[ Bootstrap Lazy ]]
+    if optsTable == nil then
+        wk.register(mapTable)
+    else
+        wk.register(mapTable, optsTable)
+    end
+end
 
-require 'user.lazy_bootstrap'
+-- REGISTER LEADER KEYS
+vim.g.mapleader = ' '
+vim.g.maplocalleader = '\\'
 
-----------------------------------------------[[  User Settings ]]
+-- BOOTSTRAP LAZY.NVIM
+local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 
-require 'user.autocmds'
-require 'user.options'
-require 'user.maps'
-require 'user.util'
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system {
+        'git',
+        'clone',
+        '--filter=blob:none',
+        '--single-branch',
+        'https://github.com/folke/lazy.nvim.git',
+        lazypath,
+    }
+end
 
-----------------------------------------------[[  Load Plugins  ]]
+vim.opt.runtimepath:prepend(lazypath)
 
+-- USER SETTINGS
+require 'autocommands'
+require 'options'
+require 'shared'
+
+-- LOAD PLUGINS
 require('lazy').setup 'plugins' -- Loads each lua/plugin/*
+
+-- LOAD MAPPINGS
+require 'mappings'

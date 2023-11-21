@@ -1,7 +1,7 @@
-local java_cmds = vim.api.nvim_create_augroup('java_cmds', { clear = true })
-local cache_vars = {}
+local javaCmds = vim.api.nvim_create_augroup('java_cmds', { clear = true })
+local cacheVars = {}
 
-local root_files = {
+local rootFiles = {
     '.git',
     'mvnw',
     'gradlew',
@@ -21,71 +21,69 @@ local features = {
     decompiler = true,
 }
 
-local function get_jdtls_paths()
-    if cache_vars.paths then
-        return cache_vars.paths
+local function getJdtls()
+    return require 'jdtls'
+end
+
+local function getJdtlsPaths()
+    if cacheVars.paths then
+        return cacheVars.paths
     end
 
     local path = {}
 
     path.data_dir = vim.fn.stdpath 'cache' .. '/nvim-jdtls'
 
-    local mason_registry = require 'mason-registry'
+    local masonReg = require 'mason-registry'
 
-    local jdtls_install = mason_registry.get_package('jdtls'):get_install_path()
+    local jdtlsInstallPath = masonReg.get_package('jdtls'):get_install_path()
 
-    path.java_agent = jdtls_install .. '/lombok.jar'
-    path.launcher_jar = vim.fn.glob(jdtls_install .. '/plugins/org.eclipse.equinox.launcher_*.jar')
+    path.java_agent = jdtlsInstallPath .. '/lombok.jar'
+    path.launcher_jar =
+        vim.fn.glob(jdtlsInstallPath .. '/plugins/org.eclipse.equinox.launcher_*.jar')
 
     if vim.fn.has 'mac' == 1 then
-        path.platform_config = jdtls_install .. '/config_mac'
+        path.platform_config = jdtlsInstallPath .. '/config_mac'
     elseif vim.fn.has 'unix' == 1 then
-        path.platform_config = jdtls_install .. '/config_linux'
+        path.platform_config = jdtlsInstallPath .. '/config_linux'
     elseif vim.fn.has 'win32' == 1 then
-        path.platform_config = jdtls_install .. '/config_win'
+        path.platform_config = jdtlsInstallPath .. '/config_win'
     end
 
     path.bundles = {}
 
-    ---
     -- Include java-test bundle if present
-    ---
     if features.debugger then
-        local java_test_path = mason_registry.get_package('java-test'):get_install_path()
+        local javaTestPath = masonReg.get_package('java-test'):get_install_path()
 
-        local java_test_bundle =
-        vim.split(vim.fn.glob(java_test_path .. '/extension/server/*.jar'), '\n')
+        local javaTestBundle =
+            vim.split(vim.fn.glob(javaTestPath .. '/extension/server/*.jar'), '\n')
 
-        if java_test_bundle[1] ~= '' then
-            vim.list_extend(path.bundles, java_test_bundle)
+        if javaTestBundle[1] ~= '' then
+            vim.list_extend(path.bundles, javaTestBundle)
         end
     end
 
-    ---
     -- Include java-debug-adapter bundle if present
-    ---
-    local java_debug_path = mason_registry.get_package('java-debug-adapter'):get_install_path()
+    local javaDebugPath = masonReg.get_package('java-debug-adapter'):get_install_path()
 
-    local java_debug_bundle = vim.split(
-    vim.fn.glob(java_debug_path .. '/extension/server/com.microsoft.java.debug.plugin-*.jar'),
-    '\n'
+    local javaDebugBundle = vim.split(
+        vim.fn.glob(javaDebugPath .. '/extension/server/com.microsoft.java.debug.plugin-*.jar'),
+        '\n'
     )
 
-    if java_debug_bundle[1] ~= '' then
-        vim.list_extend(path.bundles, java_debug_bundle)
+    if javaDebugBundle[1] ~= '' then
+        vim.list_extend(path.bundles, javaDebugBundle)
     end
 
-    ---
     -- Include java-decompiler bundle if present
-    ---
-    local java_decompiler_path =
-    mason_registry.get_package('vscode-java-decompiler'):get_install_path()
-    local java_decompiler_jars = vim.fn.glob(java_decompiler_path .. '/server/*.jar')
+    local javaDecompilerPath = masonReg.get_package('vscode-java-decompiler'):get_install_path()
+    local javaDecompilerJars = vim.fn.glob(javaDecompilerPath .. '/server/*.jar')
 
-    local java_decompiler_bundle = vim.fn.split(java_decompiler_jars, '\n')
+    local javaDecompilerBundle = vim.fn.split(javaDecompilerJars, '\n')
 
     if features.decompiler then
-        vim.list_extend(path.bundles, java_decompiler_bundle)
+        vim.list_extend(path.bundles, javaDecompilerBundle)
     end
 
     ---
@@ -99,26 +97,26 @@ local function get_jdtls_paths()
         --
         -- This example assume you are using sdkman: https://sdkman.io
         -- {
-            --   name = 'JavaSE-17',
-            --   path = vim.fn.expand('~/.sdkman/candidates/java/17.0.6-tem'),
-            -- },
-            -- {
-                --   name = 'JavaSE-18',
-                --   path = vim.fn.expand('~/.sdkman/candidates/java/18.0.2-amzn'),
-                -- },
-            }
+        --   name = 'JavaSE-17',
+        --   path = vim.fn.expand('~/.sdkman/candidates/java/17.0.6-tem'),
+        -- },
+        -- {
+        --   name = 'JavaSE-18',
+        --   path = vim.fn.expand('~/.sdkman/candidates/java/18.0.2-amzn'),
+        -- },
+    }
 
-            cache_vars.paths = path
+    cacheVars.paths = path
 
-            return path
+    return path
 end
 
-local function enable_codelens(bufnr)
+local function enableCodeLens(bufnr)
     pcall(vim.lsp.codelens.refresh)
 
     vim.api.nvim_create_autocmd('BufWritePost', {
         buffer = bufnr,
-        group = java_cmds,
+        group = javaCmds,
         desc = 'refresh codelens',
         callback = function()
             pcall(vim.lsp.codelens.refresh)
@@ -126,7 +124,7 @@ local function enable_codelens(bufnr)
     })
 end
 
-local function attach_to_debug()
+local function attachToDebug()
     local dap = require 'dap'
 
     dap.configurations.java = {
@@ -143,7 +141,7 @@ local function attach_to_debug()
 end
 
 local function enable_debugger(bufnr)
-    local jdtls = require 'jdtls'
+    local jdtls = getJdtls()
 
     jdtls.setup_dap { hotcodereplace = 'auto' }
     require('jdtls.dap').setup_dap_main_class_configs()
@@ -155,7 +153,7 @@ local function enable_debugger(bufnr)
         jdtls.test_nearest_method,
         { buffer = bufnr, desc = '[n]earest' }
     )
-    vim.keymap.set('n', '<leader>da', attach_to_debug, { buffer = bufnr, desc = '[a]ttach' })
+    vim.keymap.set('n', '<leader>da', attachToDebug, { buffer = bufnr, desc = '[a]ttach' })
 end
 
 local function jdtls_on_attach(client, bufnr)
@@ -164,27 +162,27 @@ local function jdtls_on_attach(client, bufnr)
     end
 
     if features.codelens then
-        enable_codelens(bufnr)
+        enableCodeLens(bufnr)
     end
 
     -- The following mappings are based on the suggested usage of nvim-jdtls
     -- https://github.com/mfussenegger/nvim-jdtls#usage
 
     -- Add general LSP keybindings
-    require('user.util').on_attach(client, bufnr)
+    require('shared').onAttach(client, bufnr)
 end
 
 local function jdtls_setup()
-    local jdtls = require 'jdtls'
+    local jdtls = getJdtls()
 
-    local path = get_jdtls_paths()
+    local path = getJdtlsPaths()
     local data_dir = path.data_dir .. '/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
 
-    if cache_vars.capabilities == nil then
+    if cacheVars.capabilities == nil then
         jdtls.extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 
         local ok_cmp, cmp_lsp = pcall(require, 'cmp_nvim_lsp')
-        cache_vars.capabilities = vim.tbl_deep_extend(
+        cacheVars.capabilities = vim.tbl_deep_extend(
             'force',
             vim.lsp.protocol.make_client_capabilities(),
             ok_cmp and cmp_lsp.default_capabilities() or {}
@@ -299,8 +297,8 @@ local function jdtls_setup()
         cmd = cmd,
         settings = lsp_settings,
         on_attach = jdtls_on_attach,
-        capabilities = cache_vars.capabilities,
-        root_dir = jdtls.setup.find_root(root_files),
+        capabilities = cacheVars.capabilities,
+        root_dir = jdtls.setup.find_root(rootFiles),
         flags = {
             allow_incremental_sync = true,
         },
@@ -311,7 +309,7 @@ local function jdtls_setup()
 end
 
 vim.api.nvim_create_autocmd('FileType', {
-    group = java_cmds,
+    group = javaCmds,
     pattern = { 'java' },
     desc = 'Setup JDTLS',
     callback = jdtls_setup,

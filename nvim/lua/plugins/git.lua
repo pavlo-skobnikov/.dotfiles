@@ -1,97 +1,98 @@
 return {
     {
-        'tpope/vim-fugitive', -- Powerful Git wrapper for many-many simple and coml
-        dependencies = 'nvim-telescope/telescope.nvim',
+        'tpope/vim-fugitive', -- Git wrapper
+        dependencies = {
+            'nvim-telescope/telescope.nvim',
+            'folke/which-key.nvim',
+        },
         config = function()
             local tb = require 'telescope.builtin'
 
-            vim.keymap.set('n', '<leader>gb', tb.git_branches, { desc = '[b]ranches' })
-            vim.keymap.set('n', '<leader>gB', ':Git blame<CR>', { desc = '[b]lame' })
-            vim.keymap.set('n', '<leader>gc', tb.git_commits, { desc = '[c]ommits' })
-            vim.keymap.set('n', '<leader>gC', tb.git_bcommits, { desc = '[c]urrent' })
-            vim.keymap.set('n', '<leader>gd', ':Gvdiff<CR>', { desc = '[d]iff' })
-            vim.keymap.set('n', '<leader>gf', ':Git fetch<SPACE>', { desc = '[f]etch' })
-            vim.keymap.set('n', '<leader>gg', ':Git<CR>', { desc = 'fu[g]itive' })
-            vim.keymap.set('n', '<leader>gh', ':0Gclog<CR>', { desc = 'file [h]istory' })
-            vim.keymap.set('n', '<leader>gl', ':Git log<CR>', { desc = '[l]og' })
-            vim.keymap.set('n', '<leader>go', ':Git checkout<SPACE>', { desc = '[c]heckout' })
-            vim.keymap.set('n', '<leader>gp', ':Git push<SPACE>', { desc = '[p]ush' })
-            vim.keymap.set('n', '<leader>gu', ':Git pull<SPACE>', { desc = 'p[u]ll' })
-            vim.keymap.set('n', '<leader>gs', tb.git_status, { desc = '[s]tatus' })
-            vim.keymap.set('n', '<leader>gS', tb.git_stash, { desc = '[s]tash' })
-            vim.keymap.set('n', '<leader>g?', ':Git help<CR>', { desc = 'help ([?])' })
+            RegisterWK({
+                name = 'git',
+                b = { tb.git_branches, '[B]ranches' },
+                c = { tb.git_commits, 'All [c]ommits' },
+                d = { ':Gvdiff<CR>', '[D]iff' },
+                f = { ':Git fetch<SPACE>', '[F]etch' },
+                g = { ':Git<CR>', 'Fu[g]itive' },
+                h = { ':0Gclog<CR>', 'File [h]istory' },
+                l = { ':Git log<CR>', 'Changes [l]og' },
+                o = { ':Git checkout<SPACE>', 'Check[o]ut' },
+                p = { ':Git push<SPACE>', '[P]ush' },
+                u = { ':Git pull<SPACE>', 'P[u]ll' },
+                i = { tb.git_status, 'Commit [i]nfo (status)' },
+                s = { tb.git_stash, '[S]tash' },
+                ['?'] = { ':Git help<CR>', 'Help ([?])' },
+            }, { prefix = '<LEADER>g' })
 
-            vim.keymap.set('n', '<leader>tb', ':Git blame<CR>', { desc = 'git [b]lame' })
+            RegisterWK({
+                b = { ':Git blame<CR>', 'git [b]lame' },
+            }, { prefix = '<LEADER>t' })
         end,
     },
     {
-        'lewis6991/gitsigns.nvim', -- Git gutters and hunk navigation
+        'lewis6991/gitsigns.nvim', -- Git gutter && hunks
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            'folke/which-key.nvim',
+        },
         config = function()
             require('gitsigns').setup {
                 on_attach = function()
                     local gs = package.loaded.gitsigns
 
-                    -- Navigation between changes
-                    vim.keymap.set('n', ']h', function()
-                        if vim.wo.diff then
-                            return ']h'
+                    -- Navigation between hunks
+                    local function getHunkMoveFunc(mapping, action)
+                        return function()
+                            if vim.wo.diff then
+                                return mapping
+                            end
+
+                            vim.schedule(action)
+                            return '<Ignore>'
                         end
-                        vim.schedule(function()
-                            gs.next_hunk()
-                        end)
-                        return '<Ignore>'
-                    end, { expr = true, desc = 'Next [h]unk' })
-                    vim.keymap.set('n', '[h', function()
-                        if vim.wo.diff then
-                            return '[h'
-                        end
-                        vim.schedule(function()
-                            gs.prev_hunk()
-                        end)
-                        return '<Ignore>'
-                    end, { expr = true, desc = 'Previous [h]unk' })
+                    end
 
-                    -- Actions
-                    vim.keymap.set(
-                        { 'n', 'v' },
-                        '<leader>hs',
-                        gs.stage_hunk,
-                        { desc = '[S]tage hunk' }
-                    )
-                    vim.keymap.set('n', '<leader>hS', gs.stage_buffer, { desc = '[S]tage buffer' })
-                    vim.keymap.set(
-                        'n',
-                        '<leader>hu',
-                        gs.undo_stage_hunk,
-                        { desc = '[U]ndo stage Hunk' }
-                    )
-                    vim.keymap.set(
-                        { 'n', 'v' },
-                        '<leader>hr',
-                        gs.reset_hunk,
-                        { desc = '[R]eset hunk' }
-                    )
-                    vim.keymap.set('n', '<leader>hR', gs.reset_buffer, { desc = '[R]eset buffer' })
-                    vim.keymap.set('n', '<leader>hp', gs.preview_hunk, { desc = '[P]review hunk' })
-                    vim.keymap.set('n', '<leader>hb', function()
-                        gs.blame_line { full = true }
-                    end, { desc = '[B]lame line' })
-                    vim.keymap.set('n', '<leader>hd', gs.diffthis, { desc = '[D]iff' })
-                    vim.keymap.set('n', '<leader>hD', function()
-                        gs.diffthis(vim.fn.input 'Ref > ')
-                    end, { desc = '[D]iff against ref' })
+                    RegisterWK {
+                        [']h'] = { getHunkMoveFunc(']h', gs.next_hunk), 'Next [h]unk' },
+                        ['[h'] = { getHunkMoveFunc('[h', gs.prev_hunk), 'Previous [h]unk' },
+                    }
 
-                    -- Toggles
-                    vim.keymap.set(
-                        'n',
-                        '<leader>tL',
-                        gs.toggle_current_line_blame,
-                        { desc = 'current [l]ine blame' }
-                    )
-                    vim.keymap.set('n', '<leader>td', gs.toggle_deleted, { desc = '[d]eleted' })
+                    -- Hunk actions
+                    RegisterWK({
+                        name = 'hunks',
+                        s = { gs.stage_hunk, '[S]tage hunk' },
+                        u = { gs.undo_stage_hunk, '[U]ndo stage hunk' },
+                        h = { gs.reset_hunk, 'Reset [h]unk' },
+                        b = { gs.reset_buffer, 'Reset [b]uffer' },
+                        p = { gs.preview_hunk, '[P]review hunk' },
+                        i = {
+                            function()
+                                gs.blame_line { full = true }
+                            end,
+                            'Git [i]nfo for current line',
+                        },
+                        d = { gs.diffthis, '[D]iff' },
+                        r = {
+                            function()
+                                gs.diffthis(vim.fn.input 'Ref > ')
+                            end,
+                            'Diff against [r]ef',
+                        },
+                    }, { prefix = '<LEADER>h' })
 
-                    -- Text object
-                    vim.keymap.set({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+                    -- Toggle removed hunks
+                    RegisterWK({
+                        d = { gs.toggle_deleted, '[D]eleted hunks' },
+                    }, { prefix = '<LEADER>t' })
+
+                    -- Hunk as a text object
+                    RegisterWK({
+                        h = { ':<C-U>Gitsigns select_hunk<CR>', 'Select [h]unk' },
+                    }, {
+                        prefix = 'i',
+                        mode = { 'o', 'x' },
+                    })
                 end,
             }
         end,

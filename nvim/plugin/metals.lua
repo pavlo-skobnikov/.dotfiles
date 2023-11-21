@@ -1,10 +1,12 @@
-local function get_metals_main_cfg()
-    local metals = require 'metals'
+local function getMetals()
+    return require 'metals'
+end
 
-    local metals_config = metals.bare_config()
+local function getMetalsMainCfg()
+    local metalsCfg = getMetals().bare_config()
 
     -- Example of settings
-    metals_config.settings = {
+    metalsCfg.settings = {
         showImplicitArguments = true,
         excludedPackages = { 'akka.actor.typed.javadsl', 'com.github.swagger.akka.javadsl' },
     }
@@ -16,13 +18,13 @@ local function get_metals_main_cfg()
     -- metals_config.init_options.statusBarProvider = "on"
 
     -- Setup capabilites for `cmp` snippets
-    metals_config.capabilities = require('cmp_nvim_lsp').default_capabilities()
+    metalsCfg.capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-    return metals_config
+    return metalsCfg
 end
 
 -- Debug settings if you're using nvim-dap
-local function setup_dap_cfg()
+local function setupDapCfg()
     local dap = require 'dap'
 
     dap.configurations.scala = {
@@ -46,25 +48,29 @@ local function setup_dap_cfg()
     }
 end
 
-local function compose_metals_cfg()
-    local metals_config = get_metals_main_cfg()
-    local metals = require 'metals'
+local function composeMetalsCfg()
+    local metalsCfg = getMetalsMainCfg()
+    local metals = getMetals()
 
-    metals_config.on_attach = function(client, bufnr)
-        vim.keymap.set('n', '<leader>ws', function()
-            metals.hover_worksheet()
-        end, { desc = '[w]orksheet' })
+    metalsCfg.on_attach = function(client, bufnr)
+        RegisterWK({
+            w = {
+                function()
+                    metals.hover_worksheet()
+                end,
+                '[W]orksheet',
+            },
+        }, { prefix = '<LEADER>r' })
 
-        require('user.util').on_attach(client, bufnr)
+        require('shared').onAttach(client, bufnr)
 
-        setup_dap_cfg()
-        require('metals').setup_dap()
+        setupDapCfg()
+        metals.setup_dap()
     end
 
-    return metals_config
+    return metalsCfg
 end
 
--- Autocmd that will actually be in charging of starting the whole thing
 local nvim_metals_group = vim.api.nvim_create_augroup('nvim-metals', { clear = true })
 vim.api.nvim_create_autocmd('FileType', {
     -- NOTE: Java might or might not need to be included. It's needed if
@@ -73,7 +79,7 @@ vim.api.nvim_create_autocmd('FileType', {
     -- pattern = { 'scala', 'sbt', 'java' },
     pattern = { 'scala', 'sbt' },
     callback = function()
-        require('metals').initialize_or_attach(compose_metals_cfg())
+        getMetals().initialize_or_attach(composeMetalsCfg())
     end,
     group = nvim_metals_group,
 })

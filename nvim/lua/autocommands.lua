@@ -1,5 +1,3 @@
--- This configuration file contains all the autocommands for NeoVim to run on various events.
-
 vim.api.nvim_create_autocmd('FocusGained', {
     group = vim.api.nvim_create_augroup('CheckFileForExternalChanges', { clear = true }),
     pattern = { '*' },
@@ -10,18 +8,18 @@ vim.api.nvim_create_autocmd('FocusGained', {
     desc = "Update the file's buffer when there are changes to the file on disk",
 })
 
-local function get_git_branch()
+local function getGitBranchName()
     local result = vim.fn.system 'git branch --show-current'
 
     if string.match(result, 'fatal') then
-        return 'no git'
+        return 'NONE'
     end
 
     return vim.fn.trim(result)
 end
 
-local function set_statusline()
-    vim.opt.statusline = '%f  %r%m%=%y  (' .. get_git_branch() .. ')    %l,%c    %P'
+local function setStatusLine()
+    vim.opt.statusline = '%f  %r%m%=%y  (' .. getGitBranchName() .. ')    %l,%c    %P'
 end
 
 vim.api.nvim_create_autocmd('BufEnter', {
@@ -31,7 +29,7 @@ vim.api.nvim_create_autocmd('BufEnter', {
         -- Gets the current git branch and sets it to the buffer variable
         vim.cmd [[let b:git_branch = trim(system('git branch --show-current'))]]
         -- Set the statusline only once
-        set_statusline()
+        setStatusLine()
     end,
     desc = "Update the file's buffer when there are changes to the file on disk",
 })

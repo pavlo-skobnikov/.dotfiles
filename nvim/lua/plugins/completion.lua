@@ -16,13 +16,14 @@ return {
             },
             'nvim-telescope/telescope.nvim', -- Used to enhance LSP functionality
             'hrsh7th/cmp-nvim-lsp', -- Used to extend capabilities
+            'folke/which-key.nvim',
         },
         config = function()
             require('mason').setup()
 
-            local mason_lspconfig = require 'mason-lspconfig'
+            local masonLspCfg = require 'mason-lspconfig'
 
-            mason_lspconfig.setup {
+            masonLspCfg.setup {
                 ensure_installed = {
                     'clangd', -- C
                     'zls', -- Zig
@@ -44,30 +45,40 @@ return {
             }
 
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
-            local on_attach = require('user.util').on_attach
+            local onAttach = require('shared').onAttach
 
-            local lspconfig = require 'lspconfig'
+            local lspCfg = require 'lspconfig'
 
-            local servers_to_not_auto_setup = {
-                'jdtls',
-                -- Scala doesn't need to be ignored
-            }
+            local function serverIsNotToSetup(serverName)
+                local serversToNotAutoSetup = {
+                    'jdtls',
+                    -- Scala doesn't need to be ignored
+                }
 
-            mason_lspconfig.setup_handlers {
+                for _, serverToNotAutoSetup in ipairs(serversToNotAutoSetup) do
+                    if serverToNotAutoSetup == serverName then
+                        return true
+                    end
+                end
+
+                return false
+            end
+
+            masonLspCfg.setup_handlers {
                 -- Default setup for non-specified language servers
-                function(server_name)
-                    if table.contains(servers_to_not_auto_setup, server_name) then
+                function(serverName)
+                    if serverIsNotToSetup(serverName) then
                         return
                     end
 
-                    lspconfig[server_name].setup {
-                        on_attach = on_attach,
+                    lspCfg[serverName].setup {
+                        on_attach = onAttach,
                         capabilities = capabilities,
                     }
                 end,
                 ['lua_ls'] = function()
-                    lspconfig.lua_ls.setup {
-                        on_attach = on_attach,
+                    lspCfg.lua_ls.setup {
+                        on_attach = onAttach,
                         capabilities = capabilities,
                         settings = {
                             Lua = {
@@ -104,8 +115,8 @@ return {
         },
         config = function()
             local cmp = require 'cmp'
-            local luasnip = require 'luasnip'
-            local lspkind = require 'lspkind'
+            local luaSnip = require 'luasnip'
+            local lspKind = require 'lspkind'
 
             -- Lazy loading is required for the snippet engine to correctly
             -- detect the `luasnip` sources
@@ -120,12 +131,12 @@ return {
                 -- Enable snippets
                 snippet = {
                     expand = function(args)
-                        luasnip.lsp_expand(args.body) -- For `luasnip` users.
+                        luaSnip.lsp_expand(args.body) -- For `luasnip` users.
                     end,
                 },
                 formatting = {
                     -- Enable icons to appear with completion options
-                    format = lspkind.cmp_format {
+                    format = lspKind.cmp_format {
                         with_text = true,
                         menu = {
                             buffer = '[buf]',
@@ -221,16 +232,23 @@ return {
                 let g:copilot_no_tab_map = v:true
             ]]
 
-            vim.keymap.set('i', '<C-M-y>', function()
-                ---@diagnostic disable-next-line: unused-local
-                local suggestion = vim.fn['copilot#Accept'] ''
+            RegisterWK({
+                ['<C-S-y>'] = "Accept Copilot's full suggestion",
+                ['<C-M-y>'] = {
+                    function()
+                        ---@diagnostic disable-next-line: unused-local
+                        local suggestion = vim.fn['copilot#Accept'] ''
 
-                local bar = vim.fn['copilot#TextQueuedForInsertion']()
-                return vim.fn.split(bar, [[[ .]\zs]])[1]
-            end, { expr = true, remap = false })
+                        local bar = vim.fn['copilot#TextQueuedForInsertion']()
+                        return vim.fn.split(bar, [[[ .]\zs]])[1]
+                    end,
+                    "Accept Copilot's WORD suggestion",
+                },
+            }, { mode = { 'i' }, expr = true })
 
-            -- Bring up the suggestions panel
-            vim.keymap.set('n', '<C-;>', ':Copilot panel<CR>', { noremap = true, silent = true })
+            RegisterWK {
+                ['<C-;>'] = { ':Copilot panel<CR>', 'Bring up the suggestions panel' },
+            }
         end,
     },
 }
