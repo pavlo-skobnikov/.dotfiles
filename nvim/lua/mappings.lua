@@ -16,7 +16,7 @@ RegisterWK {
         end,
         'Highlight word',
     },
-    ['<ESC'] = {
+    ['<ESC>'] = {
         function()
             vim.cmd ':noh'
             vim.cmd ':call clearmatches()'
