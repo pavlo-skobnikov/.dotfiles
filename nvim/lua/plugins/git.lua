@@ -54,8 +54,8 @@ return {
                     end
 
                     RegisterWK {
-                        [']h'] = { getHunkMoveFunc(']h', gs.next_hunk), 'Next [h]unk' },
-                        ['[h'] = { getHunkMoveFunc('[h', gs.prev_hunk), 'Previous [h]unk' },
+                        [']c'] = { getHunkMoveFunc(']c', gs.next_hunk), 'Next [c]hange' },
+                        ['[c'] = { getHunkMoveFunc('[c', gs.prev_hunk), 'Previous [c]hange' },
                     }
 
                     -- Hunk actions
