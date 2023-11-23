@@ -1,10 +1,10 @@
-local util = require 'util'
+local u = require 'util'
 
 --- `Hyper` sub-layer key bindings
 
 hs.window.animationDuration = 0 -- Disable animations, default value = 0.2
 
-util.bindHyperSubmodeActions(
+u.bindHyperSubmodeActions(
     'v',
     '[V]iews',
     hs.fnutils.map({
@@ -31,7 +31,7 @@ util.bindHyperSubmodeActions(
             hs.window.focusedWindow():centerOnScreen()
         end,
     }, function(windowUnitOrFunction)
-        local action = util.ternary(
+        local action = u.ternary(
             type(windowUnitOrFunction) == 'function',
             windowUnitOrFunction,
             function()
@@ -39,11 +39,11 @@ util.bindHyperSubmodeActions(
             end
         )
 
-        return util.wrapModalExit(action)
+        return u.wrapModalExit(action)
     end)
 )
 
-util.bindHyperSubmodeActions(
+u.bindHyperSubmodeActions(
     's',
     '[S]witch Apps',
     hs.fnutils.map({
@@ -60,18 +60,18 @@ util.bindHyperSubmodeActions(
         m = { 'Slack', 'Telegram' }, -- [M]essaging
         [','] = 'zoom.us', -- No mnemonic binding :)
         ['.'] = 'Microsoft Teams classic', -- No mnemonic binding :)
-    }, function(appNameOrNameList)
-        local action = util.ternary(type(appNameOrNameList) == 'string', function()
-            util.focusOrCycleAppWindows(appNameOrNameList)
-        end, function()
-            util.focusOrCycleDifferentApps(appNameOrNameList)
-        end)
+    }, function(appNameOrNames)
+        if type(appNameOrNames) == 'string' then
+            appNameOrNames = { appNameOrNames }
+        end
 
-        return util.wrapModalExit(action)
+        return u.wrapModalExit(function()
+            u.focusOrCycleApps(appNameOrNames)
+        end)
     end)
 )
 
-util.bindHyperSubmodeActions(
+u.bindHyperSubmodeActions(
     'c',
     '[C]ontrols',
     hs.fnutils.map({
@@ -80,7 +80,7 @@ util.bindHyperSubmodeActions(
         k = 'SOUND_UP',
         l = 'NEXT',
         [';'] = function()
-            util.sendSystemKey 'MUTE'
+            u.sendSystemKey 'MUTE'
         end,
         u = 'BRIGHTNESS_DOWN',
         i = 'BRIGHTNESS_UP',
@@ -88,20 +88,20 @@ util.bindHyperSubmodeActions(
         y = 'REWIND',
         p = hs.caffeinate.lockScreen,
         ['.'] = function()
-            util.sendSystemKey 'PLAY'
+            u.sendSystemKey 'PLAY'
         end,
     }, function(systemKeyOrFunction)
-        return util.ternary(
+        return u.ternary(
             type(systemKeyOrFunction) == 'function',
-            util.wrapModalExit(systemKeyOrFunction),
+            u.wrapModalExit(systemKeyOrFunction),
             function()
-                util.sendSystemKey(systemKeyOrFunction)
+                u.sendSystemKey(systemKeyOrFunction)
             end
         )
     end)
 )
 
-util.bindHyperSubmodeActions(
+u.bindHyperSubmodeActions(
     'z',
     '[Z]ap Screen',
     hs.fnutils.map({
@@ -111,19 +111,16 @@ util.bindHyperSubmodeActions(
         k = { { 'ctrl', 'cmd', 'shift' }, '4' },
         o = { { 'cmd', 'shift' }, '5' },
     }, function(modsAndKey)
-        return util.wrapModalExit(function()
-            util.sendKey(modsAndKey[1], modsAndKey[2])
+        return u.wrapModalExit(function()
+            u.sendKey(modsAndKey[1], modsAndKey[2])
         end)
     end)
 )
 
-util.bindHyperSubmodeActions(
+u.bindHyperSubmodeActions(
     'x',
     'E[x]ecute',
     hs.fnutils.map({
-        u = function() -- [U]pdate
-            -- TODO: Call update script
-        end,
         k = function() -- [K]ill
             hs.application.frontmostApplication():kill()
         end,
@@ -131,7 +128,7 @@ util.bindHyperSubmodeActions(
             hs.reload()
         end,
     }, function(action)
-        return util.wrapModalExit(action)
+        return u.wrapModalExit(action)
     end)
 )
 
@@ -139,12 +136,12 @@ util.bindHyperSubmodeActions(
 
 local topLevelHyperBindings = {
     f = function() -- [F]ind Applications
-        util.sendKey({ 'cmd' }, 'space')
+        u.sendKey({ 'cmd' }, 'space')
     end,
 }
 
 for key, action in pairs(topLevelHyperBindings) do
-    hs.hotkey.bind(util.HYPER, key, action)
+    hs.hotkey.bind(u.HYPER, key, action)
 end
 
 hs.alert.show 'Configuration reloaded'

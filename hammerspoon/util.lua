@@ -2,10 +2,6 @@ local M = {}
 
 M.HYPER = { 'cmd', 'ctrl', 'alt', 'shift' }
 
----@param condition boolean
----@param ifTrue any
----@param ifFalse any
----@return any
 function M.ternary(condition, ifTrue, ifFalse)
     if condition then
         return ifTrue
@@ -14,8 +10,6 @@ function M.ternary(condition, ifTrue, ifFalse)
     end
 end
 
----@param functionToWrap function
----@return function
 function M.wrapModalExit(functionToWrap)
     return function(modal)
         functionToWrap(modal)
@@ -23,14 +17,11 @@ function M.wrapModalExit(functionToWrap)
     end
 end
 
----@param alert string
 function M.alert(alert)
     hs.alert.closeAll()
     hs.alert.show(alert)
 end
 
----@param mods string[] | nil
----@param key string
 function M.sendKey(mods, key)
     if mods == nil then
         mods = {}
@@ -39,37 +30,11 @@ function M.sendKey(mods, key)
     hs.eventtap.keyStroke(mods, key)
 end
 
----@param key string
 function M.sendSystemKey(key)
     hs.eventtap.event.newSystemKeyEvent(key, true):post()
     hs.eventtap.event.newSystemKeyEvent(key, false):post()
 end
 
----@param appName string
-function M.focusOrCycleAppWindows(appName)
-    local focusedWindow = hs.window.focusedWindow()
-
-    -- If already focused, try to find the next window
-    if focusedWindow and focusedWindow:application():name() == appName then
-        local appWindows = hs.application.get(appName):allWindows()
-
-        if #appWindows > 0 then
-            -- It seems that this list order changes after one window get focused,
-            -- let's directly bring the last one to focus every time
-            appWindows[#appWindows]:focus()
-        else
-            -- This should not happen, but just in case
-            hs.application.launchOrFocus(appName)
-        end
-    else
-        -- If not focused
-        hs.application.launchOrFocus(appName)
-    end
-end
-
----@param list string[]
----@param index number
----@return string
 local function getFromListByIndexOrFirstItem(list, index)
     if index > #list then
         return list[1]
@@ -78,8 +43,7 @@ local function getFromListByIndexOrFirstItem(list, index)
     end
 end
 
----@param appNames string[]
-function M.focusOrCycleDifferentApps(appNames)
+function M.focusOrCycleApps(appNames)
     local focusedWindow = hs.window.focusedWindow()
 
     local focusedWindowName = focusedWindow:application():name()
@@ -98,10 +62,6 @@ function M.focusOrCycleDifferentApps(appNames)
     end
 end
 
----@param triggerKey string
----@param modeName string
----@param keysAndActions table<string, function>
----@return nil
 function M.bindHyperSubmodeActions(triggerKey, modeName, keysAndActions)
     local modal = hs.hotkey.modal.new(M.HYPER, triggerKey)
 
