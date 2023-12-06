@@ -35,33 +35,6 @@ function M.sendSystemKey(key)
     hs.eventtap.event.newSystemKeyEvent(key, false):post()
 end
 
-local function getFromListByIndexOrFirstItem(list, index)
-    if index > #list then
-        return list[1]
-    else
-        return list[index]
-    end
-end
-
-function M.focusOrCycleApps(appNames)
-    local focusedWindow = hs.window.focusedWindow()
-
-    local focusedWindowName = focusedWindow:application():name()
-
-    -- If the focused window is in the application list,
-    -- then launch or focus the next one
-    if hs.fnutils.contains(appNames, focusedWindowName) then
-        local focusedWindowIndex = hs.fnutils.indexOf(appNames, focusedWindowName)
-
-        local nextWindowName = getFromListByIndexOrFirstItem(appNames, focusedWindowIndex + 1)
-        hs.application.launchOrFocus(nextWindowName)
-    else
-        -- If not focused, launch or focus the first application
-        -- from the list
-        hs.application.launchOrFocus(appNames[1])
-    end
-end
-
 function M.bindHyperSubmodeActions(triggerKey, modeName, keysAndActions)
     local modal = hs.hotkey.modal.new(M.HYPER, triggerKey)
 
@@ -75,6 +48,24 @@ function M.bindHyperSubmodeActions(triggerKey, modeName, keysAndActions)
         M.alert('Exiting ' .. modeName .. ' mode')
         modal:exit()
     end)
+end
+
+function M.launchOrFocusChromeProfileWindow(profileName)
+    local chromeWindows = hs.application.find('Google Chrome'):allWindows()
+
+    local windowToFocus = nil
+
+    for _, window in ipairs(chromeWindows) do
+        if string.match(window:title(), profileName) then
+            windowToFocus = window
+        end
+    end
+
+    if windowToFocus then
+        windowToFocus:focus()
+    else
+        M.alert('No Chrome window found for ' .. profileName .. ' profile')
+    end
 end
 
 return M

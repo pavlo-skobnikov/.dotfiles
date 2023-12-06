@@ -3,16 +3,19 @@
 echo "This script will use git pull to clone some repositories."
 echo "So, you should have ssh configured in your GitHub account before running this script."
 
-read -p "Have you configured ssh? 'y' will continue the script" -n 1 -r
+read -p "Have you run 'xcode-select --install'? 'y' will continue the script" -n 1 -r
 if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
   exit
 fi
 echo
 
-# Install xCode cli tools
-echo "Installing commandline tools..."
-xcode-select --install
+read -p "Have you configured ssh? 'y' will continue the script" -n 1 -r
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+  exit
+fi
+echo
 
 # Install Brew
 echo "Installing Brew..."
@@ -134,6 +137,7 @@ brew install --cask intellij-idea
 echo "Installing OS interaction utilities..."
 brew install --cask karabiner-elements
 brew install --cask hammerspoon
+brew install --cask alfred
 
 echo "Installing other developer tools..."
 brew install --cask docker

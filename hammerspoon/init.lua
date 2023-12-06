@@ -47,26 +47,36 @@ u.bindHyperSubmodeActions(
     's',
     '[S]witch Apps',
     hs.fnutils.map({
-        y = 'Youtube Music', -- [Y]outube Music
-        u = { 'Calendar', 'Reminders', 'Mail' }, -- [U]tilities
-        i = 'IntelliJ IDEA', -- [I]ntellij
-        o = 'Obsidian', -- [O]bsidian
+        y = 'Youtube Music',
+        u = 'Slack', -- Work [u]pdates
+        i = 'IntelliJ IDEA',
+        o = 'Obsidian',
         p = 'NordPass', -- [P]asswords
-        h = 'Hammerspoon', -- [H]ammerspoon
-        j = 'Google Chrome', -- [J]avaScript
-        k = 'Kitty', -- [K]itty
-        [';'] = 'Docker Desktop', -- No mnemonic binding :)
+        h = 'Hammerspoon',
+        j = 'Mail', -- [J]unk
+        k = 'Kitty',
+        l = 'Reminders', -- To-do [l]ist
+        [';'] = 'Calendar', -- No mnemonic binding :'(
         n = 'Finder', -- [N]avigation
-        m = { 'Slack', 'Telegram' }, -- [M]essaging
-        [','] = 'zoom.us', -- No mnemonic binding :)
-        ['.'] = 'Microsoft Teams classic', -- No mnemonic binding :)
-    }, function(appNameOrNames)
-        if type(appNameOrNames) == 'string' then
-            appNameOrNames = { appNameOrNames }
-        end
-
+        m = 'Telegram', -- [M]essaging
+    }, function(appName)
         return u.wrapModalExit(function()
-            u.focusOrCycleApps(appNameOrNames)
+            hs.application.launchOrFocus(appName)
+        end)
+    end)
+)
+
+u.bindHyperSubmodeActions(
+    'b',
+    '[B]rowse Internet',
+    hs.fnutils.map({
+        h = 'Incognito', -- [H]idden
+        i = 'Innovecs',
+        p = 'Personal',
+        m = 'Miro',
+    }, function(profileName)
+        return u.wrapModalExit(function()
+            u.launchOrFocusChromeProfileWindow(profileName)
         end)
     end)
 )
@@ -131,17 +141,5 @@ u.bindHyperSubmodeActions(
         return u.wrapModalExit(action)
     end)
 )
-
---- Top level `Hyper` key bindings
-
-local topLevelHyperBindings = {
-    f = function() -- [F]ind Applications
-        u.sendKey({ 'cmd' }, 'space')
-    end,
-}
-
-for key, action in pairs(topLevelHyperBindings) do
-    hs.hotkey.bind(u.HYPER, key, action)
-end
 
 hs.alert.show 'Configuration reloaded'
