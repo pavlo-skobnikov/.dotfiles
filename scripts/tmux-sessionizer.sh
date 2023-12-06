@@ -5,7 +5,7 @@ if [[ $# -eq 1 ]]; then
 else
     selected=$(find \
         ~/dev/projects \
-        ~/dev/projects/personal \
+        ~/dev/projects/work \
         ~/dev/projects/personal \
         -mindepth 1 -maxdepth 1 -type d | fzf)
 fi
