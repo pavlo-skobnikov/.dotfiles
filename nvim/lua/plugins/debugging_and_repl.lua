@@ -104,6 +104,7 @@ return {
         },
         config = function()
             RegisterWK({
+                c = 'connect',
                 e = {
                     name = 'evaluate',
                     c = 'comment',
@@ -111,7 +112,10 @@ return {
                 g = 'get',
                 l = 'log',
                 r = 'run',
+                s = 'sessions',
+                v = 'variables',
+                t = 'test',
             }, { prefix = '<LOCALLEADER>' })
-        end
+        end,
     },
 }
