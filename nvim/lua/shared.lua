@@ -34,55 +34,62 @@ function M.onAttach(client, bufnr)
 
     -- Basic info actions
     RegisterWK({
-        K = { vim.lsp.buf.hover, 'Show [k]ind' },
+        K = { vim.lsp.buf.hover, 'Show kind' },
     }, createOptsWith { mode = { 'n', 'v' } })
     RegisterWK({
-        ['<C-S-k>'] = { vim.lsp.buf.signature_help, 'Show fn argument [k]inds' },
+        ['<C-S-k>'] = { vim.lsp.buf.signature_help, 'Show fn argument kinds' },
     }, createOptsWith { mode = { 'n', 'i' } })
 
     -- Next/previous diagnostic
+    local repeatMove = require 'nvim-treesitter.textobjects.repeatable_move'
+    local nextDiagnosticFunc, prevDiagnosticFunc =
+        repeatMove.make_repeatable_move_pair(vim.diagnostic.goto_next, vim.diagnostic.goto_prev)
+
     RegisterWK({
-        [']d'] = { vim.diagnostic.goto_next, 'Next [d]iagnostic' },
-        ['[d'] = { vim.diagnostic.goto_prev, 'Previous [d]iagnostic' },
+        [']d'] = { nextDiagnosticFunc, 'Next diagnostic' },
+        ['[d'] = { prevDiagnosticFunc, 'Previous diagnostic' },
     }, opts)
 
     -- Go to LSP capability actions
+    local goToLspActionMappings = addMappingsForPresentCapabilities({}, {
+        ['definitionProvider'] = { d = { vim.lsp.buf.definition, 'Definition' } },
+        ['declarationProvider'] = { D = { vim.lsp.buf.declaration, 'Declaration' } },
+        ['implementationProvider'] = { I = { vim.lsp.buf.implementation, 'Implementation' } },
+        ['callHierarchyProvider'] = {
+            o = { vim.lsp.buf.outgoing_calls, 'Outgoing calls' },
+            i = { vim.lsp.buf.incoming_calls, 'Incoming calls' },
+        },
+        ['typeDefinitionProvider'] = { t = { vim.lsp.buf.type_definition, 'Type definition' } },
+    })
+
+    RegisterWK(goToLspActionMappings, createOptsWith { prefix = 'g' })
+
+    -- 'Refactor' actions
     local function getDiagnosticsFunc(severity)
         return function()
             tb.diagnostics { severity = vim.diagnostic.severity[severity] }
         end
     end
 
-    local goToLspActionMappings = addMappingsForPresentCapabilities({
-        name = 'lsp-action',
-        s = { getDiagnosticsFunc 'WARN', 'Warning[s]' },
-        e = { getDiagnosticsFunc 'ERROR', '[E]rrors' },
-    }, {
-        ['definitionProvider'] = { f = { vim.lsp.buf.definition, 'De[f]inition' } },
-        ['declarationProvider'] = { c = { vim.lsp.buf.declaration, 'De[c]laration' } },
-        ['implementationProvider'] = { m = { vim.lsp.buf.implementation, 'I[m]plementation' } },
-        ['callHierarchyProvider'] = {
-            o = { vim.lsp.buf.outgoing_calls, '[O]utgoing calls' },
-            i = { vim.lsp.buf.incoming_calls, '[I]ncoming calls' },
-        },
-        ['typeDefinitionProvider'] = { t = { vim.lsp.buf.type_definition, '[T]ype definition' } },
-        ['documentSymbolProvider'] = { d = { tb.lsp_document_symbols, '[D]ocument symbols' } },
-        ['workspaceSymbolProvider'] = { w = { tb.lsp_workspace_symbols, '[W]orkspace symbols' } },
-    })
-
-    RegisterWK(goToLspActionMappings, createOptsWith { prefix = 'gl' })
-
-    -- 'Refactor' actions
     local refactorActionMappings = addMappingsForPresentCapabilities({
         name = 'refactor',
-        f = { vim.diagnostic.open_float, 'Diagnostics [f]loat' },
-        l = { vim.lsp.codelens.run, 'Code [l]ens' },
+        f = { vim.diagnostic.open_float, 'Diagnostics float' },
+        l = { vim.lsp.codelens.run, 'Code lens' },
+        s = {
+            name = 'show',
+            w = { getDiagnosticsFunc 'WARN', 'Warnings' },
+            e = { getDiagnosticsFunc 'ERROR', 'Errors' },
+        },
     }, {
-        ['codeActionProvider'] = { a = { vim.lsp.buf.code_action, '[A]ctions' } },
-        ['referencesProvider'] = { r = { vim.lsp.buf.references, '[R]eferences' } },
-        ['renameProvider'] = { n = { vim.lsp.buf.rename, 'Re[n]ame' } },
+        ['codeActionProvider'] = { a = { vim.lsp.buf.code_action, 'Actions' } },
+        ['referencesProvider'] = { r = { vim.lsp.buf.references, 'References' } },
+        ['renameProvider'] = { n = { vim.lsp.buf.rename, 'Rename' } },
         ['documentHighlightProvider'] = {
-            h = { vim.lsp.buf.document_highlight, '[H]ighlight symbol' },
+            h = { vim.lsp.buf.document_highlight, 'Highlight symbol' },
+        },
+        ['documentSymbolProvider'] = { d = { tb.lsp_document_symbols, 'Search document symbols' } },
+        ['workspaceSymbolProvider'] = {
+            w = { tb.lsp_workspace_symbols, 'Search workspace symbols' },
         },
     })
 

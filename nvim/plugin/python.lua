@@ -16,9 +16,9 @@ local function setKeyMappings()
 
     RegisterWK({
         name = 'test',
-        c = { dapPy.test_class, '[C]lass' },
-        n = { dapPy.test_method, '[N]earest' },
-        s = { dapPy.debug_selection, '[S]election' },
+        c = { dapPy.test_class, 'Class' },
+        n = { dapPy.test_method, 'Nearest' },
+        s = { dapPy.debug_selection, 'Selection' },
     }, { prefix = '<leader>dt' })
 end
 

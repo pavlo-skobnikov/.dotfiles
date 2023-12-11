@@ -247,11 +247,11 @@ return {
             }, { mode = { 'i' }, expr = true })
 
             RegisterWK {
-                ['<C-;>'] = { ':Copilot panel<CR>', 'Bring up the suggestions panel' },
+                ['<LEADER>c'] = { ':Copilot panel<CR>', 'Copilot suggestion panel' },
             }
 
             RegisterWK {
-                ['<LEADER>tc'] = {
+                ['yoC'] = {
                     function()
                         local status = vim.api.nvim_command_output 'Copilot status'
 
@@ -263,7 +263,7 @@ return {
                             vim.api.nvim_command 'Copilot enable'
                         end
                     end,
-                    '[C]opilot',
+                    'Copilot',
                 },
             }
         end,

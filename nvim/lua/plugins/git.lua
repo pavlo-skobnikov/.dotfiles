@@ -10,24 +10,24 @@ return {
 
             RegisterWK({
                 name = 'git',
-                b = { tb.git_branches, '[B]ranches' },
-                c = { tb.git_commits, 'All [c]ommits' },
-                d = { ':Gvdiff<CR>', '[D]iff' },
-                f = { ':Git fetch<SPACE>', '[F]etch' },
-                g = { ':Git<CR>', 'Fu[g]itive' },
-                h = { ':0Gclog<CR>', 'File [h]istory' },
-                l = { ':Git log<CR>', 'Changes [l]og' },
-                o = { ':Git checkout<SPACE>', 'Check[o]ut' },
-                p = { ':Git push<SPACE>', '[P]ush' },
-                u = { ':Git pull<SPACE>', 'P[u]ll' },
-                i = { tb.git_status, 'Commit [i]nfo (status)' },
-                s = { tb.git_stash, '[S]tash' },
-                ['?'] = { ':Git help<CR>', 'Help ([?])' },
+                b = { tb.git_branches, 'Branches' },
+                c = { tb.git_commits, 'All commits' },
+                d = { ':Gvdiff<CR>', 'Diff' },
+                f = { ':Git fetch<SPACE>', 'Fetch' },
+                g = { ':Git<CR>', 'Fugitive' },
+                h = { ':0Gclog<CR>', 'File history' },
+                l = { ':Git log<CR>', 'Changes log' },
+                o = { ':Git checkout<SPACE>', 'Checkout' },
+                p = { ':Git push<SPACE>', 'Push' },
+                u = { ':Git pull<SPACE>', 'Pull' },
+                i = { tb.git_status, 'Commit info (status)' },
+                s = { tb.git_stash, 'Stash' },
+                ['?'] = { ':Git help<CR>', 'Help (?)' },
             }, { prefix = '<LEADER>g' })
 
-            RegisterWK({
-                b = { ':Git blame<CR>', 'git [b]lame' },
-            }, { prefix = '<LEADER>t' })
+            RegisterWK {
+                yog = { ':Git blame<CR>', 'git blame' },
+            }
         end,
     },
     {
@@ -35,6 +35,7 @@ return {
         dependencies = {
             'nvim-lua/plenary.nvim',
             'folke/which-key.nvim',
+            'nvim-treesitter/nvim-treesitter-textobjects',
         },
         config = function()
             require('gitsigns').setup {
@@ -52,43 +53,48 @@ return {
                             return '<Ignore>'
                         end
                     end
+                    local repeatMove = require 'nvim-treesitter.textobjects.repeatable_move'
+                    local nextHunkFunc, prevHunkFunc = repeatMove.make_repeatable_move_pair(
+                        getHunkMoveFunc(']g', gs.next_hunk),
+                        getHunkMoveFunc('[g', gs.prev_hunk)
+                    )
 
                     RegisterWK {
-                        [']c'] = { getHunkMoveFunc(']c', gs.next_hunk), 'Next [c]hange' },
-                        ['[c'] = { getHunkMoveFunc('[c', gs.prev_hunk), 'Previous [c]hange' },
+                        [']g'] = { nextHunkFunc, 'Next git change' },
+                        ['[g'] = { prevHunkFunc, 'Previous git change' },
                     }
 
                     -- Hunk actions
                     RegisterWK({
                         name = 'hunks',
-                        s = { gs.stage_hunk, '[S]tage hunk' },
-                        u = { gs.undo_stage_hunk, '[U]ndo stage hunk' },
-                        h = { gs.reset_hunk, 'Reset [h]unk' },
-                        b = { gs.reset_buffer, 'Reset [b]uffer' },
-                        p = { gs.preview_hunk, '[P]review hunk' },
+                        s = { gs.stage_hunk, 'Stage hunk' },
+                        u = { gs.undo_stage_hunk, 'Undo stage hunk' },
+                        h = { gs.reset_hunk, 'Reset hunk' },
+                        b = { gs.reset_buffer, 'Reset buffer' },
+                        p = { gs.preview_hunk, 'Preview hunk' },
                         i = {
                             function()
                                 gs.blame_line { full = true }
                             end,
-                            'Git [i]nfo for current line',
+                            'Git info for current line',
                         },
-                        d = { gs.diffthis, '[D]iff' },
+                        d = { gs.diffthis, 'Diff' },
                         r = {
                             function()
                                 gs.diffthis(vim.fn.input 'Ref > ')
                             end,
-                            'Diff against [r]ef',
+                            'Diff against ref',
                         },
                     }, { prefix = '<LEADER>h' })
 
                     -- Toggle removed hunks
-                    RegisterWK({
-                        d = { gs.toggle_deleted, '[D]eleted hunks' },
-                    }, { prefix = '<LEADER>t' })
+                    RegisterWK {
+                        yod = { gs.toggle_deleted, 'Deleted hunks' },
+                    }
 
                     -- Hunk as a text object
                     RegisterWK({
-                        h = { ':<C-U>Gitsigns select_hunk<CR>', 'Select [h]unk' },
+                        h = { ':<C-U>Gitsigns select_hunk<CR>', 'inner hunk' },
                     }, {
                         prefix = 'i',
                         mode = { 'o', 'x' },

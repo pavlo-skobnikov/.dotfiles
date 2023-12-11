@@ -58,7 +58,7 @@ local function composeMetalsCfg()
                 function()
                     metals.hover_worksheet()
                 end,
-                '[W]orksheet',
+                'Open worksheet',
             },
         }, { prefix = '<LEADER>r' })
 

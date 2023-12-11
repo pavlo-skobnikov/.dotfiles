@@ -13,8 +13,8 @@ local function setDapMappings()
 
     RegisterWK({
         name = 'test',
-        n = { dapGo.debug_test, '[N]earest' },
-        l = { dapGo.debug_last_test, '[L]ast' },
+        n = { dapGo.debug_test, 'Nearest' },
+        l = { dapGo.debug_last_test, 'Last' },
     }, { prefix = '<LEADER>dt' })
 end
 

@@ -146,14 +146,14 @@ local function enable_debugger(bufnr)
     jdtls.setup_dap { hotcodereplace = 'auto' }
     require('jdtls.dap').setup_dap_main_class_configs()
 
-    vim.keymap.set('n', '<leader>dtc', jdtls.test_class, { buffer = bufnr, desc = '[c]lass' })
-    vim.keymap.set(
-        'n',
-        '<leader>dtn',
-        jdtls.test_nearest_method,
-        { buffer = bufnr, desc = '[n]earest' }
-    )
-    vim.keymap.set('n', '<leader>da', attachToDebug, { buffer = bufnr, desc = '[a]ttach' })
+    RegisterWK({
+        t = {
+            name = 'test',
+            c = { jdtls.test_class, 'Class' },
+            n = { jdtls.test_nearest_method, 'Nearest' },
+        },
+        a = { attachToDebug, 'Attach' },
+    }, { prefix = '<LEADER>d', buffer = bufnr })
 end
 
 local function jdtls_on_attach(client, bufnr)

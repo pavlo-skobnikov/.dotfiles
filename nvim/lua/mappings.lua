@@ -24,8 +24,12 @@ RegisterWK {
         end,
         'Remove all highlights on ESC',
     },
+    -- Center screen on movement
     ['<C-d>'] = { '<C-d>zz', 'Screen down and center' },
     ['<C-u>'] = { '<C-u>zz', 'Screen up and center' },
+    -- Replace multiple successive whitespaces with a single space
+    ['di<SPACE>'] = { 'f<SPACE>diwi<SPACE><ESC>', 'Trim whitespace' },
+    ['ci<SPACE>'] = { 'f<SPACE>diwi<SPACE>', 'Trim whitespace' },
 }
 
 RegisterWK({

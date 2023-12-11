@@ -41,8 +41,22 @@ return {
                 },
 
                 indent = { enable = false },
-                incremental_selection = { enable = true },
+                incremental_selection = {
+                    enable = true,
+                    keymaps = {
+                        init_selection = 'gs',
+                        node_incremental = ';',
+                        node_decremental = ',',
+                        scope_incremental = false,
+                    },
+                },
             }
+
+            vim.cmd [[ " Treesitter folding
+                set foldmethod=expr
+                set foldexpr=nvim_treesitter#foldexpr()
+                set nofoldenable " Disable folding at startup.
+            ]]
         end,
     },
     {
@@ -52,96 +66,52 @@ return {
             'folke/which-key.nvim',
         },
         config = function()
-            local function mkOpts(query, desc)
+            local function opts(query, desc)
                 return { query = query, desc = desc }
             end
 
             getTsCfgs().setup {
                 textobjects = {
                     select = {
-                        -- Enable textobj selection
                         enable = true,
-                        -- Automatically jump forward to textobj, similar to targets.vim
                         lookahead = true,
-                        -- Capture groups defined in textobjects.scm are available for bindings
                         keymaps = {
-                            ['oia'] = mkOpts('@parameter.inner', '[A]rgument'),
-                            ['oaa'] = mkOpts('@parameter.outer', '[A]rgument'),
-                            ['oic'] = mkOpts('@class.inner', '[C]lass'),
-                            ['oac'] = mkOpts('@class.outer', '[C]lass'),
-                            ['oif'] = mkOpts('@function.inner', '[F]unction'),
-                            ['oaf'] = mkOpts('@function.outer', '[F]unction'),
-                            ['oib'] = mkOpts('@block.inner', '[B]lock'),
-                            ['oab'] = mkOpts('@block.outer', '[B]lock'),
-                            ['oil'] = mkOpts('@call.inner', 'Ca[l]l'),
-                            ['oal'] = mkOpts('@call.outer', 'Ca[l]l'),
-                            ['oim'] = mkOpts('@comment.inner', 'Co[m]ment'),
-                            ['oam'] = mkOpts('@comment.outer', 'Co[m]ment'),
+                            ['ie'] = opts('@parameter.inner', 'inner argument element'),
+                            ['ae'] = opts('@parameter.outer', 'around argument element'),
+                            ['if'] = opts('@function.inner', 'inner function'),
+                            ['af'] = opts('@function.outer', 'around function'),
                         },
                     },
                     swap = {
-                        -- Enable textobj swap
                         enable = true,
-                        -- Capture groups defined in textobjects.scm are available for bindings
                         swap_next = {
-                            ['<leader>sna'] = mkOpts('@parameter.inner', '[A]rgument'),
-                            ['<leader>snc'] = mkOpts('@class.outer', '[C]lass'),
-                            ['<leader>snf'] = mkOpts('@function.outer', '[F]unction'),
+                            ['>e'] = opts('@parameter.inner', 'Swap argument forwards'),
+                            ['>f'] = opts('@function.outer', 'Swap function forwards'),
                         },
                         swap_previous = {
-                            ['<leader>spa'] = mkOpts('@parameter.inner', '[A]rgument'),
-                            ['<leader>spc'] = mkOpts('@class.outer', '[C]lass'),
-                            ['<leader>spf'] = mkOpts('@function.outer', '[F]unction'),
+                            ['<e'] = opts('@parameter.inner', 'Swap argument backwards'),
+                            ['<f'] = opts('@function.outer', 'Swap function backwards'),
                         },
                     },
                     move = {
-                        -- Enable textobj move
                         enable = true,
-                        -- Whether to set jumps in the jumplist
                         set_jumps = true,
                         goto_next_start = {
-                            [']ca'] = mkOpts('@parameter.inner', '[A]rgument'),
-                            [']cc'] = mkOpts('@class.outer', '[C]lass'),
-                            [']cf'] = mkOpts('@function.outer', '[F]unction'),
+                            [']a'] = opts('@parameter.inner', 'Next argument'),
+                            [']f'] = opts('@function.outer', 'Next function'),
                         },
                         goto_previous_start = {
-                            ['[ca'] = mkOpts('@parameter.inner', '[A]rgument'),
-                            ['[cc'] = mkOpts('@class.outer', '[C]lass'),
-                            ['[cf'] = mkOpts('@function.outer', '[F]unction'),
+                            ['[a'] = opts('@parameter.inner', 'Previous argument'),
+                            ['[f'] = opts('@function.outer', 'Previous function'),
                         },
                     },
                 },
             }
 
             RegisterWK({
-                o = {
-                    name = 'objects',
-                    i = { name = 'inside' },
-                    a = { name = 'around' },
-                },
-                ['['] = {
-                    name = 'backwards',
-                    c = { name = 'context' },
-                },
-                [']'] = {
-                    name = 'forwards',
-                    c = { name = 'context' },
-                },
+                ['['] = 'backwards',
+                [']'] = 'forwards',
             }, { mode = { 'o', 'x' } })
-            RegisterWK({
-                s = {
-                    name = 'swap',
-                    n = 'next',
-                    p = 'previous',
-                },
-            }, { prefix = '<LEADER>' })
-
-            local movePrefixes = { '[', ']' }
-            for _, prefix in ipairs(movePrefixes) do
-                RegisterWK({
-                    c = 'context',
-                }, { prefix = prefix })
-            end
 
             local repeatMove = require 'nvim-treesitter.textobjects.repeatable_move'
             RegisterWK({

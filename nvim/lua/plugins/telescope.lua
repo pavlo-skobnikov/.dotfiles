@@ -30,28 +30,28 @@ return {
             local bi = require 'telescope.builtin'
 
             RegisterWK({
-                b = { bi.buffers, '[B]uffers' },
-                c = { bi.commands, '[C]ommand && run' },
-                d = { bi.command_history, 'In comman[d] history' },
-                e = { bi.spell_suggest, 'Sp[e]lling suggestion && apply' },
+                b = { bi.buffers, 'Buffers' },
+                c = { bi.commands, 'Command && run' },
+                d = { bi.command_history, 'In command history' },
+                e = { bi.spell_suggest, 'Spelling suggestion && apply' },
                 f = {
                     function()
                         bi.find_files {
                             find_command = { 'rg', '--files', '--hidden', '-g', '!.git' },
                         }
                     end,
-                    'All [f]iles',
+                    'All files',
                 },
-                g = { bi.live_grep, '[g]rep search' },
-                h = { bi.help_tags, 'Doc [h]elp' },
-                k = { bi.keymaps, '[K]eymaps' },
-                l = { bi.loclist, 'In [l]oclist' },
-                m = { bi.marks, '[M]arks' },
-                r = { bi.resume, '[R]esume previous search' },
-                s = { bi.search_history, 'in [s]earch history' },
-                q = { bi.quickfix, 'In [q]flist' },
-                t = { bi.tags, '[T]ags' },
-                ['"'] = { bi.registers, 'In registers ["]' },
+                g = { bi.live_grep, 'grep search' },
+                h = { bi.help_tags, 'Doc help' },
+                k = { bi.keymaps, 'Keymaps' },
+                l = { bi.loclist, 'In loclist' },
+                m = { bi.marks, 'Marks' },
+                r = { bi.resume, 'Resume previous search' },
+                s = { bi.search_history, 'in search history' },
+                q = { bi.quickfix, 'In qflist' },
+                t = { bi.tags, 'Tags' },
+                ['"'] = { bi.registers, 'In registers (")' },
             }, { prefix = '<leader>f' })
         end,
     },

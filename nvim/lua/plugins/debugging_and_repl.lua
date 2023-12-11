@@ -30,57 +30,54 @@ return {
 
             RegisterWK({
                 name = 'dap',
-                d = { dap_ui.toggle, '[D]AP UI' },
-                c = { dap.continue, '[C]ontinue' },
-                o = { dap.repl.open, '[O]pen REPL' },
-                r = { dap.run_last, '[R]un last' },
-                b = {
-                    name = 'breakpoint',
-                    t = { dap.toggle_breakpoint, '[T]oggle simple' },
-                    c = {
-                        function()
-                            dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
-                        end,
-                        'Toggle [c]onditional',
-                    },
-                    l = {
-                        function()
-                            dap.set_breakpoint(nil, nil, vim.fn.input 'Log point message: ')
-                        end,
-                        'Toggle [l]ogging',
-                    },
+                -- General mappings
+                D = { dap_ui.toggle, 'DAP UI' },
+                O = { dap.repl.open, 'Open REPL' },
+                C = { dap.continue, 'Continue' },
+                R = { dap.run_last, 'Run last' },
+                -- Step mappings
+                n = { dap.step_over, 'Step Next' },
+                i = { dap.step_into, 'Step Into' },
+                o = { dap.step_out, 'Step Out' },
+                -- Breakpoint mappings
+                b = { dap.toggle_breakpoint, 'Toggle breakpoint' },
+                c = {
+                    function()
+                        dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+                    end,
+                    'Toggle conditional breakpoint',
+                },
+                l = {
+                    function()
+                        dap.set_breakpoint(nil, nil, vim.fn.input 'Log point message: ')
+                    end,
+                    'Toggle log point',
                 },
                 f = {
                     name = 'find',
-                    c = { tele.extensions.dap.commands, '[C]ommands' },
-                    g = { tele.extensions.dap.configurations, 'Confi[g]urations' },
-                    b = { tele.extensions.dap.list_breakpoints, '[B]reakpoints' },
-                    v = { tele.extensions.dap.variables, '[V]ariables' },
-                    f = { tele.extensions.dap.frames, '[F]rames' },
-                },
-                s = {
-                    name = 'step',
-                    n = { dap.step_over, '[N]ext' },
-                    i = { dap.step_into, '[I]nto' },
-                    o = { dap.step_out, '[O]ut' },
+                    c = { tele.extensions.dap.commands, 'Commands' },
+                    g = { tele.extensions.dap.configurations, 'Configurations' },
+                    b = { tele.extensions.dap.list_breakpoints, 'Breakpoints' },
+                    v = { tele.extensions.dap.variables, 'Variables' },
+                    f = { tele.extensions.dap.frames, 'Frames' },
                 },
             }, { prefix = '<leader>d' })
 
             RegisterWK({
                 name = 'widgets',
-                h = { widgets.hover, '[H]over' },
-                p = { widgets.preview, '[P]review' },
+                h = { widgets.hover, 'Hover' },
+                p = { widgets.preview, 'Preview' },
                 f = {
                     function()
                         widgets.centered_float(widgets.frames)
                     end,
-                    '[F]rames',
+                    'Frames',
                 },
                 s = {
                     function()
                         widgets.centered_float(widgets.scopes)
                     end,
-                    '[S]copes',
+                    'Scopes',
                 },
             }, { mode = { 'n', 'v' }, prefix = '<leader>dw' })
 
