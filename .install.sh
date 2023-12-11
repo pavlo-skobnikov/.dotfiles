@@ -153,6 +153,9 @@ brew install --cask google-chrome
 echo "Installing the password manager..."
 brew install --cask nordpass
 
+echo "Installing the notes app..."
+brew install --cask notion
+
 echo "Installing miscelaneous casks..."
 brew install --cask sf-symbols
 brew install --cask font-hack-nerd-font

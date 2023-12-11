@@ -6,7 +6,7 @@ hs.window.animationDuration = 0 -- Disable animations, default value = 0.2
 
 u.bindHyperSubmodeActions(
     'v',
-    '[V]iews',
+    'Views',
     hs.fnutils.map({
         -- Occupy 1/2 of a screen
         h = { 0, 0, 0.5, 1 }, -- <
@@ -45,19 +45,19 @@ u.bindHyperSubmodeActions(
 
 u.bindHyperSubmodeActions(
     's',
-    '[S]witch Apps',
+    'Switch Apps',
     hs.fnutils.map({
         y = 'Youtube Music',
         u = 'Slack', -- Work [u]pdates
         i = 'IntelliJ IDEA',
-        o = 'Obsidian',
+        o = 'Finder', -- [O]pen
         p = 'NordPass', -- [P]asswords
         h = 'Hammerspoon',
         j = 'Mail', -- [J]unk
         k = 'Kitty',
         l = 'Reminders', -- To-do [l]ist
         [';'] = 'Calendar', -- No mnemonic binding :'(
-        n = 'Finder', -- [N]avigation
+        n = 'Notion',
         m = 'Telegram', -- [M]essaging
     }, function(appName)
         return u.wrapModalExit(function()
@@ -68,7 +68,7 @@ u.bindHyperSubmodeActions(
 
 u.bindHyperSubmodeActions(
     'b',
-    '[B]rowse Internet',
+    'Browse Internet',
     hs.fnutils.map({
         h = 'Incognito', -- [H]idden
         i = 'Innovecs',
@@ -83,7 +83,7 @@ u.bindHyperSubmodeActions(
 
 u.bindHyperSubmodeActions(
     'c',
-    '[C]ontrols',
+    'Controls',
     hs.fnutils.map({
         h = 'PREVIOUS',
         j = 'SOUND_DOWN',
@@ -113,7 +113,7 @@ u.bindHyperSubmodeActions(
 
 u.bindHyperSubmodeActions(
     'z',
-    '[Z]ap Screen',
+    'Zap Screen',
     hs.fnutils.map({
         u = { { 'cmd', 'shift' }, '3' },
         i = { { 'ctrl', 'cmd', 'shift' }, '3' },
@@ -129,7 +129,7 @@ u.bindHyperSubmodeActions(
 
 u.bindHyperSubmodeActions(
     'x',
-    'E[x]ecute',
+    'Execute',
     hs.fnutils.map({
         k = function() -- [K]ill
             hs.application.frontmostApplication():kill()
