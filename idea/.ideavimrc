@@ -308,7 +308,7 @@ nnoremap <leader>fg :action FindInPath<CR>
 let g:WhichKeyDesc_ShowKeyBindings = "<leader>fk Keymaps"
 nnoremap <leader>fk :map<CR>
 
-let g:WhichKeyDesc_ShowBookmarks = "<leader>fk Bookmarks"
+let g:WhichKeyDesc_ShowBookmarks = "<leader>fb Bookmarks"
 nnoremap <leader>fb :action ShowBookmarks<CR>
 
 "" Git
