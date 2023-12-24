@@ -37,7 +37,7 @@ function M.onAttach(client, bufnr)
         K = { vim.lsp.buf.hover, 'Show kind' },
     }, createOptsWith { mode = { 'n', 'v' } })
     RegisterWK({
-        ['<C-S-k>'] = { vim.lsp.buf.signature_help, 'Show fn argument kinds' },
+        ['<C-S-k>'] = { vim.lsp.buf.signature_help, 'Show function parameter info' },
     }, createOptsWith { mode = { 'n', 'i' } })
 
     -- Next/previous diagnostic
@@ -52,14 +52,15 @@ function M.onAttach(client, bufnr)
 
     -- Go to LSP capability actions
     local goToLspActionMappings = addMappingsForPresentCapabilities({}, {
-        ['definitionProvider'] = { d = { vim.lsp.buf.definition, 'Definition' } },
-        ['declarationProvider'] = { D = { vim.lsp.buf.declaration, 'Declaration' } },
-        ['implementationProvider'] = { I = { vim.lsp.buf.implementation, 'Implementation' } },
+        ['definitionProvider'] = { d = { vim.lsp.buf.definition, 'Go to definition' } },
+        ['declarationProvider'] = { D = { vim.lsp.buf.declaration, 'Go to declaration' } },
+        ['implementationProvider'] = { I = { vim.lsp.buf.implementation, 'Go to implementation' } },
         ['callHierarchyProvider'] = {
-            o = { vim.lsp.buf.outgoing_calls, 'Outgoing calls' },
-            i = { vim.lsp.buf.incoming_calls, 'Incoming calls' },
+            o = { vim.lsp.buf.outgoing_calls, 'Search outgoing calls' },
+            i = { vim.lsp.buf.incoming_calls, 'Search incoming calls' },
         },
-        ['typeDefinitionProvider'] = { t = { vim.lsp.buf.type_definition, 'Type definition' } },
+        ['typeDefinitionProvider'] = { t = { vim.lsp.buf.type_definition, 'Go to type definition' } },
+        ['referencesProvider'] = { r = { vim.lsp.buf.references, 'Search references' } },
     })
 
     RegisterWK(goToLspActionMappings, createOptsWith { prefix = 'g' })
@@ -82,7 +83,6 @@ function M.onAttach(client, bufnr)
         },
     }, {
         ['codeActionProvider'] = { a = { vim.lsp.buf.code_action, 'Actions' } },
-        ['referencesProvider'] = { r = { vim.lsp.buf.references, 'References' } },
         ['renameProvider'] = { n = { vim.lsp.buf.rename, 'Rename' } },
         ['documentHighlightProvider'] = {
             h = { vim.lsp.buf.document_highlight, 'Highlight symbol' },
