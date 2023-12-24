@@ -210,18 +210,6 @@ let g:WhichKeyDesc_InspectCode = "<leader>ri Inspect Code"
 nnoremap <leader>ri :action InspectCode<CR>
 
 "" Completion
-nnoremap <C-y> :action EditorChooseLookupItem<CR>
-vnoremap <C-y> :action EditorChooseLookupItem<CR>
-inoremap <C-y> :action EditorChooseLookupItem<CR>
-nnoremap <M-y> :action EditorChooseLookupItemReplace<CR>
-vnoremap <M-y> :action EditorChooseLookupItemReplace<CR>
-inoremap <M-y> :action EditorChooseLookupItemReplace<CR>
-
-inoremap <C-;> :action copilot.requestCompletions<CR>
-
-inoremap <C-S-y> :action copilot.applyInlays<CR>
-inoremap <C-M-y> :action copilot.applyInlaysNextWord<CR>
-
 let g:WhichKeyDesc_CopilotChatShow = "<leader>c Show Copilot chat"
 nnoremap <LEADER>c :action copilot.chat.show<CR>
 
