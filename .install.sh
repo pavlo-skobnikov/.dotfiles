@@ -107,6 +107,7 @@ sdk install maven
 
 brew install clojure
 sdk install leiningen # Build automation system
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/weavejester/cljfmt/HEAD/install.sh)"
 
 brew install coursier/formulas/coursier 
 cs setup

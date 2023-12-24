@@ -40,6 +40,18 @@ return {
                         }
                     end,
                 },
+                clojure = {
+                    function()
+                        return {
+                            exe = 'cljfmt',
+                            args = {
+                                'fix',
+                                vim.api.nvim_buf_get_name(0),
+                            },
+                            stdin = false,
+                        }
+                    end,
+                },
                 kotlin = { getFtFmt('kotlin', 'ktlint') },
                 javascript = { getPrettier() },
                 typescript = { getPrettier() },
