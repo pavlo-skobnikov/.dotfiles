@@ -137,6 +137,9 @@ u.bindHyperSubmodeActions(
         l = function() -- [L]oad Hammerspoon configuration
             hs.reload()
         end,
+        m = function() -- Open e[m]oji picker
+            hs.eventtap.keyStroke({ 'ctrl', 'cmd' }, 'space')
+        end,
     }, function(action)
         return u.wrapModalExit(action)
     end)
