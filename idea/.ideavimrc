@@ -53,10 +53,6 @@ set NERDTree
 " -> https://github.com/tpope/vim-surround/blob/master/doc/surround.txt
 set surround
 
-let g:WhichKeyDesc_SurroundAdd = "ys +add-surround"
-let g:WhichKeyDesc_SurroundChange = "cs +change-surround"
-let g:WhichKeyDesc_SurroundDelete = "ds +delete-surround"
-
 "" PLUGIN
 
 " Add text object for arguments: aA (around arguments), iA (inside arguments)
