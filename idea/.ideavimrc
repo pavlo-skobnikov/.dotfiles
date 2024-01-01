@@ -135,13 +135,13 @@ let g:WhichKeyDesc_GotoPreviousError = "[d Previous diagnostic"
 nnoremap [d :action GotoPreviousError<CR>
 
 " Go to LSP capability actions
-let g:WhichKeyDesc_GotoImplementation = "gI Go to implementation"
-nnoremap gI :action GotoImplementation<CR>
+let g:WhichKeyDesc_GotoImplementation = "gi Go to implementation"
+nnoremap gi :action GotoImplementation<CR>
 
-let g:WhichKeyDesc_CallHierarchy = "gi Search incoming calls"
-nnoremap gi :action CallHierarchy<CR>
+let g:WhichKeyDesc_CallHierarchy = "gI Search incoming calls"
+nnoremap gI :action CallHierarchy<CR>
 
-let g:WhichKeyDesc_GotoSuperMethod = "go Search outgoing calls"
+let g:WhichKeyDesc_GotoSuperMethod = "go Go to super"
 nnoremap go :action GotoSuperMethod<CR>
 
 let g:WhichKeyDesc_GotoTypeDeclaration = "gt Go to type definition"
@@ -163,7 +163,7 @@ let g:WhichKeyDesc_Refactor = "<leader>r +refactor"
 let g:WhichKeyDesc_ShowErrorDescription = "<leader>rf Open diagnostics float"
 nnoremap <leader>rf :action ShowErrorDescription<CR>
 
-let g:WhichKeyDesc_Refactorings.QuickListPopupAction= = "<leader>rl Code lens"
+let g:WhichKeyDesc_Refactorings_QuickListPopupAction= = "<leader>rl Code lens"
 nnoremap <leader>rl :action Refactorings.QuickListPopupAction<CR>
 
 let g:WhichKeyDesc_ActivateProblemsViewToolWindow = "<leader>rs Show diagnostics"
