@@ -1,0 +1,3 @@
+[submodule "hammerspoon"]
+	path = hammerspoon
+	url = git@github.com:pavlo-skobnikov/.hammerspoon.git
