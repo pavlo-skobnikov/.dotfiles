@@ -18,7 +18,7 @@ return {
             setDapSign('DapBreakpoint', '🛑')
             setDapSign('DapBreakpointCondition', '🟥')
             setDapSign('DapLogPoint', '📍')
-            setDapSign('DapStopped', '➡️')
+            setDapSign('DapStopped', '🧲')
             setDapSign('DapBreakpointRejected', '❌')
 
             -- Setup mappings
@@ -30,27 +30,20 @@ return {
 
             RegisterWK({
                 name = 'dap',
-                -- General mappings
-                D = { dap_ui.toggle, 'DAP UI' },
+                D = { dap_ui.toggle, 'DAP UI' }, -- General mappings
                 O = { dap.repl.open, 'Open REPL' },
                 C = { dap.continue, 'Continue' },
                 R = { dap.run_last, 'Run last' },
-                -- Step mappings
-                n = { dap.step_over, 'Step Next' },
+                n = { dap.step_over, 'Step Next' }, -- Step mappings
                 i = { dap.step_into, 'Step Into' },
                 o = { dap.step_out, 'Step Out' },
-                -- Breakpoint mappings
-                b = { dap.toggle_breakpoint, 'Toggle breakpoint' },
+                b = { dap.toggle_breakpoint, 'Toggle breakpoint' }, -- Breakpoint mappings
                 c = {
-                    function()
-                        dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
-                    end,
+                    function() dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ') end,
                     'Toggle conditional breakpoint',
                 },
                 l = {
-                    function()
-                        dap.set_breakpoint(nil, nil, vim.fn.input 'Log point message: ')
-                    end,
+                    function() dap.set_breakpoint(nil, nil, vim.fn.input 'Log point message: ') end,
                     'Toggle log point',
                 },
                 f = {
@@ -67,18 +60,8 @@ return {
                 name = 'widgets',
                 h = { widgets.hover, 'Hover' },
                 p = { widgets.preview, 'Preview' },
-                f = {
-                    function()
-                        widgets.centered_float(widgets.frames)
-                    end,
-                    'Frames',
-                },
-                s = {
-                    function()
-                        widgets.centered_float(widgets.scopes)
-                    end,
-                    'Scopes',
-                },
+                f = { function() widgets.centered_float(widgets.frames) end, 'Frames' },
+                s = { function() widgets.centered_float(widgets.scopes) end, 'Scopes' },
             }, { mode = { 'n', 'v' }, prefix = '<leader>dw' })
 
             -- Register DAP listeners for automatic opening/closing of DAP UI
@@ -94,18 +77,14 @@ return {
     },
     {
         'Olical/conjure', -- Interactive environment for evaluating code within a running program
-        dependencies = {
-            'tpope/vim-dispatch', -- Asynchronous build and test dispatcher
-            'clojure-vim/vim-jack-in', -- Easy commands for Clojure
-            'folke/which-key.nvim',
-        },
+        lazy = true,
+        ft = { 'clojure', 'fennel', 'lisp', 'scheme' },
+        -- Asynchronous build and test dispatcher && Easy commands for Clojure
+        dependencies = { 'tpope/vim-dispatch', 'clojure-vim/vim-jack-in', 'folke/which-key.nvim' },
         config = function()
             RegisterWK({
                 c = 'connect',
-                e = {
-                    name = 'evaluate',
-                    c = 'comment',
-                },
+                e = { name = 'evaluate', c = 'comment' },
                 g = 'get',
                 l = 'log',
                 r = 'run',

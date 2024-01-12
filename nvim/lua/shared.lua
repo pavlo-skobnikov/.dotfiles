@@ -33,9 +33,7 @@ function M.onAttach(client, bufnr)
     end
 
     -- Basic info actions
-    RegisterWK({
-        K = { vim.lsp.buf.hover, 'Show kind' },
-    }, createOptsWith { mode = { 'n', 'v' } })
+    RegisterWK({ K = { vim.lsp.buf.hover, 'Show kind' } }, createOptsWith { mode = { 'n', 'v' } })
     RegisterWK({
         ['<C-S-k>'] = { vim.lsp.buf.signature_help, 'Show function parameter info' },
     }, createOptsWith { mode = { 'n', 'i' } })
@@ -59,7 +57,9 @@ function M.onAttach(client, bufnr)
             o = { vim.lsp.buf.outgoing_calls, 'Search outgoing calls' },
             i = { vim.lsp.buf.incoming_calls, 'Search incoming calls' },
         },
-        ['typeDefinitionProvider'] = { t = { vim.lsp.buf.type_definition, 'Go to type definition' } },
+        ['typeDefinitionProvider'] = {
+            t = { vim.lsp.buf.type_definition, 'Go to type definition' },
+        },
         ['referencesProvider'] = { r = { vim.lsp.buf.references, 'Search references' } },
     })
 
@@ -67,9 +67,7 @@ function M.onAttach(client, bufnr)
 
     -- 'Refactor' actions
     local function getDiagnosticsFunc(severity)
-        return function()
-            tb.diagnostics { severity = vim.diagnostic.severity[severity] }
-        end
+        return function() tb.diagnostics { severity = vim.diagnostic.severity[severity] } end
     end
 
     local refactorActionMappings = addMappingsForPresentCapabilities({

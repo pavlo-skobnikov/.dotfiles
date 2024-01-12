@@ -1,10 +1,5 @@
-local function getTelescope()
-    return require 'telescope'
-end
-
-local function loadTelescopeExtension(extension)
-    return getTelescope().load_extension(extension)
-end
+local function getTelescope() return require 'telescope' end
+local function loadTelescopeExtension(extension) return getTelescope().load_extension(extension) end
 
 return {
     {
@@ -58,16 +53,12 @@ return {
     {
         'nvim-telescope/telescope-ui-select.nvim', -- UI picker extension for Telescope
         dependencies = 'nvim-telescope/telescope.nvim',
-        config = function()
-            loadTelescopeExtension 'ui-select'
-        end,
+        config = function() loadTelescopeExtension 'ui-select' end,
     },
     {
         'nvim-telescope/telescope-fzf-native.nvim', -- Blazingly-fast C port of FZF for Telescope
         dependencies = 'nvim-telescope/telescope.nvim',
         build = 'make',
-        config = function()
-            loadTelescopeExtension 'fzf'
-        end,
+        config = function() loadTelescopeExtension 'fzf' end,
     },
 }

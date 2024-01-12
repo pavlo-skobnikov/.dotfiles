@@ -1,6 +1,4 @@
-local function getTsCfgs()
-    return require 'nvim-treesitter.configs'
-end
+local function getTsCfgs() return require 'nvim-treesitter.configs' end
 
 return {
     {
@@ -32,14 +30,7 @@ return {
 
                 sync_install = false, -- Install parsers synchronously
                 auto_install = true, -- Auto-install missing parsers when entering buffer
-
-                highlight = {
-                    -- Enable Treesitter-based syntax highlighting
-                    enable = true,
-                    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-                    additional_vim_regex_highlighting = false,
-                },
-
+                highlight = { enable = true, additional_vim_regex_highlighting = false },
                 indent = { enable = false },
                 incremental_selection = {
                     enable = true,
@@ -61,14 +52,9 @@ return {
     },
     {
         'nvim-treesitter/nvim-treesitter-textobjects', -- Additional Vim textobjects
-        dependencies = {
-            'nvim-treesitter/nvim-treesitter',
-            'folke/which-key.nvim',
-        },
+        dependencies = { 'nvim-treesitter/nvim-treesitter', 'folke/which-key.nvim' },
         config = function()
-            local function opts(query, desc)
-                return { query = query, desc = desc }
-            end
+            local function opts(query, desc) return { query = query, desc = desc } end
 
             getTsCfgs().setup {
                 textobjects = {
@@ -108,10 +94,7 @@ return {
                 },
             }
 
-            RegisterWK({
-                ['['] = 'backwards',
-                [']'] = 'forwards',
-            }, { mode = { 'o', 'x' } })
+            RegisterWK({ ['['] = 'backwards', [']'] = 'forwards' }, { mode = { 'o', 'x' } })
 
             local repeatMove = require 'nvim-treesitter.textobjects.repeatable_move'
             RegisterWK({
@@ -126,10 +109,7 @@ return {
     },
     {
         'nvim-treesitter/playground', -- Treesitter playground
-        dependencies = {
-            'nvim-treesitter/nvim-treesitter',
-            'folke/which-key.nvim',
-        },
+        dependencies = { 'nvim-treesitter/nvim-treesitter', 'folke/which-key.nvim' },
         config = function()
             RegisterWK({
                 p = {

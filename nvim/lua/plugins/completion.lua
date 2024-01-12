@@ -2,18 +2,10 @@ return {
     {
         'williamboman/mason-lspconfig.nvim', -- Bridges mason.nvim with the lspconfig plugin
         dependencies = {
-            {
-                'williamboman/mason.nvim', -- Package manager for Neovim
-                build = ':MasonUpdate',
-            },
+            { 'williamboman/mason.nvim', build = ':MasonUpdate' }, -- Package manager for Neovim
             'neovim/nvim-lspconfig', -- Configs for the Nvim LSP client (:help lsp)
             'mfussenegger/nvim-jdtls', -- Significant improvements to the Eclipse JDTLS
-            {
-                'scalameta/nvim-metals', -- Scala MetaLS
-                dependencies = {
-                    'nvim-lua/plenary.nvim',
-                },
-            },
+            { 'scalameta/nvim-metals', dependencies = { 'nvim-lua/plenary.nvim' } }, -- Scala MetaLS
             'nvim-telescope/telescope.nvim', -- Used to enhance LSP functionality
             'hrsh7th/cmp-nvim-lsp', -- Used to extend capabilities
             'folke/which-key.nvim',
@@ -50,15 +42,10 @@ return {
             local lspCfg = require 'lspconfig'
 
             local function serverIsNotToSetup(serverName)
-                local serversToNotAutoSetup = {
-                    'jdtls',
-                    -- Scala doesn't need to be ignored
-                }
+                local serversToNotAutoSetup = { 'jdtls' } -- Scala doesn't need to be ignored
 
                 for _, serverToNotAutoSetup in ipairs(serversToNotAutoSetup) do
-                    if serverToNotAutoSetup == serverName then
-                        return true
-                    end
+                    if serverToNotAutoSetup == serverName then return true end
                 end
 
                 return false
@@ -67,29 +54,15 @@ return {
             masonLspCfg.setup_handlers {
                 -- Default setup for non-specified language servers
                 function(serverName)
-                    if serverIsNotToSetup(serverName) then
-                        return
-                    end
+                    if serverIsNotToSetup(serverName) then return end
 
-                    lspCfg[serverName].setup {
-                        on_attach = onAttach,
-                        capabilities = capabilities,
-                    }
+                    lspCfg[serverName].setup { on_attach = onAttach, capabilities = capabilities }
                 end,
                 ['lua_ls'] = function()
                     lspCfg.lua_ls.setup {
                         on_attach = onAttach,
                         capabilities = capabilities,
-                        settings = {
-                            Lua = {
-                                diagnostics = {
-                                    globals = {
-                                        'vim',
-                                        'hs',
-                                    },
-                                },
-                            },
-                        },
+                        settings = { Lua = { diagnostics = { globals = { 'vim', 'hs' } } } },
                     }
                 end,
             }
@@ -98,7 +71,6 @@ return {
     {
         'hrsh7th/nvim-cmp', -- Autocompletion plugin
         dependencies = {
-            -- SNIPPET ENGINE
             'L3MON4D3/LuaSnip', -- Snippet engine for NeoVim
             -- SOURCES
             'saadparwaiz1/cmp_luasnip', -- Adds a `luasnip` completion source for `cmp`
@@ -118,8 +90,7 @@ return {
             local luaSnip = require 'luasnip'
             local lspKind = require 'lspkind'
 
-            -- Lazy loading is required for the snippet engine to correctly
-            -- detect the `luasnip` sources
+            -- Lazy loading is required for the snippet engine to correctly detect the `luasnip` sources
             require('luasnip/loaders/from_vscode').lazy_load()
 
             cmp.setup {
@@ -128,11 +99,11 @@ return {
                     return vim.api.nvim_buf_get_option(0, 'buftype') ~= 'prompt'
                         or require('cmp_dap').is_dap_buffer()
                 end,
+
                 -- Enable snippets
                 snippet = {
-                    expand = function(args)
-                        luaSnip.lsp_expand(args.body) -- For `luasnip` users.
-                    end,
+                    -- For `luasnip` users.
+                    expand = function(args) luaSnip.lsp_expand(args.body) end,
                 },
                 formatting = {
                     -- Enable icons to appear with completion options
@@ -141,9 +112,9 @@ return {
                         menu = {
                             buffer = '[buf]',
                             nvim_lsp = '[LSP]',
-                            nvim_lua = '[api]',
-                            path = '[path]',
-                            luasnip = '[snip]',
+                            nvim_lua = '[vim]',
+                            path = '[pth]',
+                            luasnip = '[snp]',
                         },
                     },
                 },
@@ -168,94 +139,68 @@ return {
                         },
                         { 'i', 'c' }
                     ),
-                    ['<M-y>'] = cmp.mapping(
+                    ['<C-S-y>'] = cmp.mapping(
                         cmp.mapping.confirm {
                             behavior = cmp.ConfirmBehavior.Replace,
                             select = false,
                         },
                         { 'i', 'c' }
                     ),
-
                     ['<C-Space>'] = cmp.mapping {
                         i = cmp.mapping.complete(),
                         c = function()
                             if cmp.visible() then
-                                if not cmp.confirm { select = true } then
-                                    return
-                                end
+                                if not cmp.confirm { select = true } then return end
                             else
                                 cmp.complete()
                             end
                         end,
                     },
-
                     ['<Tab>'] = cmp.config.disable,
                 },
             }
 
+            -- Snippet traversal
+            RegisterWK({
+                ['<C-n>'] = { function() luaSnip.jump(1) end, 'Next Snippet Choice' },
+                ['<C-p>'] = { function() luaSnip.jump(-1) end, 'Previous Snippet Choice' },
+                ['<C-e>'] = {
+                    function()
+                        if luaSnip.choice_active() then luaSnip.change_choice(1) end
+                    end,
+                    'Next Snippet Choice',
+                },
+            }, { mode = { 'i', 's' }, silent = true })
+
             cmp.setup.cmdline({ '/', '?' }, {
                 mapping = cmp.mapping.preset.cmdline(),
-                sources = {
-                    { name = 'buffer' },
-                },
+                sources = { { name = 'buffer' } },
             })
 
             cmp.setup.cmdline(':', {
                 mapping = cmp.mapping.preset.cmdline(),
-                sources = cmp.config.sources({
-                    { name = 'path' },
-                }, {
-                    { name = 'cmdline' },
-                }),
+                sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } }),
             })
 
-            cmp.setup.filetype({ 'dap-repl', 'dapui_watches', 'dapui_hover' }, {
-                sources = {
-                    { name = 'dap' },
-                },
-            })
+            cmp.setup.filetype(
+                { 'dap-repl', 'dapui_watches', 'dapui_hover' },
+                { sources = { { name = 'dap' } } }
+            )
 
             cmp.setup.filetype('gitcommit', {
-                sources = cmp.config.sources({
-                    { name = 'git' },
-                }, {
-                    { name = 'buffer' },
-                }),
+                sources = cmp.config.sources({ { name = 'git' } }, { { name = 'buffer' } }),
             })
         end,
     },
     {
         'github/copilot.vim', -- AI-powered code completion
         config = function()
-            vim.cmd [[
-                imap <silent><script><expr> <C-S-y> copilot#Accept("\<CR>")
-                let g:copilot_no_tab_map = v:true
-            ]]
-
-            RegisterWK({
-                ['<C-S-y>'] = "Accept Copilot's full suggestion",
-                ['<C-M-y>'] = {
-                    function()
-                        ---@diagnostic disable-next-line: unused-local
-                        local suggestion = vim.fn['copilot#Accept'] ''
-
-                        local bar = vim.fn['copilot#TextQueuedForInsertion']()
-                        return vim.fn.split(bar, [[[ .]\zs]])[1]
-                    end,
-                    "Accept Copilot's WORD suggestion",
-                },
-            }, { mode = { 'i' }, expr = true })
-
-            RegisterWK {
-                ['<LEADER>c'] = { ':Copilot panel<CR>', 'Copilot suggestion panel' },
-            }
+            RegisterWK { ['<LEADER>c'] = { ':Copilot panel<CR>', 'Copilot suggestion panel' } }
 
             RegisterWK {
                 ['yoC'] = {
                     function()
                         local status = vim.api.nvim_command_output 'Copilot status'
-
-                        print(status)
 
                         if string.find(status, 'Enabled') or string.find(status, 'enabled') then
                             vim.api.nvim_command 'Copilot disable'

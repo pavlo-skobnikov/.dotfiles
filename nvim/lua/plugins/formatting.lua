@@ -1,21 +1,10 @@
-local function getFtFmt(filetype, formatter)
-    return require('formatter.filetypes.' .. filetype)[formatter]
-end
-
-local function getShFmt()
-    return getFtFmt('sh', 'shfmt')
-end
-
-local function getPrettier()
-    return require 'formatter.defaults.prettier'
-end
+local function getFtFmt(ft, formatter) return require('formatter.filetypes.' .. ft)[formatter] end
+local function getShFmt() return getFtFmt('sh', 'shfmt') end
+local function getPrettier() return require 'formatter.defaults.prettier' end
 
 return {
     'mhartington/formatter.nvim', -- Easy formatter setup goodness
-    dependencies = {
-        'williamboman/mason.nvim',
-        'nvim-lua/plenary.nvim',
-    },
+    dependencies = { 'williamboman/mason.nvim', 'nvim-lua/plenary.nvim' },
     config = function()
         require('formatter').setup {
             logging = true,
@@ -66,8 +55,6 @@ return {
             },
         }
 
-        RegisterWK({
-            ['='] = { ':Format<CR>', 'Format' },
-        }, { prefix = '<LEADER>' })
+        RegisterWK({ ['='] = { ':Format<CR>', 'Format' } }, { prefix = '<LEADER>' })
     end,
 }

@@ -1,19 +1,14 @@
 vim.api.nvim_create_autocmd('FocusGained', {
     group = vim.api.nvim_create_augroup('CheckFileForExternalChanges', { clear = true }),
     pattern = { '*' },
-    callback = function()
-        -- Checks if file was changed while outside of NeoVim
-        vim.cmd 'checktime'
-    end,
+    callback = function() vim.cmd 'checktime' end, -- Checks if file was changed while outside of NeoVim
     desc = "Update the file's buffer when there are changes to the file on disk",
 })
 
 local function getGitBranchName()
     local result = vim.fn.system 'git branch --show-current'
 
-    if string.match(result, 'fatal') then
-        return 'NONE'
-    end
+    if string.match(result, 'fatal') then return 'NO-GIT' end
 
     return vim.fn.trim(result)
 end

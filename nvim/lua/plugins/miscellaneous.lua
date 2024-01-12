@@ -1,6 +1,8 @@
 return {
     {
         'julienvincent/nvim-paredit', -- Paredit for Neovim
+        lazy = true,
+        ft = { 'clojure', 'fennel', 'lisp', 'scheme' },
         config = function()
             local paredit = require 'nvim-paredit'
 
@@ -250,19 +252,16 @@ return {
                 },
             }
 
-            RegisterWK {
-                cse = 'wrap-element',
-                csf = 'wrap-form',
-            }
+            RegisterWK { cse = 'wrap-element', csf = 'wrap-form' }
         end,
     },
     {
         'tpope/vim-surround', -- Cool surround actions for `cs`, `cS`, and `ds` mappings
         config = function()
             RegisterWK {
-                cs = 'surround',
-                ys = 'surround',
-                ds = 'surround',
+                cs = { name = 'surround' },
+                ys = { name = 'surround' },
+                ds = { name = 'surround' },
             }
         end,
     },
@@ -273,17 +272,16 @@ return {
         'mbbill/undotree', -- A detailed undo history for files
         dependencies = 'folke/which-key.nvim',
         config = function()
-            RegisterWK({
-                u = { ':UndotreeToggle<CR>', 'Toggle Undotree' },
-            }, { prefix = '<LEADER>' })
+            RegisterWK(
+                { u = { ':UndotreeToggle<CR>', 'Toggle Undotree' } },
+                { prefix = '<LEADER>' }
+            )
         end,
     },
     {
         'Tummetott/unimpaired.nvim', -- Useful && comfy mappings for basic Vim commands
         config = function()
-            local function desc(description)
-                return { description = description }
-            end
+            local function desc(description) return { description = description } end
 
             require('unimpaired').setup {
                 default_keymaps = true,
@@ -367,9 +365,7 @@ return {
                 },
             }
 
-            RegisterWK {
-                yo = 'toggle',
-            }
+            RegisterWK { yo = 'toggle' }
         end,
     },
     {
@@ -377,6 +373,7 @@ return {
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = function()
             require('oil').setup { view_options = { show_hidden = true } }
+
             RegisterWK { ['-'] = { '<CMD>Oil<CR>', 'Open parent directory' } }
         end,
     },
@@ -386,7 +383,6 @@ return {
             vim.cmd [[
                     let g:tmux_navigator_no_mappings = 1
                     let g:tmux_navigator_save_on_switch = 2
-
                 ]]
 
             RegisterWK({
