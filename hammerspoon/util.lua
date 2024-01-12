@@ -23,9 +23,7 @@ function M.alert(alert)
 end
 
 function M.sendKey(mods, key)
-    if mods == nil then
-        mods = {}
-    end
+    if mods == nil then mods = {} end
 
     hs.eventtap.keyStroke(mods, key)
 end
@@ -36,12 +34,10 @@ function M.sendSystemKey(key)
 end
 
 function M.bindHyperSubmodeActions(triggerKey, modeName, keysAndActions)
-    local modal = hs.hotkey.modal.new(M.HYPER, triggerKey)
+    local modal = hs.hotkey.modal.new(M.HYPER, triggerKey, modeName .. ' mode')
 
     for key, actionSupplier in pairs(keysAndActions) do
-        modal:bind('', key, function()
-            actionSupplier(modal)
-        end)
+        modal:bind('', key, function() actionSupplier(modal) end)
     end
 
     modal:bind('', 'escape', function()
@@ -56,9 +52,7 @@ function M.launchOrFocusChromeProfileWindow(profileName)
     local windowToFocus = nil
 
     for _, window in ipairs(chromeWindows) do
-        if string.match(window:title(), profileName) then
-            windowToFocus = window
-        end
+        if string.match(window:title(), profileName) then windowToFocus = window end
     end
 
     if windowToFocus then

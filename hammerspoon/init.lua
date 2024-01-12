@@ -22,21 +22,14 @@ u.bindHyperSubmodeActions(
         u = { 0, 0.5, 0.5, 0.5 }, -- ⌞
         i = { 0.5, 0.5, 0.5, 0.5 }, -- ⌟
         o = { 0.5, 0, 0.5, 0.5 }, -- ⌝
-        -- Maximize
-        p = function()
-            hs.window.focusedWindow():maximize()
-        end,
+        p = function() hs.window.focusedWindow():maximize() end, -- Maximize
         -- Center
-        [';'] = function()
-            hs.window.focusedWindow():centerOnScreen()
-        end,
+        [';'] = function() hs.window.focusedWindow():centerOnScreen() end,
     }, function(windowUnitOrFunction)
         local action = u.ternary(
             type(windowUnitOrFunction) == 'function',
             windowUnitOrFunction,
-            function()
-                hs.window.focusedWindow():moveToUnit(windowUnitOrFunction)
-            end
+            function() hs.window.focusedWindow():moveToUnit(windowUnitOrFunction) end
         )
 
         return u.wrapModalExit(action)
@@ -60,9 +53,7 @@ u.bindHyperSubmodeActions(
         n = 'Notion',
         m = 'Telegram', -- [M]essaging
     }, function(appName)
-        return u.wrapModalExit(function()
-            hs.application.launchOrFocus(appName)
-        end)
+        return u.wrapModalExit(function() hs.application.launchOrFocus(appName) end)
     end)
 )
 
@@ -75,9 +66,7 @@ u.bindHyperSubmodeActions(
         p = 'Personal',
         m = 'Miro',
     }, function(profileName)
-        return u.wrapModalExit(function()
-            u.launchOrFocusChromeProfileWindow(profileName)
-        end)
+        return u.wrapModalExit(function() u.launchOrFocusChromeProfileWindow(profileName) end)
     end)
 )
 
@@ -89,24 +78,18 @@ u.bindHyperSubmodeActions(
         j = 'SOUND_DOWN',
         k = 'SOUND_UP',
         l = 'NEXT',
-        [';'] = function()
-            u.sendSystemKey 'MUTE'
-        end,
+        [';'] = function() u.sendSystemKey 'MUTE' end,
         u = 'BRIGHTNESS_DOWN',
         i = 'BRIGHTNESS_UP',
         o = 'FAST',
         y = 'REWIND',
         p = hs.caffeinate.lockScreen,
-        ['.'] = function()
-            u.sendSystemKey 'PLAY'
-        end,
+        ['.'] = function() u.sendSystemKey 'PLAY' end,
     }, function(systemKeyOrFunction)
         return u.ternary(
             type(systemKeyOrFunction) == 'function',
             u.wrapModalExit(systemKeyOrFunction),
-            function()
-                u.sendSystemKey(systemKeyOrFunction)
-            end
+            function() u.sendSystemKey(systemKeyOrFunction) end
         )
     end)
 )
@@ -121,9 +104,7 @@ u.bindHyperSubmodeActions(
         k = { { 'ctrl', 'cmd', 'shift' }, '4' },
         o = { { 'cmd', 'shift' }, '5' },
     }, function(modsAndKey)
-        return u.wrapModalExit(function()
-            u.sendKey(modsAndKey[1], modsAndKey[2])
-        end)
+        return u.wrapModalExit(function() u.sendKey(modsAndKey[1], modsAndKey[2]) end)
     end)
 )
 
@@ -131,18 +112,10 @@ u.bindHyperSubmodeActions(
     'x',
     'Execute',
     hs.fnutils.map({
-        k = function() -- [K]ill
-            hs.application.frontmostApplication():kill()
-        end,
-        l = function() -- [L]oad Hammerspoon configuration
-            hs.reload()
-        end,
-        m = function() -- Open e[m]oji picker
-            hs.eventtap.keyStroke({ 'ctrl', 'cmd' }, 'space')
-        end,
-    }, function(action)
-        return u.wrapModalExit(action)
-    end)
+        k = function() hs.application.frontmostApplication():kill() end, -- [K]ill
+        l = function() hs.reload() end, -- [L]oad Hammerspoon configuration
+        m = function() hs.eventtap.keyStroke({ 'ctrl', 'cmd' }, 'space') end, -- Open e[m]oji picker
+    }, function(action) return u.wrapModalExit(action) end)
 )
 
 hs.alert.show 'Configuration reloaded'
