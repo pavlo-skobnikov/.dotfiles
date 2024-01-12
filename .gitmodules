@@ -1,3 +1,6 @@
 [submodule "hammerspoon"]
 	path = hammerspoon
 	url = git@github.com:pavlo-skobnikov/.hammerspoon.git
+[submodule "karabiner"]
+	path = karabiner
+	url = git@github.com:pavlo-skobnikov/.karabiner.git
