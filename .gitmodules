@@ -4,3 +4,6 @@
 [submodule "karabiner"]
 	path = karabiner
 	url = git@github.com:pavlo-skobnikov/.karabiner.git
+[submodule "kitty"]
+	path = kitty
+	url = git@github.com:pavlo-skobnikov/.kitty.git
