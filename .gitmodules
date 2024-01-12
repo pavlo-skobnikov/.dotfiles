@@ -7,3 +7,6 @@
 [submodule "kitty"]
 	path = kitty
 	url = git@github.com:pavlo-skobnikov/.kitty.git
+[submodule "tmux"]
+	path = tmux
+	url = git@github.com:pavlo-skobnikov/.tmux.git
