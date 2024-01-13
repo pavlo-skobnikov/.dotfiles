@@ -16,3 +16,6 @@
 [submodule "zsh"]
 	path = zsh
 	url = git@github.com:pavlo-skobnikov/.zsh.git
+[submodule "idea"]
+	path = idea
+	url = git@github.com:pavlo-skobnikov/.idea.git
