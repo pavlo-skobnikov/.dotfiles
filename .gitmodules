@@ -13,3 +13,6 @@
 [submodule ".secrets"]
 	path = .secrets
 	url = git@github.com:pavlo-skobnikov/.secrets.git
+[submodule "zsh"]
+	path = zsh
+	url = git@github.com:pavlo-skobnikov/.zsh.git
