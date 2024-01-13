@@ -10,3 +10,6 @@
 [submodule "tmux"]
 	path = tmux
 	url = git@github.com:pavlo-skobnikov/.tmux.git
+[submodule ".secrets"]
+	path = .secrets
+	url = git@github.com:pavlo-skobnikov/.secrets.git
