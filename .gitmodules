@@ -22,3 +22,6 @@
 [submodule "nvim"]
 	path = nvim
 	url = git@github.com:pavlo-skobnikov/.nvim.git
+[submodule "scripts/.hidden"]
+	path = scripts/.hidden
+	url = git@github.com:pavlo-skobnikov/.scripts.git
