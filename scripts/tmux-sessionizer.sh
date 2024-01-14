@@ -4,9 +4,13 @@ if [[ $# -eq 1 ]]; then
     selected=$1
 else
     selected=$(find \
+        ~/.config \
         ~/dev/projects \
         ~/dev/projects/work \
         ~/dev/projects/personal \
+        ~/code \
+        ~/code/work \
+        ~/code/personal \
         -mindepth 1 -maxdepth 1 -type d | fzf)
 fi
 
