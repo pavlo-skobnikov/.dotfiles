@@ -55,9 +55,6 @@ brew install tree # Display directories as trees (with optional color/HTML outpu
 brew install rename # Perl-powered file rename script with many helpful built-ins
 brew install mas # Mac App Store command-line interface
 brew install llvm # Next-gen compiler infrastructure
-curl -s https://cht.sh/:cht.sh \
-    | sudo tee /usr/local/bin/cht.sh \
-    && sudo chmod +x /usr/local/bin/cht.sh # Command-line client for cheat.sh
 
 # Git and CLI tools for remote repositories
 echo "Installing git and CLI tools for remote repositories..."
@@ -72,7 +69,7 @@ git config --global init.defaultBranch main
 git config --global push.autoSetupRemote true
 
 echo "Fetching dotfiles..."
-git clone https://github.com/pavlo-skobnikov/.dotfiles.git ~/.config/
+git clone --recurse-submodules https://github.com/pavlo-skobnikov/.dotfiles.git ~/.config/
 
 read -p "Download secrets repository? 'y' will download secrets. NOTE: ssh should be already set up!" -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]]
@@ -165,6 +162,7 @@ echo "Configuring the environment..."
 
 echo "Making scrips executable..."
 chmod -R +x ~/.config/scripts
+chmod -R +x ~/.config/scripts/.hidden
 
 echo "Linking some config files..."
 
@@ -176,10 +174,6 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # Link hammerspoon config
 rm -rf ~/.hammerspoon  
 ln -s ~/.config/hammerspoon ~/.hammerspoon
-
-# Link amethyst config
-rm ~/.amethyst.yml
-ln -s ~/.config/amethyst/amethyst.yml ~/.amethyst.yml
 
 # Install Zap for Zsh and link .zshrc
 zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh)
