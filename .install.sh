@@ -153,6 +153,7 @@ brew install --cask nordpass
 
 echo "Installing the notes app..."
 brew install --cask notion
+brew install --cask notion-calendar
 
 echo "Installing miscelaneous casks..."
 brew install --cask sf-symbols
