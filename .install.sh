@@ -151,9 +151,9 @@ brew install --cask google-chrome
 echo "Installing the password manager..."
 brew install --cask nordpass
 
-echo "Installing the notes app..."
-brew install --cask notion
-brew install --cask notion-calendar
+echo "Installing the self-management apps..."
+brew install --cask obsidian
+brew install --cask todoist
 
 echo "Installing miscelaneous casks..."
 brew install --cask sf-symbols
