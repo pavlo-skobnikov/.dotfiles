@@ -135,7 +135,6 @@ brew install --cask intellij-idea
 echo "Installing OS interaction utilities..."
 brew install --cask karabiner-elements
 brew install --cask hammerspoon
-brew install --cask alfred
 
 echo "Installing other developer tools..."
 brew install --cask docker
