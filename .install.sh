@@ -151,7 +151,8 @@ echo "Installing the password manager..."
 brew install --cask nordpass
 
 echo "Installing the self-management apps..."
-brew install --cask obsidian
+brew install --cask notion
+brew install --cask notion-calendar
 brew install --cask todoist
 
 echo "Installing miscelaneous casks..."
