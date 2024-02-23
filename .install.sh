@@ -145,7 +145,7 @@ brew install --cask telegram
 brew install --cask slack
 
 echo "Installing the browser..."
-brew install --cask google-chrome
+brew install --cask arc
 
 echo "Installing the password manager..."
 brew install --cask nordpass
