@@ -150,11 +150,6 @@ brew install --cask arc
 echo "Installing the password manager..."
 brew install --cask nordpass
 
-echo "Installing the self-management apps..."
-brew install --cask notion
-brew install --cask notion-calendar
-brew install --cask todoist
-
 echo "Installing miscelaneous casks..."
 brew install --cask sf-symbols
 brew install --cask font-hack-nerd-font
