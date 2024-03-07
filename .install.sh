@@ -147,9 +147,6 @@ brew install --cask slack
 echo "Installing the browser..."
 brew install --cask arc
 
-echo "Installing the password manager..."
-brew install --cask nordpass
-
 echo "Installing miscelaneous casks..."
 brew install --cask sf-symbols
 brew install --cask font-hack-nerd-font
