@@ -136,6 +136,9 @@ echo "Installing OS interaction utilities..."
 brew install --cask karabiner-elements
 brew install --cask hammerspoon
 
+echo "Installing cloud tools..."
+brew install --cask google-drive
+
 echo "Installing other developer tools..."
 brew install --cask docker
 brew install --cask postman
