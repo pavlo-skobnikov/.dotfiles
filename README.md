@@ -19,7 +19,3 @@ If you're interested in checking out my setup, all you need to do is to:
 
 The installation of tools and setup process is automated, you'll only have to react to terminal
 prompts.
-
-## Other Cool Tools Worth Considering
-
-- [SurfingKeys](https://github.com/brookhong/Surfingkeys) extension for Google Chrome.
