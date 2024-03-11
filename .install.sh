@@ -26,15 +26,9 @@ brew analytics off
 echo "Installing SDKMan..."
 curl -s "https://get.sdkman.io" | bash
 
-# Install rustup
-echo "Installing Rustup..."
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
 ## Brew taps
 echo "Running required brew taps..."
 brew tap homebrew/cask-fonts
-brew tap FelixKratz/formulae
-brew tap koekeishiya/formulae
 
 ## Brew formulae and casks
 echo "Installing brew formulae and casks..."
@@ -60,7 +54,6 @@ brew install llvm # Next-gen compiler infrastructure
 echo "Installing git and CLI tools for remote repositories..."
 brew install git
 brew install gh
-brew install glab
 
 # Configure git and clone some repositories
 echo "Configuring git default pull strategy and branch name..."
@@ -90,10 +83,6 @@ brew install cmake
 brew install cmake-docs
 brew install clang-format
 
-brew install zig
-
-brew install rust
-
 brew install lua
 brew install luajit
 brew install luarocks
@@ -101,10 +90,6 @@ brew install luarocks
 sdk install java
 sdk install gradle
 sdk install maven
-
-brew install clojure
-sdk install leiningen # Build automation system
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/weavejester/cljfmt/HEAD/install.sh)"
 
 brew install coursier/formulas/coursier 
 cs setup
@@ -132,23 +117,21 @@ echo "Installing code editors..."
 brew install neovim
 brew install --cask intellij-idea
 
-echo "Installing OS interaction utilities..."
+echo "Installing Karabiner..."
 brew install --cask karabiner-elements
-brew install --cask hammerspoon
 
 echo "Installing cloud tools..."
 brew install --cask google-drive
 
-echo "Installing other developer tools..."
+echo "Installing docker..."
 brew install --cask docker
-brew install --cask postman
 
 echo "Installing messaging and communication tools..."
 brew install --cask telegram
 brew install --cask slack
 
-echo "Installing the browser..."
-brew install --cask arc
+echo "Installing Google Chrome..."
+brew install --cask google-chrome
 
 echo "Installing miscelaneous casks..."
 brew install --cask sf-symbols
@@ -166,10 +149,6 @@ echo "Linking some config files..."
 rm -rf ~/.tmux.conf
 ln -s ~/.config/tmux/.tmux.conf ~/.tmux.conf
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
-# Link hammerspoon config
-rm -rf ~/.hammerspoon  
-ln -s ~/.config/hammerspoon ~/.hammerspoon
 
 # Install Zap for Zsh and link .zshrc
 zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh)
