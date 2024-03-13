@@ -4,9 +4,6 @@ if [[ $# -eq 1 ]]; then
     selected="$1"
 else
     selected=$(find \
-        ~/.config/ \
-        ~/Documents \
-        ~/Downloads \
         ~/dev/projects \
         ~/dev/projects/work \
         ~/dev/projects/personal \
